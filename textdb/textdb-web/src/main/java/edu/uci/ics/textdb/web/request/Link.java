@@ -3,11 +3,8 @@ package edu.uci.ics.textdb.web.request;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Created by kishorenarendran on 10/12/16.
- */
-
-/**
  * This class defines a link in the operator graph
+ * Created by kishorenarendran on 10/12/16.
  */
 public class Link {
     @JsonProperty("from")

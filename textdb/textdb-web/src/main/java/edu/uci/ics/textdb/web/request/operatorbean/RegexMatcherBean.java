@@ -3,12 +3,9 @@ package edu.uci.ics.textdb.web.request.operatorbean;
 import edu.uci.ics.textdb.web.request.Operator;
 
 /**
- * Created by kishorenarendran on 10/17/16.
- */
-
-/**
  * This class defines the properties/data members specific to the RegexMatcher operator
  * and extends the Operator class which defines the data members general to all operators
+ * Created by kishorenarendran on 10/17/16.
  */
 public class RegexMatcherBean extends Operator {
     private String regex;

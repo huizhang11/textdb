@@ -3,6 +3,7 @@ package edu.uci.ics.textdb.web.request;
 import java.util.ArrayList;
 
 /**
+ * This class describes the JSON request when a query plan is submitted
  * Created by kishorenarendran on 10/12/16.
  */
 public class QueryPlanRequest {

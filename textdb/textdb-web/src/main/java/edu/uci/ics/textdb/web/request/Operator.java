@@ -6,13 +6,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.uci.ics.textdb.web.request.operatorbean.RegexMatcherBean;
 
 /**
- * Created by kishorenarendran on 10/12/16.
- */
-
-/**
  * This class is the abstract class that defines the data members common to all operators. It is
  * extended by invidual operator beans in order to define the data members specific to each
  * operator
+ * Created by kishorenarendran on 10/12/16.
  */
 @JsonTypeInfo(use=JsonTypeInfo.Id.NAME, include= JsonTypeInfo.As.PROPERTY, property="operator_type")
 @JsonSubTypes({
