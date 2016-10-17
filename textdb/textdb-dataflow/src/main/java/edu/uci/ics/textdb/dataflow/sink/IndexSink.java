@@ -16,15 +16,20 @@ import edu.uci.ics.textdb.storage.writer.DataWriter;
 public class IndexSink extends AbstractSink {
 
     private DataWriter dataWriter;
+    
+    private boolean isOverwrite;
 
-    public IndexSink(String indexDirectory, Schema schema, Analyzer luceneAnalyzer) {
+    public IndexSink(String indexDirectory, Schema schema, Analyzer luceneAnalyzer, boolean isOverwrite) {
         DataStore dataStore = new DataStore(indexDirectory, schema);
         this.dataWriter = new DataWriter(dataStore, luceneAnalyzer);
+        this.isOverwrite = isOverwrite;
     }
 
     public void open() throws Exception {
         super.open();
-        this.dataWriter.clearData();
+        if (isOverwrite) {
+            this.dataWriter.clearData();
+        }
         this.dataWriter.open();
     }
 
