@@ -3,6 +3,8 @@ package edu.uci.ics.textdb.web.request.operatorbean;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.uci.ics.textdb.web.request.OperatorBean;
 
+import java.util.HashMap;
+
 /**
  * This class defines the properties/data members specific to the IndexSink operator
  * and extends the OperatorBean class which defines the data members general to all operators
@@ -41,5 +43,11 @@ public class IndexSinkBean extends OperatorBean {
     @JsonProperty("index_name")
     public void setIndexName(String indexName) {
         this.indexName = indexName;
+    }
+
+    public HashMap<String, String> getOperatorProperties() {
+        HashMap<String, String> operatorProperties = super.getOperatorProperties();
+        //TODO - Check on properties for IndexSink, IndexSinkBuilder seems to be missing
+        return operatorProperties;
     }
 }

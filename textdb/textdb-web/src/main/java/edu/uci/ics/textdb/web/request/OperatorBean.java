@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import edu.uci.ics.textdb.dataflow.sink.IndexSink;
+import edu.uci.ics.textdb.plangen.operatorbuilder.OperatorBuilderUtils;
 import edu.uci.ics.textdb.web.request.operatorbean.*;
+
+import java.util.HashMap;
 
 /**
  * This class is the abstract class that defines the data members common to all operators. It is
@@ -38,9 +40,9 @@ public abstract class OperatorBean {
     @JsonProperty("attributes")
     private String attributes;
     @JsonProperty("limit")
-    private Integer limit;
+    private String limit;
     @JsonProperty("offset")
-    private Integer offset;
+    private String offset;
 
     public OperatorBean() {
     }
@@ -81,22 +83,32 @@ public abstract class OperatorBean {
     }
 
     @JsonProperty("limit")
-    public Integer getLimit() {
+    public String getLimit() {
         return limit;
     }
 
     @JsonProperty("limit")
-    public void setLimit(Integer limit) {
+    public void setLimit(String limit) {
         this.limit = limit;
     }
 
     @JsonProperty("offset")
-    public Integer getOffset() {
+    public String getOffset() {
         return offset;
     }
 
     @JsonProperty("offset")
-    public void setOffset(Integer offset) {
+    public void setOffset(String offset) {
         this.offset = offset;
+    }
+
+    public HashMap<String, String> getOperatorProperties() {
+        HashMap<String, String> basicOperatorProperties = new HashMap<String, String>();
+        if(this.getLimit() != null)
+            basicOperatorProperties.put(OperatorBuilderUtils.LIMIT, this.getLimit());
+        if(this.getOffset() != null)
+            basicOperatorProperties.put(OperatorBuilderUtils.OFFSET, this.getOffset());
+        basicOperatorProperties.put(OperatorBuilderUtils.ATTRIBUTE_NAMES, this.getAttributes());
+        return basicOperatorProperties;
     }
 }

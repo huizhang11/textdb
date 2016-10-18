@@ -1,7 +1,11 @@
 package edu.uci.ics.textdb.web.request.operatorbean;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import edu.uci.ics.textdb.plangen.operatorbuilder.DictionaryMatcherBuilder;
+import edu.uci.ics.textdb.plangen.operatorbuilder.FuzzyTokenMatcherBuilder;
 import edu.uci.ics.textdb.web.request.OperatorBean;
+
+import java.util.HashMap;
 
 /**
  * This class defines the properties/data members specific to the FuzzyTokenSource operator
@@ -13,14 +17,14 @@ public class FuzzyTokenSourceBean extends OperatorBean {
     @JsonProperty("query")
     private String query;
     @JsonProperty("threshold_ratio")
-    private double thresholdRatio;
+    private String thresholdRatio;
     @JsonProperty("data_source")
     private String dataSource;
 
     public FuzzyTokenSourceBean() {
     }
 
-    public FuzzyTokenSourceBean(String operatorID, String operatorType, String query, double thresholdRatio, String dataSource) {
+    public FuzzyTokenSourceBean(String operatorID, String operatorType, String query, String thresholdRatio, String dataSource) {
         super(operatorID, operatorType);
         this.query = query;
         this.thresholdRatio = thresholdRatio;
@@ -38,12 +42,12 @@ public class FuzzyTokenSourceBean extends OperatorBean {
     }
 
     @JsonProperty("threshold_ratio")
-    public double getThresholdRatio() {
+    public String getThresholdRatio() {
         return thresholdRatio;
     }
 
     @JsonProperty("threshold_ratio")
-    public void setThresholdRatio(double thresholdRatio) {
+    public void setThresholdRatio(String thresholdRatio) {
         this.thresholdRatio = thresholdRatio;
     }
 
@@ -55,5 +59,12 @@ public class FuzzyTokenSourceBean extends OperatorBean {
     @JsonProperty("data_source")
     public void setDataSource(String dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public HashMap<String, String> getOperatorProperties() {
+        HashMap<String, String> operatorProperties = super.getOperatorProperties();
+        operatorProperties.put(FuzzyTokenMatcherBuilder.FUZZY_STRING, this.getQuery());
+        operatorProperties.put(FuzzyTokenMatcherBuilder.THRESHOLD_RATIO, this.getThresholdRatio());
+        return operatorProperties;
     }
 }

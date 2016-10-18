@@ -2,7 +2,11 @@ package edu.uci.ics.textdb.web.request.operatorbean;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.uci.ics.textdb.common.constants.DataConstants;
+import edu.uci.ics.textdb.plangen.operatorbuilder.KeywordMatcherBuilder;
+import edu.uci.ics.textdb.plangen.operatorbuilder.KeywordSourceBuilder;
 import edu.uci.ics.textdb.web.request.OperatorBean;
+
+import java.util.HashMap;
 
 /**
  * This class defines the properties/data members specific to the KeywordSource operator
@@ -55,5 +59,13 @@ public class KeywordSourceBean extends OperatorBean {
     @JsonProperty("data_source")
     public void setDataSource(String dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public HashMap<String, String> getOperatorProperties() {
+        HashMap<String, String> operatorProperties = super.getOperatorProperties();
+        operatorProperties.put(KeywordMatcherBuilder.KEYWORD, this.getKeyword());
+        operatorProperties.put(KeywordMatcherBuilder.MATCHING_TYPE, this.getMatchingType().name());
+        // TODO - Check on the data source properties for the KeywordSourceOperator
+        return operatorProperties;
     }
 }

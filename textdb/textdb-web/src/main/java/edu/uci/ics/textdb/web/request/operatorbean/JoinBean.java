@@ -1,7 +1,10 @@
 package edu.uci.ics.textdb.web.request.operatorbean;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import edu.uci.ics.textdb.plangen.operatorbuilder.JoinBuilder;
 import edu.uci.ics.textdb.web.request.OperatorBean;
+
+import java.util.HashMap;
 
 /**
  * This class defines the properties/data members specific to the Join operator
@@ -43,5 +46,13 @@ public class JoinBean extends OperatorBean {
     @JsonProperty("distance")
     public void setDistance(String distance) {
         this.distance = distance;
+    }
+
+    public HashMap<String, String> getOperatorProperties() {
+        HashMap<String, String> operatorProperties = super.getOperatorProperties();
+        operatorProperties.put(JoinBuilder.JOIN_ID_ATTRIBUTE_NAME, this.getIdAttribute());
+        operatorProperties.put(JoinBuilder.JOIN_DISTANCE, this.getDistance());
+        // TODO - Check on the other properties required for the Join Operator
+        return operatorProperties;
     }
 }

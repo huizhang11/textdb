@@ -2,7 +2,11 @@ package edu.uci.ics.textdb.web.request.operatorbean;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.uci.ics.textdb.common.constants.DataConstants;
+import edu.uci.ics.textdb.plangen.operatorbuilder.DictionaryMatcherBuilder;
+import edu.uci.ics.textdb.plangen.operatorbuilder.OperatorBuilderUtils;
 import edu.uci.ics.textdb.web.request.OperatorBean;
+
+import java.util.HashMap;
 
 /**
  * This class defines the properties/data members specific to the DictionaryMatcher operator
@@ -42,5 +46,12 @@ public class DictionaryMatcherBean extends OperatorBean {
     @JsonProperty("matching_type")
     public void setMatchingType(DataConstants.KeywordMatchingType matchingType) {
         this.matchingType = matchingType;
+    }
+
+    public HashMap<String, String> getOperatorProperties() {
+        HashMap<String, String> operatorProperties = super.getOperatorProperties();
+        operatorProperties.put(DictionaryMatcherBuilder.DICTIONARY, this.getDictionary());
+        operatorProperties.put(DictionaryMatcherBuilder.MATCHING_TYPE, this.getMatchingType().name());
+        return operatorProperties;
     }
 }

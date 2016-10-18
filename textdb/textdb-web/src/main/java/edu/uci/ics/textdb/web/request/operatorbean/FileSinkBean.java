@@ -1,7 +1,10 @@
 package edu.uci.ics.textdb.web.request.operatorbean;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import edu.uci.ics.textdb.plangen.operatorbuilder.FileSinkBuilder;
 import edu.uci.ics.textdb.web.request.OperatorBean;
+
+import java.util.HashMap;
 
 /**
  * This class defines the properties/data members specific to the FileSink operator
@@ -28,5 +31,11 @@ public class FileSinkBean extends OperatorBean {
     @JsonProperty("file_path")
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public HashMap<String, String> getOperatorProperties() {
+        HashMap<String, String> operatorProperties = super.getOperatorProperties();
+        operatorProperties.put(FileSinkBuilder.FILE_PATH, this.getFilePath());
+        return operatorProperties;
     }
 }

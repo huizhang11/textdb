@@ -1,6 +1,9 @@
 package edu.uci.ics.textdb.web.request.operatorbean;
 
+import edu.uci.ics.textdb.plangen.operatorbuilder.RegexMatcherBuilder;
 import edu.uci.ics.textdb.web.request.OperatorBean;
+
+import java.util.HashMap;
 
 /**
  * This class defines the properties/data members specific to the RegexMatcher operator
@@ -24,5 +27,12 @@ public class RegexMatcherBean extends OperatorBean {
 
     public void setRegex(String regex) {
         this.regex = regex;
+    }
+
+    @Override
+    public HashMap<String, String> getOperatorProperties() {
+        HashMap<String, String> operatorProperties = super.getOperatorProperties();
+        operatorProperties.put(RegexMatcherBuilder.REGEX, this.getRegex());
+        return operatorProperties;
     }
 }

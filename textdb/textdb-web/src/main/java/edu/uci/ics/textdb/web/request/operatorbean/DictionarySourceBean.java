@@ -2,7 +2,11 @@ package edu.uci.ics.textdb.web.request.operatorbean;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.uci.ics.textdb.common.constants.DataConstants;
+import edu.uci.ics.textdb.plangen.operatorbuilder.DictionaryMatcherBuilder;
+import edu.uci.ics.textdb.plangen.operatorbuilder.DictionarySourceBuilder;
 import edu.uci.ics.textdb.web.request.OperatorBean;
+
+import java.util.HashMap;
 
 /**
  * This class defines the properties/data members specific to the DictionarySource operator
@@ -55,5 +59,13 @@ public class DictionarySourceBean extends OperatorBean {
     @JsonProperty("data_source")
     public void setDataSource(String dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public HashMap<String, String> getOperatorProperties() {
+        HashMap<String, String> operatorProperties = super.getOperatorProperties();
+        operatorProperties.put(DictionarySourceBuilder.DICTIONARY, this.getDictionary());
+        operatorProperties.put(DictionarySourceBuilder.MATCHING_TYPE, this.getMatchingType().name());
+        //TODO - Check property for DataSource
+        return operatorProperties;
     }
 }

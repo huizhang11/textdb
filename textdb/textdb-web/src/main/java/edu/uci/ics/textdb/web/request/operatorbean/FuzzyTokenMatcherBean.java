@@ -1,7 +1,10 @@
 package edu.uci.ics.textdb.web.request.operatorbean;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import edu.uci.ics.textdb.plangen.operatorbuilder.FuzzyTokenMatcherBuilder;
 import edu.uci.ics.textdb.web.request.OperatorBean;
+
+import java.util.HashMap;
 
 /**
  * This class defines the properties/data members specific to the FuzzyTokenMatcher operator
@@ -12,12 +15,12 @@ public class FuzzyTokenMatcherBean extends OperatorBean {
     @JsonProperty("query")
     private String query;
     @JsonProperty("threshold_ratio")
-    private double thresholdRatio;
+    private String thresholdRatio;
 
     public FuzzyTokenMatcherBean() {
     }
 
-    public FuzzyTokenMatcherBean(String operatorID, String operatorType, String query, double thresholdRatio) {
+    public FuzzyTokenMatcherBean(String operatorID, String operatorType, String query, String thresholdRatio) {
         super(operatorID, operatorType);
         this.query = query;
         this.thresholdRatio = thresholdRatio;
@@ -34,12 +37,19 @@ public class FuzzyTokenMatcherBean extends OperatorBean {
     }
 
     @JsonProperty("threshold_ratio")
-    public double getThresholdRatio() {
+    public String getThresholdRatio() {
         return thresholdRatio;
     }
 
     @JsonProperty("threshold_ratio")
-    public void setThresholdRatio(double thresholdRatio) {
+    public void setThresholdRatio(String thresholdRatio) {
         this.thresholdRatio = thresholdRatio;
+    }
+
+    public HashMap<String, String> getOperatorProperties() {
+        HashMap<String, String> operatorProperties = super.getOperatorProperties();
+        operatorProperties.put(FuzzyTokenMatcherBuilder.FUZZY_STRING, this.getQuery());
+        operatorProperties.put(FuzzyTokenMatcherBuilder.THRESHOLD_RATIO, this.getThresholdRatio());
+        return operatorProperties;
     }
 }
