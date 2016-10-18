@@ -5,6 +5,8 @@ import edu.uci.ics.textdb.common.constants.DataConstants;
 import edu.uci.ics.textdb.web.request.Operator;
 
 /**
+ * This class defines the properties/data members specific to the DictionaryMatcher operator
+ * and extends the Operator class which defines the data members general to all operators
  * Created by kishorenarendran on 10/17/16.
  */
 public class DictionaryMatcherBean extends Operator {
