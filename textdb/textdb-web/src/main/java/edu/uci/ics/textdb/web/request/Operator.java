@@ -1,5 +1,6 @@
 package edu.uci.ics.textdb.web.request;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -15,11 +16,18 @@ import edu.uci.ics.textdb.web.request.operatorbean.RegexMatcherBean;
 @JsonSubTypes({
         @JsonSubTypes.Type(value=RegexMatcherBean.class, name="RegexMatcher"),
 })
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public abstract class Operator {
     @JsonProperty("operator_id")
     private String operatorID;
     @JsonProperty("operator_type")
     private String operatorType;
+    @JsonProperty("attributes")
+    private String attributes;
+    @JsonProperty("limit")
+    private Integer limit;
+    @JsonProperty("offset")
+    private Integer offset;
 
     public Operator() {
     }
@@ -47,5 +55,35 @@ public abstract class Operator {
     @JsonProperty("operator_type")
     public void setOperatorType(String operatorType) {
         this.operatorType = operatorType;
+    }
+
+    @JsonProperty("attributes")
+    public String getAttributes() {
+        return attributes;
+    }
+
+    @JsonProperty("attributes")
+    public void setAttributes(String attributes) {
+        this.attributes = attributes;
+    }
+
+    @JsonProperty("limit")
+    public Integer getLimit() {
+        return limit;
+    }
+
+    @JsonProperty("limit")
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+
+    @JsonProperty("offset")
+    public Integer getOffset() {
+        return offset;
+    }
+
+    @JsonProperty("offset")
+    public void setOffset(Integer offset) {
+        this.offset = offset;
     }
 }

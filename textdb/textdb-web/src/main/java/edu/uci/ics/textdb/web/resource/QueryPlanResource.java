@@ -2,6 +2,7 @@ package edu.uci.ics.textdb.web.resource;
 
 import edu.uci.ics.textdb.web.request.QueryPlanRequest;
 import edu.uci.ics.textdb.web.response.SampleResponse;
+import org.apache.xpath.SourceTree;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
