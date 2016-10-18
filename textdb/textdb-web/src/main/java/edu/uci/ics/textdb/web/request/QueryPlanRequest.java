@@ -7,30 +7,30 @@ import java.util.ArrayList;
  * Created by kishorenarendran on 10/12/16.
  */
 public class QueryPlanRequest {
-    private ArrayList<Operator> operators;
-    private ArrayList<Link> links;
+    private ArrayList<OperatorBean> operators;
+    private ArrayList<LinkBean> links;
 
     public QueryPlanRequest() {
     }
 
-    public QueryPlanRequest(ArrayList<Operator> operators, ArrayList<Link> links) {
+    public QueryPlanRequest(ArrayList<OperatorBean> operators, ArrayList<LinkBean> links) {
         this.operators = operators;
         this.links = links;
     }
 
-    public ArrayList<Operator> getOperators() {
+    public ArrayList<OperatorBean> getOperators() {
         return operators;
     }
 
-    public void setOperators(ArrayList<Operator> operators) {
+    public void setOperators(ArrayList<OperatorBean> operators) {
         this.operators = operators;
     }
 
-    public ArrayList<Link> getLinks() {
+    public ArrayList<LinkBean> getLinks() {
         return links;
     }
 
-    public void setLinks(ArrayList<Link> links) {
+    public void setLinks(ArrayList<LinkBean> links) {
         this.links = links;
     }
 }

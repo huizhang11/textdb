@@ -6,16 +6,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * This class defines a link in the operator graph
  * Created by kishorenarendran on 10/12/16.
  */
-public class Link {
+public class LinkBean {
     @JsonProperty("from")
     private String fromOperatorID;
     @JsonProperty("to")
     private String toOperatorID;
 
-    public Link() {
+    public LinkBean() {
     }
 
-    public Link(String fromOperatorID, String toOperatorID) {
+    public LinkBean(String fromOperatorID, String toOperatorID) {
         this.fromOperatorID = fromOperatorID;
         this.toOperatorID = toOperatorID;
     }

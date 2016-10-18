@@ -30,7 +30,7 @@ import edu.uci.ics.textdb.web.request.operatorbean.*;
         @JsonSubTypes.Type(value=RegexSourceBean.class, name="RegexSource")
 })
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public abstract class Operator {
+public abstract class OperatorBean {
     @JsonProperty("operator_id")
     private String operatorID;
     @JsonProperty("operator_type")
@@ -42,10 +42,10 @@ public abstract class Operator {
     @JsonProperty("offset")
     private Integer offset;
 
-    public Operator() {
+    public OperatorBean() {
     }
 
-    public Operator(String operatorID, String operatorType) {
+    public OperatorBean(String operatorID, String operatorType) {
         this.operatorID = operatorID;
         this.operatorType = operatorType;
     }

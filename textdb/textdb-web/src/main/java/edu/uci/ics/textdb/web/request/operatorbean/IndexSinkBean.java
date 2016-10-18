@@ -1,14 +1,14 @@
 package edu.uci.ics.textdb.web.request.operatorbean;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import edu.uci.ics.textdb.web.request.Operator;
+import edu.uci.ics.textdb.web.request.OperatorBean;
 
 /**
  * This class defines the properties/data members specific to the IndexSink operator
- * and extends the Operator class which defines the data members general to all operators
+ * and extends the OperatorBean class which defines the data members general to all operators
  * Created by kishorenarendran on 10/17/16.
  */
-public class IndexSinkBean extends Operator{
+public class IndexSinkBean extends OperatorBean {
     @JsonProperty("index_path")
     private String indexPath;
     @JsonProperty("index_name")
