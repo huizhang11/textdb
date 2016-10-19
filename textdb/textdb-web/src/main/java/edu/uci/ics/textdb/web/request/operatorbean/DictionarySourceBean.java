@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.uci.ics.textdb.common.constants.DataConstants;
 import edu.uci.ics.textdb.plangen.operatorbuilder.DictionaryMatcherBuilder;
 import edu.uci.ics.textdb.plangen.operatorbuilder.DictionarySourceBuilder;
+import edu.uci.ics.textdb.plangen.operatorbuilder.OperatorBuilderUtils;
 import edu.uci.ics.textdb.web.request.OperatorBean;
 
 import java.util.HashMap;
@@ -65,7 +66,7 @@ public class DictionarySourceBean extends OperatorBean {
         HashMap<String, String> operatorProperties = super.getOperatorProperties();
         operatorProperties.put(DictionarySourceBuilder.DICTIONARY, this.getDictionary());
         operatorProperties.put(DictionarySourceBuilder.MATCHING_TYPE, this.getMatchingType().name());
-        //TODO - Check property for DataSource
+        operatorProperties.put(OperatorBuilderUtils.DATA_DIRECTORY, this.getDataSource());
         return operatorProperties;
     }
 }

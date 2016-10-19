@@ -3,6 +3,7 @@ package edu.uci.ics.textdb.web.request.operatorbean;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.uci.ics.textdb.plangen.operatorbuilder.DictionaryMatcherBuilder;
 import edu.uci.ics.textdb.plangen.operatorbuilder.FuzzyTokenMatcherBuilder;
+import edu.uci.ics.textdb.plangen.operatorbuilder.OperatorBuilderUtils;
 import edu.uci.ics.textdb.web.request.OperatorBean;
 
 import java.util.HashMap;
@@ -65,6 +66,7 @@ public class FuzzyTokenSourceBean extends OperatorBean {
         HashMap<String, String> operatorProperties = super.getOperatorProperties();
         operatorProperties.put(FuzzyTokenMatcherBuilder.FUZZY_STRING, this.getQuery());
         operatorProperties.put(FuzzyTokenMatcherBuilder.THRESHOLD_RATIO, this.getThresholdRatio());
+        operatorProperties.put(OperatorBuilderUtils.DATA_DIRECTORY, this.getDataSource());
         return operatorProperties;
     }
 }

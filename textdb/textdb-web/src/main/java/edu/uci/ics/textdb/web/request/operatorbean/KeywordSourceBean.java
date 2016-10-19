@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.uci.ics.textdb.common.constants.DataConstants;
 import edu.uci.ics.textdb.plangen.operatorbuilder.KeywordMatcherBuilder;
 import edu.uci.ics.textdb.plangen.operatorbuilder.KeywordSourceBuilder;
+import edu.uci.ics.textdb.plangen.operatorbuilder.OperatorBuilderUtils;
 import edu.uci.ics.textdb.web.request.OperatorBean;
 
 import java.util.HashMap;
@@ -65,7 +66,7 @@ public class KeywordSourceBean extends OperatorBean {
         HashMap<String, String> operatorProperties = super.getOperatorProperties();
         operatorProperties.put(KeywordMatcherBuilder.KEYWORD, this.getKeyword());
         operatorProperties.put(KeywordMatcherBuilder.MATCHING_TYPE, this.getMatchingType().name());
-        // TODO - Check on the data source properties for the KeywordSourceOperator
+        operatorProperties.put(OperatorBuilderUtils.DATA_DIRECTORY, this.getDataSource());
         return operatorProperties;
     }
 }

@@ -1,6 +1,7 @@
 package edu.uci.ics.textdb.web.request.operatorbean;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import edu.uci.ics.textdb.plangen.operatorbuilder.OperatorBuilderUtils;
 import edu.uci.ics.textdb.plangen.operatorbuilder.RegexMatcherBuilder;
 import edu.uci.ics.textdb.web.request.OperatorBean;
 
@@ -50,7 +51,7 @@ public class RegexSourceBean extends OperatorBean {
     public HashMap<String, String> getOperatorProperties() {
         HashMap<String, String> operatorProperties = super.getOperatorProperties();
         operatorProperties.put(RegexMatcherBuilder.REGEX, this.getRegex());
-        // TODO - Check on the data source property of the RegexSource operator
+        operatorProperties.put(OperatorBuilderUtils.DATA_DIRECTORY, this.getDataSource());
         return operatorProperties;
     }
 }
