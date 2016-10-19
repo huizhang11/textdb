@@ -21,22 +21,6 @@ import java.util.HashMap;
 @Consumes(MediaType.APPLICATION_JSON)
 public class QueryPlanResource {
 
-    public static final HashMap<String, Class> OPERATOR_BEAN_MAP = new HashMap<String, Class>() {{
-        put("DictionaryMatcher", DictionaryMatcherBean.class);
-        put("DictionarySource", DictionarySourceBean.class);
-        put("FileSink", FileSinkBean.class);
-        put("FuzzyTokenMatcher", FuzzyTokenMatcherBean.class);
-        put("FuzzyTokenSource", FuzzyTokenSourceBean.class);
-        put("IndexSink", IndexSinkBean.class);
-        put("Join", JoinBean.class);
-        put("KeywordMatcher", KeywordMatcherBean.class);
-        put("KeywordSource", KeywordSourceBean.class);
-        put("NlpExtractor", NlpExtractorBean.class);
-        put("Projection", ProjectionBean.class);
-        put("RegexMatcher", RegexMatcherBean.class);
-        put("RegexSource", RegexSourceBean.class);
-    }};
-
     @POST
     @Path("/execute")
     public SampleResponse executeQueryPlan(QueryPlanRequest queryPlanRequest) {
