@@ -1,5 +1,8 @@
 package edu.uci.ics.textdb.web.request;
 
+import edu.uci.ics.textdb.web.request.beans.LinkBean;
+import edu.uci.ics.textdb.web.request.beans.OperatorBean;
+
 import java.util.ArrayList;
 
 /**

@@ -1,7 +1,6 @@
-package edu.uci.ics.textdb.web.request.operatorbean;
+package edu.uci.ics.textdb.web.request.beans;
 
 import edu.uci.ics.textdb.plangen.operatorbuilder.RegexMatcherBuilder;
-import edu.uci.ics.textdb.web.request.OperatorBean;
 
 import java.util.HashMap;
 

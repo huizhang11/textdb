@@ -1,11 +1,11 @@
-package edu.uci.ics.textdb.web.request;
+package edu.uci.ics.textdb.web.request.beans;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.uci.ics.textdb.plangen.operatorbuilder.OperatorBuilderUtils;
-import edu.uci.ics.textdb.web.request.operatorbean.*;
+import edu.uci.ics.textdb.web.request.beans.*;
 
 import java.util.HashMap;
 

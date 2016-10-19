@@ -1,6 +1,4 @@
-package edu.uci.ics.textdb.web.request.operatorbean;
-
-import edu.uci.ics.textdb.web.request.OperatorBean;
+package edu.uci.ics.textdb.web.request.beans;
 
 /**
  * This class defines the properties/data members specific to the Projection operator

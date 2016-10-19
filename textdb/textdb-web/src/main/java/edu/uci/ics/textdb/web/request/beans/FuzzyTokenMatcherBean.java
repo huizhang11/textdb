@@ -1,35 +1,28 @@
-package edu.uci.ics.textdb.web.request.operatorbean;
+package edu.uci.ics.textdb.web.request.beans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import edu.uci.ics.textdb.plangen.operatorbuilder.DictionaryMatcherBuilder;
 import edu.uci.ics.textdb.plangen.operatorbuilder.FuzzyTokenMatcherBuilder;
-import edu.uci.ics.textdb.plangen.operatorbuilder.OperatorBuilderUtils;
-import edu.uci.ics.textdb.web.request.OperatorBean;
 
 import java.util.HashMap;
 
 /**
- * This class defines the properties/data members specific to the FuzzyTokenSource operator
+ * This class defines the properties/data members specific to the FuzzyTokenMatcher operator
  * and extends the OperatorBean class which defines the data members general to all operators
  * Created by kishorenarendran on 10/17/16.
  */
-public class FuzzyTokenSourceBean extends OperatorBean {
-
+public class FuzzyTokenMatcherBean extends OperatorBean {
     @JsonProperty("query")
     private String query;
     @JsonProperty("threshold_ratio")
     private String thresholdRatio;
-    @JsonProperty("data_source")
-    private String dataSource;
 
-    public FuzzyTokenSourceBean() {
+    public FuzzyTokenMatcherBean() {
     }
 
-    public FuzzyTokenSourceBean(String operatorID, String operatorType, String query, String thresholdRatio, String dataSource) {
+    public FuzzyTokenMatcherBean(String operatorID, String operatorType, String query, String thresholdRatio) {
         super(operatorID, operatorType);
         this.query = query;
         this.thresholdRatio = thresholdRatio;
-        this.dataSource = dataSource;
     }
 
     @JsonProperty("query")
@@ -52,21 +45,10 @@ public class FuzzyTokenSourceBean extends OperatorBean {
         this.thresholdRatio = thresholdRatio;
     }
 
-    @JsonProperty("data_source")
-    public String getDataSource() {
-        return dataSource;
-    }
-
-    @JsonProperty("data_source")
-    public void setDataSource(String dataSource) {
-        this.dataSource = dataSource;
-    }
-
     public HashMap<String, String> getOperatorProperties() {
         HashMap<String, String> operatorProperties = super.getOperatorProperties();
         operatorProperties.put(FuzzyTokenMatcherBuilder.FUZZY_STRING, this.getQuery());
         operatorProperties.put(FuzzyTokenMatcherBuilder.THRESHOLD_RATIO, this.getThresholdRatio());
-        operatorProperties.put(OperatorBuilderUtils.DATA_DIRECTORY, this.getDataSource());
         return operatorProperties;
     }
 }

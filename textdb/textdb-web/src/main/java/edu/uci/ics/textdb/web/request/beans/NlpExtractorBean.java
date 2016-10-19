@@ -1,9 +1,8 @@
-package edu.uci.ics.textdb.web.request.operatorbean;
+package edu.uci.ics.textdb.web.request.beans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.uci.ics.textdb.dataflow.nlpextrator.NlpPredicate.NlpTokenType;
 import edu.uci.ics.textdb.plangen.operatorbuilder.NlpExtractorBuilder;
-import edu.uci.ics.textdb.web.request.OperatorBean;
 
 import java.util.HashMap;
 

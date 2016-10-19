@@ -1,7 +1,7 @@
 package edu.uci.ics.textdb.web.resource;
 
 import edu.uci.ics.textdb.web.request.QueryPlanRequest;
-import edu.uci.ics.textdb.web.request.operatorbean.*;
+import edu.uci.ics.textdb.web.request.beans.*;
 import edu.uci.ics.textdb.web.response.SampleResponse;
 
 import javax.ws.rs.Consumes;

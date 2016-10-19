@@ -1,8 +1,7 @@
-package edu.uci.ics.textdb.web.request.operatorbean;
+package edu.uci.ics.textdb.web.request.beans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.uci.ics.textdb.plangen.operatorbuilder.FileSinkBuilder;
-import edu.uci.ics.textdb.web.request.OperatorBean;
 
 import java.util.HashMap;
 
