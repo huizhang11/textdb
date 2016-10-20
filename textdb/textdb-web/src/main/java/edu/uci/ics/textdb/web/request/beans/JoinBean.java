@@ -1,6 +1,7 @@
 package edu.uci.ics.textdb.web.request.beans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import edu.uci.ics.textdb.plangen.operatorbuilder.JoinBuilder;
 
 import java.util.HashMap;
@@ -10,7 +11,10 @@ import java.util.HashMap;
  * and extends the OperatorBean class which defines the data members general to all operators
  * Created by kishorenarendran on 10/17/16.
  */
+@JsonTypeName("Join")
 public class JoinBean extends OperatorBean {
+    @JsonProperty("operator_type")
+    private String operatorType;
     @JsonProperty("id_attribute")
     private String idAttribute;
     @JsonProperty("distance")
@@ -21,10 +25,21 @@ public class JoinBean extends OperatorBean {
     public JoinBean() {
     }
 
-    public JoinBean(String operatorID, String operatorType, String attributes, String idAttribute, String distance) {
-        super(operatorID, operatorType);
+    public JoinBean(String operatorID, String attributes, String limit, String offset, String operatorType, String idAttribute, String distance) {
+        super(operatorID, attributes, limit, offset);
+        this.operatorType = operatorType;
         this.idAttribute = idAttribute;
         this.distance = distance;
+    }
+
+    @JsonProperty("operator_type")
+    public String getOperatorType() {
+        return operatorType;
+    }
+
+    @JsonProperty("operator_type")
+    public void setOperatorType(String operatorType) {
+        this.operatorType = operatorType;
     }
 
     @JsonProperty("id_attribute")
@@ -53,5 +68,17 @@ public class JoinBean extends OperatorBean {
         operatorProperties.put(JoinBuilder.JOIN_DISTANCE, this.getDistance());
         // TODO - Check on the other properties required for the Join Operator
         return operatorProperties;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof OperatorBean)) return false;
+        JoinBean joinBean = (JoinBean) other;
+        return super.equals(other) &&
+                this.getOperatorType().equals(joinBean.getOperatorType()) &&
+                this.getIdAttribute().equals(joinBean.getIdAttribute()) &&
+                this.getDistance().equals(joinBean.getDistance());
     }
 }

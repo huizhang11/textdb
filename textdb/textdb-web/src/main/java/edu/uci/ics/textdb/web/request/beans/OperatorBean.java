@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.uci.ics.textdb.plangen.operatorbuilder.OperatorBuilderUtils;
-import edu.uci.ics.textdb.web.request.beans.*;
 
 import java.util.HashMap;
 
@@ -15,7 +14,7 @@ import java.util.HashMap;
  * operator
  * Created by kishorenarendran on 10/12/16.
  */
-@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, include= JsonTypeInfo.As.PROPERTY, property="operator_type")
+@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, include= JsonTypeInfo.As.PROPERTY, property="operator_type", visible = true)
 @JsonSubTypes({
         @JsonSubTypes.Type(value=DictionaryMatcherBean.class, name="DictionaryMatcher"),
         @JsonSubTypes.Type(value=DictionarySourceBean.class, name="DictionarySource"),
@@ -35,8 +34,6 @@ import java.util.HashMap;
 public abstract class OperatorBean {
     @JsonProperty("operator_id")
     private String operatorID;
-    @JsonProperty("operator_type")
-    private String operatorType;
     @JsonProperty("attributes")
     private String attributes;
     @JsonProperty("limit")
@@ -47,9 +44,11 @@ public abstract class OperatorBean {
     public OperatorBean() {
     }
 
-    public OperatorBean(String operatorID, String operatorType) {
+    public OperatorBean(String operatorID, String attributes, String limit, String offset) {
         this.operatorID = operatorID;
-        this.operatorType = operatorType;
+        this.attributes = attributes;
+        this.limit = limit;
+        this.offset = offset;
     }
 
     @JsonProperty("operator_id")
@@ -60,16 +59,6 @@ public abstract class OperatorBean {
     @JsonProperty("operator_id")
     public void setOperatorID(String operatorID) {
         this.operatorID = operatorID;
-    }
-
-    @JsonProperty("operator_type")
-    public String getOperatorType() {
-        return operatorType;
-    }
-
-    @JsonProperty("operator_type")
-    public void setOperatorType(String operatorType) {
-        this.operatorType = operatorType;
     }
 
     @JsonProperty("attributes")
@@ -110,5 +99,27 @@ public abstract class OperatorBean {
             basicOperatorProperties.put(OperatorBuilderUtils.OFFSET, this.getOffset());
         basicOperatorProperties.put(OperatorBuilderUtils.ATTRIBUTE_NAMES, this.getAttributes());
         return basicOperatorProperties;
+    }
+
+    @Override
+    public boolean equals(Object other){
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof OperatorBean))return false;
+        OperatorBean operatorBean = (OperatorBean)other;
+
+        if(operatorBean.getAttributes() != null && this.getAttributes() != null)
+            if(!operatorBean.getAttributes().equals(this.getAttributes()))
+                return false;
+
+        if(operatorBean.getLimit() != null && this.getLimit() != null)
+            if(!operatorBean.getLimit().equals(this.getLimit()))
+                return false;
+
+        if(operatorBean.getOffset() != null && this.getOffset() != null)
+            if(!operatorBean.getOffset().equals(this.getOffset()))
+                return false;
+
+        return operatorBean.getOperatorID().equals(this.getOperatorID());
     }
 }

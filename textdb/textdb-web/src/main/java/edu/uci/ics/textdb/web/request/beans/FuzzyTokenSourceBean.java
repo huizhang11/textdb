@@ -1,6 +1,7 @@
 package edu.uci.ics.textdb.web.request.beans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import edu.uci.ics.textdb.plangen.operatorbuilder.FuzzyTokenMatcherBuilder;
 import edu.uci.ics.textdb.plangen.operatorbuilder.OperatorBuilderUtils;
 
@@ -11,8 +12,10 @@ import java.util.HashMap;
  * and extends the OperatorBean class which defines the data members general to all operators
  * Created by kishorenarendran on 10/17/16.
  */
+@JsonTypeName("FuzzyTokenSource")
 public class FuzzyTokenSourceBean extends OperatorBean {
-
+    @JsonProperty("operator_type")
+    private String operatorType;
     @JsonProperty("query")
     private String query;
     @JsonProperty("threshold_ratio")
@@ -23,11 +26,22 @@ public class FuzzyTokenSourceBean extends OperatorBean {
     public FuzzyTokenSourceBean() {
     }
 
-    public FuzzyTokenSourceBean(String operatorID, String operatorType, String query, String thresholdRatio, String dataSource) {
-        super(operatorID, operatorType);
+    public FuzzyTokenSourceBean(String operatorID, String attributes, String limit, String offset, String operatorType, String query, String thresholdRatio, String dataSource) {
+        super(operatorID, attributes, limit, offset);
+        this.operatorType = operatorType;
         this.query = query;
         this.thresholdRatio = thresholdRatio;
         this.dataSource = dataSource;
+    }
+
+    @JsonProperty("operator_type")
+    public String getOperatorType() {
+        return operatorType;
+    }
+
+    @JsonProperty("operator_type")
+    public void setOperatorType(String operatorType) {
+        this.operatorType = operatorType;
     }
 
     @JsonProperty("query")
@@ -66,5 +80,18 @@ public class FuzzyTokenSourceBean extends OperatorBean {
         operatorProperties.put(FuzzyTokenMatcherBuilder.THRESHOLD_RATIO, this.getThresholdRatio());
         operatorProperties.put(OperatorBuilderUtils.DATA_DIRECTORY, this.getDataSource());
         return operatorProperties;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof OperatorBean)) return false;
+        FuzzyTokenSourceBean fuzzyTokenSourceBean = (FuzzyTokenSourceBean) other;
+        return super.equals(other) &&
+                this.getOperatorType().equals(fuzzyTokenSourceBean.getOperatorType()) &&
+                this.getQuery().equals(fuzzyTokenSourceBean.getQuery()) &&
+                this.getThresholdRatio().equals(fuzzyTokenSourceBean.getThresholdRatio()) &&
+                this.getDataSource().equals(fuzzyTokenSourceBean.getDataSource());
     }
 }

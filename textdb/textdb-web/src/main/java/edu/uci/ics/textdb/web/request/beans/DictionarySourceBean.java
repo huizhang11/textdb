@@ -1,6 +1,7 @@
 package edu.uci.ics.textdb.web.request.beans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import edu.uci.ics.textdb.common.constants.DataConstants;
 import edu.uci.ics.textdb.plangen.operatorbuilder.DictionarySourceBuilder;
 import edu.uci.ics.textdb.plangen.operatorbuilder.OperatorBuilderUtils;
@@ -12,7 +13,10 @@ import java.util.HashMap;
  * and extends the OperatorBean class which defines the data members general to all operators
  * Created by kishorenarendran on 10/17/16.
  */
+@JsonTypeName("DictionarySource")
 public class DictionarySourceBean extends OperatorBean {
+    @JsonProperty("operator_type")
+    private String operatorType;
     @JsonProperty("dictionary")
     private String dictionary;
     @JsonProperty("matching_type")
@@ -23,11 +27,22 @@ public class DictionarySourceBean extends OperatorBean {
     public DictionarySourceBean() {
     }
 
-    public DictionarySourceBean(String operatorID, String operatorType, String dictionary, DataConstants.KeywordMatchingType matchingType, String dataSource) {
-        super(operatorID, operatorType);
+    public DictionarySourceBean(String operatorID, String attributes, String limit, String offset, String operatorType, String dictionary, DataConstants.KeywordMatchingType matchingType, String dataSource) {
+        super(operatorID, attributes, limit, offset);
+        this.operatorType = operatorType;
         this.dictionary = dictionary;
         this.matchingType = matchingType;
         this.dataSource = dataSource;
+    }
+
+    @JsonProperty("operator_type")
+    public String getOperatorType() {
+        return operatorType;
+    }
+
+    @JsonProperty("operator_type")
+    public void setOperatorType(String operatorType) {
+        this.operatorType = operatorType;
     }
 
     @JsonProperty("dictionary")
@@ -66,5 +81,18 @@ public class DictionarySourceBean extends OperatorBean {
         operatorProperties.put(DictionarySourceBuilder.MATCHING_TYPE, this.getMatchingType().name());
         operatorProperties.put(OperatorBuilderUtils.DATA_DIRECTORY, this.getDataSource());
         return operatorProperties;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        if (!(other instanceof OperatorBean)) return false;
+        DictionarySourceBean dictionarySourceBean = (DictionarySourceBean) other;
+        return super.equals(other) &&
+                this.getOperatorType().equals(dictionarySourceBean.getOperatorType()) &&
+                this.getDictionary().equals(dictionarySourceBean.getDictionary()) &&
+                this.getMatchingType().name().equals(dictionarySourceBean.getMatchingType().name()) &&
+                this.getDataSource().equals(dictionarySourceBean.getDataSource());
     }
 }
