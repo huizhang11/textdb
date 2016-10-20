@@ -4,12 +4,12 @@
     <meta charset="utf-8">
 	
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-	<script src="textdb.flowchart.js"></script>
-	<script src="app.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<script type="text/javascript" src="js/textdb.flowchart.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
 	
-	<link href='flowchart.css' rel='stylesheet'>
-	<link href='style.css' rel='stylesheet'>
+	<link href='css/flowchart.css' rel='stylesheet'>
+	<link href='css/style.css' rel='stylesheet'>
 
     
   </head>
@@ -28,22 +28,84 @@
 			<div id="regex-panel" class="panel">
                 <em>Enter Regex: </em><br/>
 				<input type="text" id="regexText" placeholder="zika\s*(virus|fever)"><br/>
+				<em>Enter Attributes (Separated by commas): </em><br/>
+				<input type="text" id="regexAttributes" placeholder="first name, last name"><br/>
+				<em>Enter Limit (Optional): </em><br/>
+				<input type="text" id="regexLimit" placeholder="8" value="8"><br/>
+				<em>Enter Offset (Optional): </em><br/>
+				<input type="text" id="regexOffset" placeholder="5" value="5"><br/>
 				<br/>
-                <br/>
                 <button rel="regex-panel" class="create_operator">Create operator</button><br/>
             </div>
 		<li rel="keyword-panel" class="keyword-matcher">Create Keyword Matcher</li>
 			<div id="keyword-panel" class="panel">
                 <em>Enter Keyword: </em><br/>
 				<input type="text" id="keywordText" placeholder="Zika"><br/>
-                <br/>
-                <br/>
+                <em>Select Matching Type: </em><br/>
+                <select id="keywordMatchingType">
+					<option value="conjunction" selected>Conjunction</option>
+					<option value="phrase">Phrase</option>
+					<option value="substring">Substring</option>
+				</select><br/>
+				<em>Enter Attributes (Separated by commas): </em><br/>
+				<input type="text" id="keywordAttributes" placeholder="first name, last name"><br/>
+				<em>Enter Limit (Optional): </em><br/>
+				<input type="text" id="keywordLimit" placeholder="8" value="8"><br/>
+				<em>Enter Offset (Optional): </em><br/>
+				<input type="text" id="keywordOffset" placeholder="5" value="5"><br/>
+				<br/>
                 <button rel="keyword-panel" class="create_operator">Create operator</button><br/><br/>
             </div>
-		<li class="-matcher">Create  Matcher</li>
-		<li class="-matcher">Create  Matcher</li>
-		<li class="-matcher">Create  Matcher</li>
-		<li class="-matcher">Create  Matcher</li>
+		<li rel="dictionary-panel" class="dictionary-matcher">Create Dictionary Matcher</li>
+			<div id="dictionary-panel" class="panel">
+                <em>Enter Dictionary: </em><br/>
+				<input type="file" id="dictionaryFile" placeholder="Enter File"><br/>
+                <em>Select Matching Type: </em><br/>
+                <select id="dictionaryMatchingType">
+					<option value="conjunction" selected>Conjunction</option>
+					<option value="phrase">Phrase</option>
+					<option value="substring">Substring</option>
+				</select><br/>
+				<em>Enter Attributes (Separated by commas): </em><br/>
+				<input type="text" id="dictionaryAttributes" placeholder="first name, last name"><br/>
+				<em>Enter Limit (Optional): </em><br/>
+				<input type="text" id="dictionaryLimit" placeholder="8" value="8"><br/>
+				<em>Enter Offset (Optional): </em><br/>
+				<input type="text" id="dictionaryOffset" placeholder="5" value="5"><br/>
+				<br/>
+                <button rel="dictionary-panel" class="create_operator">Create operator</button><br/><br/>
+            </div>
+		<li rel="fuzzy-panel" class="fuzzy-matcher">Create Fuzzy Matcher</li>
+			<div id="fuzzy-panel" class="panel">
+                <em>Enter Fuzzy: </em><br/>
+				<input type="text" id="fuzzyText" placeholder="Enter Fuzzy"><br/>
+				<em>Enter Attributes (Separated by commas): </em><br/>
+				<input type="text" id="fuzzyAttributes" placeholder="first name, last name"><br/>
+				<em>Enter Limit (Optional): </em><br/>
+				<input type="text" id="fuzzyLimit" placeholder="8" value="8"><br/>
+				<em>Enter Offset (Optional): </em><br/>
+				<input type="text" id="fuzzyOffset" placeholder="5" value="5"><br/>
+				<br/>
+                <button rel="fuzzy-panel" class="create_operator">Create operator</button><br/><br/>
+            </div>
+		<li rel="nlp-panel" class="nlp-matcher">Create NLP Extractor</li>
+			<div id="nlp-panel" class="panel">
+                <em>Enter NLP Extractor: </em><br/>
+				<input type="text" id="nlpText" placeholder="Ex: Noun/Date/Location"><br/>
+				<em>Enter Attributes (Separated by commas): </em><br/>
+				<input type="text" id="nlpAttributes" placeholder="first name, last name"><br/>
+                <em>Enter Limit (Optional): </em><br/>
+				<input type="text" id="nlpLimit" placeholder="8" value="8"><br/>
+				<em>Enter Offset (Optional): </em><br/>
+				<input type="text" id="nlpOffset" placeholder="5" value="5"><br/>
+				<br/>
+                <button rel="nlp-panel" class="create_operator">Create operator</button><br/><br/>
+            </div>
+		<li rel="process-panel" class="process-query">Process Operators</li>
+			<div id="process-panel" class="panel">
+                <br/>
+                <button rel="process-panel" class="process_operators">Process Operators</button><br/><br/>
+            </div>
 		<li class="-matcher">Create  Matcher</li>
 		<li class="-matcher">Create  Matcher</li>
 		<li class="-matcher">Create  Matcher</li>
@@ -60,71 +122,7 @@
       </div>
 	  
 	  <div class="dashboard" id="the-flowchart">
-
-	  
-<script type="text/javascript">
-  $(document).ready(function() {
-    var data = {}
-
-    // Apply the plugin on a standard, empty div...
-    $('#the-flowchart').flowchart({
-      data: data
-    });
-	
-	var operatorI = 0;
-	var regexInput = "zika\s*(virus|fever)";
-	var keywordInput = "Zika";
-	
-    $('.create_operator').click(function() {
-	  var panel = $(this).attr('rel');
-	  var title = 'Default Operator ';
-	  var input = 'Default Input';
-	  
-	  if (panel == 'regex-panel'){
-		input = $('#regexText').val();
-		title = 'Regex';
-		if (input == null || input == ''){
-			input = regexInput;
-		}
-	  }
-	  else if (panel == 'keyword-panel'){
-		input = $('#keywordText').val();
-		title = 'Keyword';
-		if (input == null || input == ''){
-			input = keywordInput;
-		}
-	  }
-      var operatorId = 'created_operator_' + operatorI;
-      var operatorData = {
-        top: 60,
-        left: 500,
-        properties: {
-          title: (title) + ' Operator',
-          inputs: {
-            input_1: {
-              label: input,
-            }
-          },
-          outputs: {
-            output_1: {
-              label: 'Output 1',
-            }
-          }
-        }
-      };
-      
-      operatorI++;
-      
-      $('#the-flowchart').flowchart('createOperator', operatorId, operatorData);
-    });
-	
-	$('#delete-panel').click(function() {
-      $('#the-flowchart').flowchart('deleteSelected');
-    });
-	
-  });
-</script>
-
+	<script src="js/onstart.js" type="text/javascript"></script>
 
 	  </div>
 	  
