@@ -14,8 +14,6 @@ import java.util.HashMap;
  */
 @JsonTypeName("KeywordMatcher")
 public class KeywordMatcherBean extends OperatorBean {
-    @JsonProperty("operator_type")
-    private String operatorType;
     @JsonProperty("keyword")
     private String keyword;
     @JsonProperty("matching_type")
@@ -24,21 +22,10 @@ public class KeywordMatcherBean extends OperatorBean {
     public KeywordMatcherBean() {
     }
 
-    public KeywordMatcherBean(String operatorID, String attributes, String limit, String offset, String operatorType, String keyword, KeywordMatchingType matchingType) {
-        super(operatorID, attributes, limit, offset);
-        this.operatorType = operatorType;
+    public KeywordMatcherBean(String operatorID, String operatorType, String attributes, String limit, String offset, String keyword, KeywordMatchingType matchingType) {
+        super(operatorID, operatorType, attributes, limit, offset);
         this.keyword = keyword;
         this.matchingType = matchingType;
-    }
-
-    @JsonProperty("operator_type")
-    public String getOperatorType() {
-        return operatorType;
-    }
-
-    @JsonProperty("operator_type")
-    public void setOperatorType(String operatorType) {
-        this.operatorType = operatorType;
     }
 
     @JsonProperty("keyword")
@@ -75,7 +62,6 @@ public class KeywordMatcherBean extends OperatorBean {
         if (!(other instanceof OperatorBean)) return false;
         KeywordMatcherBean keywordMatcherBean = (KeywordMatcherBean) other;
         return super.equals(other) &&
-                this.getOperatorType().equals(keywordMatcherBean.getOperatorType()) &&
                 this.getKeyword().equals(keywordMatcherBean.getKeyword()) &&
                 this.getMatchingType().name().equals(keywordMatcherBean.getMatchingType().name());
     }

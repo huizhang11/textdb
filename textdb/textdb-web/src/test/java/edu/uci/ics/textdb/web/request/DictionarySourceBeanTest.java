@@ -19,7 +19,7 @@ public class DictionarySourceBeanTest {
 
     @Test
     public void testDeserialization() throws IOException {
-        final DictionarySourceBean dictionarySourceBean = new DictionarySourceBean("operator1", "attributes", "10", "100", "DictionarySource", "dictionary", DataConstants.KeywordMatchingType.PHRASE_INDEXBASED, "datasource");
+        final DictionarySourceBean dictionarySourceBean = new DictionarySourceBean("operator1", "DictionarySource", "attributes", "10", "100", "dictionary", DataConstants.KeywordMatchingType.PHRASE_INDEXBASED, "datasource");
         String jsonString = "{\n" +
                 "    \"operator_id\": \"operator1\",\n" +
                 "    \"operator_type\": \"DictionarySource\",\n" +

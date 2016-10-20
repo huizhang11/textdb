@@ -14,8 +14,6 @@ import java.util.HashMap;
  */
 @JsonTypeName("RegexSource")
 public class RegexSourceBean extends OperatorBean {
-    @JsonProperty("operator_type")
-    private String operatorType;
     @JsonProperty("regex")
     private String regex;
     @JsonProperty("data_source")
@@ -24,21 +22,10 @@ public class RegexSourceBean extends OperatorBean {
     public RegexSourceBean() {
     }
 
-    public RegexSourceBean(String operatorID, String attributes, String limit, String offset, String operatorType, String regex, String dataSource) {
-        super(operatorID, attributes, limit, offset);
-        this.operatorType = operatorType;
+    public RegexSourceBean(String operatorID, String operatorType, String attributes, String limit, String offset, String regex, String dataSource) {
+        super(operatorID, operatorType, attributes, limit, offset);
         this.regex = regex;
         this.dataSource = dataSource;
-    }
-
-    @JsonProperty("operator_type")
-    public String getOperatorType() {
-        return operatorType;
-    }
-
-    @JsonProperty("operator_type")
-    public void setOperatorType(String operatorType) {
-        this.operatorType = operatorType;
     }
 
     @JsonProperty("regex")
@@ -76,7 +63,6 @@ public class RegexSourceBean extends OperatorBean {
         if (!(other instanceof OperatorBean)) return false;
         RegexSourceBean regexSourceBean = (RegexSourceBean) other;
         return super.equals(other) &&
-                this.getOperatorType().equals(regexSourceBean.getOperatorType()) &&
                 this.getRegex().equals(regexSourceBean.getRegex()) &&
                 this.getDataSource().equals(regexSourceBean.getDataSource());
     }

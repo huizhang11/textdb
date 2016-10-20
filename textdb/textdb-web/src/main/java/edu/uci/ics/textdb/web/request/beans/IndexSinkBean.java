@@ -12,8 +12,6 @@ import java.util.HashMap;
  */
 @JsonTypeName("IndexSink")
 public class IndexSinkBean extends OperatorBean {
-    @JsonProperty("operator_type")
-    private String operatorType;
     @JsonProperty("index_path")
     private String indexPath;
     @JsonProperty("index_name")
@@ -22,21 +20,10 @@ public class IndexSinkBean extends OperatorBean {
     public IndexSinkBean() {
     }
 
-    public IndexSinkBean(String operatorID, String attributes, String limit, String offset, String operatorType, String indexPath, String indexName) {
-        super(operatorID, attributes, limit, offset);
-        this.operatorType = operatorType;
+    public IndexSinkBean(String operatorID, String operatorType, String attributes, String limit, String offset, String indexPath, String indexName) {
+        super(operatorID, operatorType, attributes, limit, offset);
         this.indexPath = indexPath;
         this.indexName = indexName;
-    }
-
-    @JsonProperty("operator_type")
-    public String getOperatorType() {
-        return operatorType;
-    }
-
-    @JsonProperty("operator_type")
-    public void setOperatorType(String operatorType) {
-        this.operatorType = operatorType;
     }
 
     @JsonProperty("index_path")
@@ -72,7 +59,6 @@ public class IndexSinkBean extends OperatorBean {
         if (!(other instanceof OperatorBean)) return false;
         IndexSinkBean indexSinkBean = (IndexSinkBean) other;
         return super.equals(other) &&
-                this.getOperatorType().equals(indexSinkBean.getOperatorType()) &&
                 this.getIndexName().equals(indexSinkBean.getIndexName()) &&
                 this.getIndexPath().equals(indexSinkBean.getIndexPath());
     }

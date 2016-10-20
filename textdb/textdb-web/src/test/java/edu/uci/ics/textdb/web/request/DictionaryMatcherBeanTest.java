@@ -19,7 +19,7 @@ public class DictionaryMatcherBeanTest {
 
     @Test
     public void testDeserialization() throws IOException{
-        final DictionaryMatcherBean dictionaryMatcherBean = new DictionaryMatcherBean("operator1", "attributes", "10", "100", "DictionaryMatcher", "dictionary", DataConstants.KeywordMatchingType.PHRASE_INDEXBASED);
+        final DictionaryMatcherBean dictionaryMatcherBean = new DictionaryMatcherBean("operator1", "DictionaryMatcher", "attributes", "10", "100", "dictionary", DataConstants.KeywordMatchingType.PHRASE_INDEXBASED);
         String jsonString = "{\n" +
                 "    \"operator_id\": \"operator1\",\n" +
                 "    \"operator_type\": \"DictionaryMatcher\",\n" +

@@ -34,6 +34,8 @@ import java.util.HashMap;
 public abstract class OperatorBean {
     @JsonProperty("operator_id")
     private String operatorID;
+    @JsonProperty("operator_type")
+    private String operatorType;
     @JsonProperty("attributes")
     private String attributes;
     @JsonProperty("limit")
@@ -44,8 +46,9 @@ public abstract class OperatorBean {
     public OperatorBean() {
     }
 
-    public OperatorBean(String operatorID, String attributes, String limit, String offset) {
+    public OperatorBean(String operatorID, String operatorType, String attributes, String limit, String offset) {
         this.operatorID = operatorID;
+        this.operatorType = operatorType;
         this.attributes = attributes;
         this.limit = limit;
         this.offset = offset;
@@ -59,6 +62,16 @@ public abstract class OperatorBean {
     @JsonProperty("operator_id")
     public void setOperatorID(String operatorID) {
         this.operatorID = operatorID;
+    }
+
+    @JsonProperty("operator_type")
+    public String getOperatorType() {
+        return operatorType;
+    }
+
+    @JsonProperty("operator_type")
+    public void setOperatorType(String operatorType) {
+        this.operatorType = operatorType;
     }
 
     @JsonProperty("attributes")
@@ -120,6 +133,7 @@ public abstract class OperatorBean {
             if(!operatorBean.getOffset().equals(this.getOffset()))
                 return false;
 
-        return operatorBean.getOperatorID().equals(this.getOperatorID());
+        return operatorBean.getOperatorID().equals(this.getOperatorID()) &&
+                operatorBean.getOperatorType().equals(this.getOperatorType());
     }
 }

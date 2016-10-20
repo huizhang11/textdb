@@ -13,28 +13,15 @@ import java.util.HashMap;
  */
 @JsonTypeName("FileSink")
 public class FileSinkBean extends OperatorBean {
-    @JsonProperty("operator_type")
-    private String operatorType;
     @JsonProperty("file_path")
     private String filePath;
 
     public FileSinkBean() {
     }
 
-    public FileSinkBean(String operatorID, String attributes, String limit, String offset, String operatorType, String filePath) {
-        super(operatorID, attributes, limit, offset);
-        this.operatorType = operatorType;
+    public FileSinkBean(String operatorID, String operatorType, String attributes, String limit, String offset, String filePath) {
+        super(operatorID, operatorType, attributes, limit, offset);
         this.filePath = filePath;
-    }
-
-    @JsonProperty("operator_type")
-    public String getOperatorType() {
-        return operatorType;
-    }
-
-    @JsonProperty("operator_type")
-    public void setOperatorType(String operatorType) {
-        this.operatorType = operatorType;
     }
 
     @JsonProperty("file_path")
@@ -60,7 +47,6 @@ public class FileSinkBean extends OperatorBean {
         if (!(other instanceof OperatorBean)) return false;
         FileSinkBean fileSinkBean = (FileSinkBean) other;
         return super.equals(other) &&
-                this.getOperatorType().equals(fileSinkBean.getOperatorType()) &&
                 this.getFilePath().equals(fileSinkBean.getFilePath());
     }
 }

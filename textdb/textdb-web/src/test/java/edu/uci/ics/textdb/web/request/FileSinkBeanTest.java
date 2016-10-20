@@ -20,7 +20,7 @@ public class FileSinkBeanTest {
 
     @Test
     public void testDeserialization() throws IOException {
-        final FileSinkBean fileSinkBean = new FileSinkBean("operator1", "attributes", "10", "100", "FileSink", "filepath");
+        final FileSinkBean fileSinkBean = new FileSinkBean("operator1", "FileSink", "attributes", "10", "100", "filepath");
         String jsonString = "{\n" +
                 "    \"operator_id\": \"operator1\",\n" +
                 "    \"operator_type\": \"FileSink\",\n" +

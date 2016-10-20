@@ -13,8 +13,6 @@ import java.util.HashMap;
  */
 @JsonTypeName("FuzzyTokenMatcher")
 public class FuzzyTokenMatcherBean extends OperatorBean {
-    @JsonProperty("operator_type")
-    private String operatorType;
     @JsonProperty("query")
     private String query;
     @JsonProperty("threshold_ratio")
@@ -23,21 +21,10 @@ public class FuzzyTokenMatcherBean extends OperatorBean {
     public FuzzyTokenMatcherBean() {
     }
 
-    public FuzzyTokenMatcherBean(String operatorID, String attributes, String limit, String offset, String operatorType, String query, String thresholdRatio) {
-        super(operatorID, attributes, limit, offset);
-        this.operatorType = operatorType;
+    public FuzzyTokenMatcherBean(String operatorID, String operatorType, String attributes, String limit, String offset, String query, String thresholdRatio) {
+        super(operatorID, operatorType, attributes, limit, offset);
         this.query = query;
         this.thresholdRatio = thresholdRatio;
-    }
-
-    @JsonProperty("operator_type")
-    public String getOperatorType() {
-        return operatorType;
-    }
-
-    @JsonProperty("operator_type")
-    public void setOperatorType(String operatorType) {
-        this.operatorType = operatorType;
     }
 
     @JsonProperty("query")
@@ -74,7 +61,6 @@ public class FuzzyTokenMatcherBean extends OperatorBean {
         if (!(other instanceof OperatorBean)) return false;
         FuzzyTokenMatcherBean fuzzyTokenMatcherBean = (FuzzyTokenMatcherBean) other;
         return super.equals(other) &&
-                this.getOperatorType().equals(fuzzyTokenMatcherBean.getOperatorType()) &&
                 this.getQuery().equals(fuzzyTokenMatcherBean.getQuery()) &&
                 this.getThresholdRatio().equals(fuzzyTokenMatcherBean.getThresholdRatio());
     }

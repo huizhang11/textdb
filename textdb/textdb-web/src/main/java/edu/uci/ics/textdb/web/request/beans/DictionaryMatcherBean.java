@@ -14,8 +14,6 @@ import java.util.HashMap;
  */
 @JsonTypeName("DictionaryMatcher")
 public class DictionaryMatcherBean extends OperatorBean {
-    @JsonProperty("operator_type")
-    private String operatorType;
     @JsonProperty("dictionary")
     private String dictionary;
     @JsonProperty("matching_type")
@@ -24,21 +22,10 @@ public class DictionaryMatcherBean extends OperatorBean {
     public DictionaryMatcherBean() {
     }
 
-    public DictionaryMatcherBean(String operatorID, String attributes, String limit, String offset, String operatorType, String dictionary, DataConstants.KeywordMatchingType matchingType) {
-        super(operatorID, attributes, limit, offset);
-        this.operatorType = operatorType;
+    public DictionaryMatcherBean(String operatorID, String operatorType, String attributes, String limit, String offset, String dictionary, DataConstants.KeywordMatchingType matchingType) {
+        super(operatorID, operatorType, attributes, limit, offset);
         this.dictionary = dictionary;
         this.matchingType = matchingType;
-    }
-
-    @JsonProperty("operator_type")
-    public String getOperatorType() {
-        return operatorType;
-    }
-
-    @JsonProperty("operator_type")
-    public void setOperatorType(String operatorType) {
-        this.operatorType = operatorType;
     }
 
     @JsonProperty("dictionary")
@@ -75,7 +62,6 @@ public class DictionaryMatcherBean extends OperatorBean {
         if (!(other instanceof OperatorBean)) return false;
         DictionaryMatcherBean dictionaryMatcherBean = (DictionaryMatcherBean) other;
         return super.equals(other) &&
-                this.getOperatorType().equals(dictionaryMatcherBean.getOperatorType()) &&
                 this.getDictionary().equals(dictionaryMatcherBean.getDictionary()) &&
                 this.getMatchingType().name().equals(dictionaryMatcherBean.getMatchingType().name());
     }

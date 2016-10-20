@@ -15,8 +15,6 @@ import java.util.HashMap;
  */
 @JsonTypeName("DictionarySource")
 public class DictionarySourceBean extends OperatorBean {
-    @JsonProperty("operator_type")
-    private String operatorType;
     @JsonProperty("dictionary")
     private String dictionary;
     @JsonProperty("matching_type")
@@ -27,22 +25,11 @@ public class DictionarySourceBean extends OperatorBean {
     public DictionarySourceBean() {
     }
 
-    public DictionarySourceBean(String operatorID, String attributes, String limit, String offset, String operatorType, String dictionary, DataConstants.KeywordMatchingType matchingType, String dataSource) {
-        super(operatorID, attributes, limit, offset);
-        this.operatorType = operatorType;
+    public DictionarySourceBean(String operatorID, String operatorType, String attributes, String limit, String offset, String dictionary, DataConstants.KeywordMatchingType matchingType, String dataSource) {
+        super(operatorID, operatorType, attributes, limit, offset);
         this.dictionary = dictionary;
         this.matchingType = matchingType;
         this.dataSource = dataSource;
-    }
-
-    @JsonProperty("operator_type")
-    public String getOperatorType() {
-        return operatorType;
-    }
-
-    @JsonProperty("operator_type")
-    public void setOperatorType(String operatorType) {
-        this.operatorType = operatorType;
     }
 
     @JsonProperty("dictionary")
@@ -90,7 +77,6 @@ public class DictionarySourceBean extends OperatorBean {
         if (!(other instanceof OperatorBean)) return false;
         DictionarySourceBean dictionarySourceBean = (DictionarySourceBean) other;
         return super.equals(other) &&
-                this.getOperatorType().equals(dictionarySourceBean.getOperatorType()) &&
                 this.getDictionary().equals(dictionarySourceBean.getDictionary()) &&
                 this.getMatchingType().name().equals(dictionarySourceBean.getMatchingType().name()) &&
                 this.getDataSource().equals(dictionarySourceBean.getDataSource());

@@ -14,28 +14,15 @@ import java.util.HashMap;
  */
 @JsonTypeName("NlpExtractor")
 public class NlpExtractorBean extends OperatorBean {
-    @JsonProperty("operator_type")
-    private String operatorType;
     @JsonProperty("nlp_type")
     private NlpTokenType nlpTokenType;
 
     public NlpExtractorBean() {
     }
 
-    public NlpExtractorBean(String operatorID, String attributes, String limit, String offset, String operatorType, NlpTokenType nlpTokenType) {
-        super(operatorID, attributes, limit, offset);
-        this.operatorType = operatorType;
+    public NlpExtractorBean(String operatorID, String operatorType, String attributes, String limit, String offset, NlpTokenType nlpTokenType) {
+        super(operatorID, operatorType, attributes, limit, offset);
         this.nlpTokenType = nlpTokenType;
-    }
-
-    @JsonProperty("operator_type")
-    public String getOperatorType() {
-        return operatorType;
-    }
-
-    @JsonProperty("operator_type")
-    public void setOperatorType(String operatorType) {
-        this.operatorType = operatorType;
     }
 
     @JsonProperty("nlp_type")
@@ -62,7 +49,6 @@ public class NlpExtractorBean extends OperatorBean {
         if (!(other instanceof OperatorBean)) return false;
         NlpExtractorBean nlpExtractorBean = (NlpExtractorBean) other;
         return super.equals(other) &&
-                this.getOperatorType().equals(nlpExtractorBean.getOperatorType()) &&
                 this.getNlpTokenType().name().equals(nlpExtractorBean.getNlpTokenType().name());
     }
 }
