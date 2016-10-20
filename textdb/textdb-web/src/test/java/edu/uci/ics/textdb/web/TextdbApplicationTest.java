@@ -4,6 +4,7 @@ package edu.uci.ics.textdb.web;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;
+import org.glassfish.jersey.client.ClientProperties;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -28,7 +29,8 @@ public class TextdbApplicationTest {
     @Test
     public void checkSampleEndpoint() {
         Client client = new JerseyClientBuilder(RULE.getEnvironment()).build("test client");
-
+        client.property(ClientProperties.CONNECT_TIMEOUT, 5000);
+        client.property(ClientProperties.READ_TIMEOUT,    5000);
         Response response = client.target(
                 String.format("http://localhost:%d/sample", RULE.getLocalPort()))
                 .request()
