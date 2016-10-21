@@ -20,7 +20,8 @@ public class IndexSinkBean extends OperatorBean {
     public IndexSinkBean() {
     }
 
-    public IndexSinkBean(String operatorID, String operatorType, String attributes, String limit, String offset, String indexPath, String indexName) {
+    public IndexSinkBean(String operatorID, String operatorType, String attributes, String limit, String offset,
+                         String indexPath, String indexName) {
         super(operatorID, operatorType, attributes, limit, offset);
         this.indexPath = indexPath;
         this.indexName = indexName;

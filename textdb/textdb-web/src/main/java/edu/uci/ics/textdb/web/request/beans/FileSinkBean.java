@@ -19,7 +19,8 @@ public class FileSinkBean extends OperatorBean {
     public FileSinkBean() {
     }
 
-    public FileSinkBean(String operatorID, String operatorType, String attributes, String limit, String offset, String filePath) {
+    public FileSinkBean(String operatorID, String operatorType, String attributes, String limit, String offset,
+                        String filePath) {
         super(operatorID, operatorType, attributes, limit, offset);
         this.filePath = filePath;
     }

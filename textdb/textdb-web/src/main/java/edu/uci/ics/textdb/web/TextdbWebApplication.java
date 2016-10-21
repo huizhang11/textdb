@@ -1,7 +1,6 @@
 package edu.uci.ics.textdb.web;
 
 import edu.uci.ics.textdb.web.healthcheck.SampleHealthCheck;
-import edu.uci.ics.textdb.web.request.QueryPlanRequest;
 import edu.uci.ics.textdb.web.resource.QueryPlanResource;
 import edu.uci.ics.textdb.web.resource.SampleResource;
 import io.dropwizard.Application;

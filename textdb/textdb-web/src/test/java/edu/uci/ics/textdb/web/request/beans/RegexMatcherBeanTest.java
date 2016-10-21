@@ -10,6 +10,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Test class for the deserialization of the RegexMatcher operators' properties
  * Created by kishorenarendran on 10/20/16.
  */
 public class RegexMatcherBeanTest {
@@ -17,7 +18,8 @@ public class RegexMatcherBeanTest {
 
     @Test
     public void testDeserialization() throws IOException {
-        final RegexMatcherBean regexMatcherBean = new RegexMatcherBean("operator1", "RegexMatcher", "attributes", "10", "100", "regex");
+        final RegexMatcherBean regexMatcherBean = new RegexMatcherBean("operator1", "RegexMatcher", "attributes",
+                "10", "100", "regex");
         String jsonString = "{\n" +
                 "    \"operator_id\": \"operator1\",\n" +
                 "    \"operator_type\": \"RegexMatcher\",\n" +

@@ -12,6 +12,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Test class for the deserialization of the KeywordMatcher operators' properties
  * Created by kishorenarendran on 10/20/16.
  */
 public class KeywordMatcherBeanTest {
@@ -19,7 +20,8 @@ public class KeywordMatcherBeanTest {
 
     @Test
     public void testDeserialization() throws IOException {
-        final KeywordMatcherBean keywordMatcherBean = new KeywordMatcherBean("operator1", "KeywordMatcher", "attributes", "10", "100", "keyword1", DataConstants.KeywordMatchingType.PHRASE_INDEXBASED);
+        final KeywordMatcherBean keywordMatcherBean = new KeywordMatcherBean("operator1", "KeywordMatcher",
+                "attributes", "10", "100", "keyword1", DataConstants.KeywordMatchingType.PHRASE_INDEXBASED);
         String jsonString = "{\n" +
                 "    \"operator_id\": \"operator1\",\n" +
                 "    \"operator_type\": \"KeywordMatcher\",\n" +

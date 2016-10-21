@@ -21,7 +21,8 @@ public class FuzzyTokenMatcherBean extends OperatorBean {
     public FuzzyTokenMatcherBean() {
     }
 
-    public FuzzyTokenMatcherBean(String operatorID, String operatorType, String attributes, String limit, String offset, String query, String thresholdRatio) {
+    public FuzzyTokenMatcherBean(String operatorID, String operatorType, String attributes, String limit, String offset,
+                                 String query, String thresholdRatio) {
         super(operatorID, operatorType, attributes, limit, offset);
         this.query = query;
         this.thresholdRatio = thresholdRatio;

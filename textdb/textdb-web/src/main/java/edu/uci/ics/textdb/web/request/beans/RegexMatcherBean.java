@@ -19,7 +19,8 @@ public class RegexMatcherBean extends OperatorBean {
     public RegexMatcherBean() {
     }
 
-    public RegexMatcherBean(String operatorID, String operatorType, String attributes, String limit, String offset, String regex) {
+    public RegexMatcherBean(String operatorID, String operatorType, String attributes, String limit, String offset,
+                            String regex) {
         super(operatorID, operatorType, attributes, limit, offset);
         this.regex = regex;
     }

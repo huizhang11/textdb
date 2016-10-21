@@ -13,6 +13,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Test class for the deserialization of the FileSink operators' properties
  * Created by kishorenarendran on 10/20/16.
  */
 public class FileSinkBeanTest {
@@ -20,7 +21,8 @@ public class FileSinkBeanTest {
 
     @Test
     public void testDeserialization() throws IOException {
-        final FileSinkBean fileSinkBean = new FileSinkBean("operator1", "FileSink", "attributes", "10", "100", "filepath");
+        final FileSinkBean fileSinkBean = new FileSinkBean("operator1", "FileSink", "attributes", "10", "100",
+                "filepath");
         String jsonString = "{\n" +
                 "    \"operator_id\": \"operator1\",\n" +
                 "    \"operator_type\": \"FileSink\",\n" +

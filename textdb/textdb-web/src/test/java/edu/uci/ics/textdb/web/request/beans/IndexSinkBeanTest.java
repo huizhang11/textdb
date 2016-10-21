@@ -10,6 +10,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Test class for the deserialization of the IndexSink operators' properties
  * Created by kishorenarendran on 10/20/16.
  */
 public class IndexSinkBeanTest {
@@ -17,7 +18,8 @@ public class IndexSinkBeanTest {
 
     @Test
     public void testDeserialization() throws IOException {
-        final IndexSinkBean indexSinkBean = new IndexSinkBean("operator1", "IndexSink", "attributes", "10", "100", "indexpath", "indexname");
+        final IndexSinkBean indexSinkBean = new IndexSinkBean("operator1", "IndexSink", "attributes", "10", "100",
+                "indexpath", "indexname");
         String jsonString = "{\n" +
                 "    \"operator_id\": \"operator1\",\n" +
                 "    \"operator_type\": \"IndexSink\",\n" +

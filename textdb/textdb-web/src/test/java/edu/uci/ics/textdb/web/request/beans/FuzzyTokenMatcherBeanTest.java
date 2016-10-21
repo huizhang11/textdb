@@ -11,6 +11,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Test class for the deserialization of the FuzzyTokenMatcher operators' properties
  * Created by kishorenarendran on 10/20/16.
  */
 public class FuzzyTokenMatcherBeanTest {
@@ -18,7 +19,8 @@ public class FuzzyTokenMatcherBeanTest {
 
     @Test
     public void testDeserialization() throws IOException {
-        final FuzzyTokenMatcherBean fuzzyTokenMatcherBean = new FuzzyTokenMatcherBean("operator1", "FuzzyTokenMatcher", "attributes", "10", "100", "query",  "0.8");
+        final FuzzyTokenMatcherBean fuzzyTokenMatcherBean = new FuzzyTokenMatcherBean("operator1", "FuzzyTokenMatcher",
+                "attributes", "10", "100", "query",  "0.8");
         String jsonString = "{\n" +
                 "    \"operator_id\": \"operator1\",\n" +
                 "    \"operator_type\": \"FuzzyTokenMatcher\",\n" +

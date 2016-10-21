@@ -1,7 +1,6 @@
 package edu.uci.ics.textdb.web.request;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.uci.ics.textdb.web.request.beans.RegexSourceBean;
 import io.dropwizard.jackson.Jackson;
 import org.junit.Test;
 
@@ -10,6 +9,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Checks the deserialization of a query plan execution request
  * Created by kishorenarendran on 10/20/16.
  */
 public class QueryPlanRequestTest {

@@ -10,6 +10,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Test class for the deserialization of the JoinBean operators' properties
  * Created by kishorenarendran on 10/20/16.
  */
 public class JoinBeanTest {

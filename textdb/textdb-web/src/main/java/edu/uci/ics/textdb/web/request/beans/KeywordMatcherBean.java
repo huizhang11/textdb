@@ -22,7 +22,8 @@ public class KeywordMatcherBean extends OperatorBean {
     public KeywordMatcherBean() {
     }
 
-    public KeywordMatcherBean(String operatorID, String operatorType, String attributes, String limit, String offset, String keyword, KeywordMatchingType matchingType) {
+    public KeywordMatcherBean(String operatorID, String operatorType, String attributes, String limit,
+                              String offset, String keyword, KeywordMatchingType matchingType) {
         super(operatorID, operatorType, attributes, limit, offset);
         this.keyword = keyword;
         this.matchingType = matchingType;

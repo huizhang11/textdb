@@ -10,6 +10,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Test class for the deserialization of the FuzzyTokenSource operators' properties
  * Created by kishorenarendran on 10/20/16.
  */
 public class FuzzyTokenSourceBeanTest {
@@ -17,7 +18,8 @@ public class FuzzyTokenSourceBeanTest {
 
     @Test
     public void testDeserialization() throws IOException {
-        final FuzzyTokenSourceBean fuzzyTokenSourceBean = new FuzzyTokenSourceBean("operator1", "FuzzyTokenSource", "attributes", "10", "100", "query", "0.8", "datasource");
+        final FuzzyTokenSourceBean fuzzyTokenSourceBean = new FuzzyTokenSourceBean("operator1", "FuzzyTokenSource",
+                "attributes", "10", "100", "query", "0.8", "datasource");
         String jsonString = "{\n" +
                 "    \"operator_id\": \"operator1\",\n" +
                 "    \"operator_type\": \"FuzzyTokenSource\",\n" +

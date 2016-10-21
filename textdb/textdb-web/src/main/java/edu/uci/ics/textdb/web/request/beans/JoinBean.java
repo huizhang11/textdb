@@ -23,7 +23,8 @@ public class JoinBean extends OperatorBean {
     public JoinBean() {
     }
 
-    public JoinBean(String operatorID, String operatorType, String attributes, String limit, String offset, String idAttribute, String distance) {
+    public JoinBean(String operatorID, String operatorType, String attributes, String limit, String offset,
+                    String idAttribute, String distance) {
         super(operatorID, operatorType, attributes, limit, offset);
         this.idAttribute = idAttribute;
         this.distance = distance;

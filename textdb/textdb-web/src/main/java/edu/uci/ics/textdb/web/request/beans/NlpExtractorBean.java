@@ -20,7 +20,8 @@ public class NlpExtractorBean extends OperatorBean {
     public NlpExtractorBean() {
     }
 
-    public NlpExtractorBean(String operatorID, String operatorType, String attributes, String limit, String offset, NlpTokenType nlpTokenType) {
+    public NlpExtractorBean(String operatorID, String operatorType, String attributes, String limit, String offset,
+                            NlpTokenType nlpTokenType) {
         super(operatorID, operatorType, attributes, limit, offset);
         this.nlpTokenType = nlpTokenType;
     }

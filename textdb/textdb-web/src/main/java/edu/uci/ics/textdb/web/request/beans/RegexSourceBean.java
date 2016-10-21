@@ -22,7 +22,8 @@ public class RegexSourceBean extends OperatorBean {
     public RegexSourceBean() {
     }
 
-    public RegexSourceBean(String operatorID, String operatorType, String attributes, String limit, String offset, String regex, String dataSource) {
+    public RegexSourceBean(String operatorID, String operatorType, String attributes, String limit, String offset,
+                           String regex, String dataSource) {
         super(operatorID, operatorType, attributes, limit, offset);
         this.regex = regex;
         this.dataSource = dataSource;

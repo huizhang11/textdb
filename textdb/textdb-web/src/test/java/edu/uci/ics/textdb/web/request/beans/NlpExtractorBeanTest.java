@@ -11,6 +11,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Test class for the deserialization of the NLPExtractor operators' properties
  * Created by kishorenarendran on 10/20/16.
  */
 public class NlpExtractorBeanTest {
@@ -18,7 +19,8 @@ public class NlpExtractorBeanTest {
 
     @Test
     public void testDeserialization() throws IOException {
-        final NlpExtractorBean nlpExtractorBean = new NlpExtractorBean("operator1", "NlpExtractor", "attributes", "10", "100", NlpPredicate.NlpTokenType.Noun);
+        final NlpExtractorBean nlpExtractorBean = new NlpExtractorBean("operator1", "NlpExtractor", "attributes",
+                "10", "100", NlpPredicate.NlpTokenType.Noun);
         String jsonString = "{\n" +
                 "    \"operator_id\": \"operator1\",\n" +
                 "    \"operator_type\": \"NlpExtractor\",\n" +

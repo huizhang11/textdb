@@ -33,6 +33,8 @@ public class QueryPlanResourceUtils {
         put("RegexSource", RegexSourceBean.class);
     }};
 
+    public static final String GET_PROPERTIES_FUNCTION_NAME = "getOperatorProperties";
+
     /**
      * This function aggregates all the operators' properties that have been sent by the query plan request
      * @param operatorBeans - Contains a list of input operator bean objects
@@ -42,9 +44,9 @@ public class QueryPlanResourceUtils {
         HashMap<String, HashMap<String, String>> operatorProperties = new HashMap<>();
         for(Iterator<OperatorBean> iter = operatorBeans.iterator(); iter.hasNext(); ) {
             OperatorBean operatorBean = iter.next();
-            Class cls =  OPERATOR_BEAN_MAP.get(operatorBean.getOperatorType());
+            Class operatorBeanClassName =  OPERATOR_BEAN_MAP.get(operatorBean.getOperatorType());
             try {
-                Method method = cls.getMethod("getOperatorProperties");
+                Method method = operatorBeanClassName.getMethod(GET_PROPERTIES_FUNCTION_NAME);
                 HashMap<String, String> currentOperatorProperty = (HashMap<String, String>) method.invoke(operatorBean);
                 operatorProperties.put(operatorBean.getOperatorID(), currentOperatorProperty);
             }

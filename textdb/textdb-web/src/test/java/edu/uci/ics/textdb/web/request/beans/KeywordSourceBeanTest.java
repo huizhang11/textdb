@@ -13,6 +13,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Test class for the deserialization of the KeywordSource operators' properties
  * Created by kishorenarendran on 10/20/16.
  */
 public class KeywordSourceBeanTest {
@@ -20,7 +21,8 @@ public class KeywordSourceBeanTest {
 
     @Test
     public void testDeserialization() throws IOException {
-        final KeywordSourceBean keywordSourceBean = new KeywordSourceBean("operator1", "KeywordSource", "attributes", "10", "100", "keyword1", DataConstants.KeywordMatchingType.PHRASE_INDEXBASED, "datasource");
+        final KeywordSourceBean keywordSourceBean = new KeywordSourceBean("operator1", "KeywordSource", "attributes",
+                "10", "100", "keyword1", DataConstants.KeywordMatchingType.PHRASE_INDEXBASED, "datasource");
         String jsonString = "{\n" +
                 "    \"operator_id\": \"operator1\",\n" +
                 "    \"operator_type\": \"KeywordSource\",\n" +

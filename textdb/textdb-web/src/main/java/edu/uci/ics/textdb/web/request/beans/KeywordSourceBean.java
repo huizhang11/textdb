@@ -25,7 +25,8 @@ public class KeywordSourceBean extends OperatorBean {
     public KeywordSourceBean() {
     }
 
-    public KeywordSourceBean(String operatorID, String operatorType, String attributes, String limit, String offset, String keyword, DataConstants.KeywordMatchingType matchingType, String dataSource) {
+    public KeywordSourceBean(String operatorID, String operatorType, String attributes, String limit, String offset,
+                             String keyword, DataConstants.KeywordMatchingType matchingType, String dataSource) {
         super(operatorID, operatorType, attributes, limit, offset);
         this.keyword = keyword;
         this.matchingType = matchingType;

@@ -22,7 +22,8 @@ public class DictionaryMatcherBean extends OperatorBean {
     public DictionaryMatcherBean() {
     }
 
-    public DictionaryMatcherBean(String operatorID, String operatorType, String attributes, String limit, String offset, String dictionary, DataConstants.KeywordMatchingType matchingType) {
+    public DictionaryMatcherBean(String operatorID, String operatorType, String attributes, String limit, String offset,
+                                 String dictionary, DataConstants.KeywordMatchingType matchingType) {
         super(operatorID, operatorType, attributes, limit, offset);
         this.dictionary = dictionary;
         this.matchingType = matchingType;

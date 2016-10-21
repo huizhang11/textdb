@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * Checks the execution of a sample query plan
  * Created by kishorenarendran on 10/21/16.
  */
 public class QueryPlanResourceTest {

@@ -1,8 +1,6 @@
 package edu.uci.ics.textdb.web.request.beans;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.uci.ics.textdb.web.request.beans.FileSinkBean;
-import edu.uci.ics.textdb.web.request.beans.OperatorBean;
 import io.dropwizard.jackson.Jackson;
 import org.junit.Test;
 
@@ -11,6 +9,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Test class for the deserialization of generic properties common to all operators
  * Created by kishorenarendran on 10/20/16.
  */
 public class OperatorBeanTest {
@@ -18,7 +17,8 @@ public class OperatorBeanTest {
 
     @Test
     public void testDeserialization() throws IOException {
-        final FileSinkBean fileSinkBean = new FileSinkBean("operator1", "FileSink", "attributes", "10", "100", "filepath");
+        final FileSinkBean fileSinkBean = new FileSinkBean("operator1", "FileSink", "attributes", "10",
+                "100", "filepath");
         final OperatorBean operatorBean = fileSinkBean;
         String jsonString = "{\n" +
                 "    \"operator_id\": \"operator1\",\n" +
