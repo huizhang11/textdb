@@ -1,7 +1,7 @@
-package edu.uci.ics.textdb.web.request;
+package edu.uci.ics.textdb.web.request.beans;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.uci.ics.textdb.web.request.beans.FuzzyTokenSourceBean;
+import edu.uci.ics.textdb.web.request.beans.RegexSourceBean;
 import io.dropwizard.jackson.Jackson;
 import org.junit.Test;
 
@@ -12,23 +12,22 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by kishorenarendran on 10/20/16.
  */
-public class FuzzyTokenSourceBeanTest {
+public class RegexSourceBeanTest {
     private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
     @Test
     public void testDeserialization() throws IOException {
-        final FuzzyTokenSourceBean fuzzyTokenSourceBean = new FuzzyTokenSourceBean("operator1", "FuzzyTokenSource", "attributes", "10", "100", "query", "0.8", "datasource");
+        final RegexSourceBean regexSourceBean = new RegexSourceBean("operator1", "RegexSource", "attributes", "10", "100", "regex", "datasource");
         String jsonString = "{\n" +
                 "    \"operator_id\": \"operator1\",\n" +
-                "    \"operator_type\": \"FuzzyTokenSource\",\n" +
+                "    \"operator_type\": \"RegexSource\",\n" +
                 "    \"attributes\":  \"attributes\",\n" +
                 "    \"limit\": \"10\",\n" +
                 "    \"offset\": \"100\",\n" +
-                "    \"query\": \"query\",\n" +
-                "    \"threshold_ratio\": \"0.8\",\n" +
+                "    \"regex\": \"regex\",\n" +
                 "    \"data_source\": \"datasource\"\n" +
                 "}";
-        FuzzyTokenSourceBean deserializedObject = MAPPER.readValue(jsonString, FuzzyTokenSourceBean.class);
-        assertEquals(fuzzyTokenSourceBean.equals(deserializedObject), true);
+        RegexSourceBean deserializedObject = MAPPER.readValue(jsonString, RegexSourceBean.class);
+        assertEquals(regexSourceBean.equals(deserializedObject), true);
     }
 }

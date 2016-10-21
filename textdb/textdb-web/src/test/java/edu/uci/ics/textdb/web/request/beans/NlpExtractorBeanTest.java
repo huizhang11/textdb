@@ -1,7 +1,8 @@
-package edu.uci.ics.textdb.web.request;
+package edu.uci.ics.textdb.web.request.beans;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.uci.ics.textdb.web.request.beans.JoinBean;
+import edu.uci.ics.textdb.dataflow.nlpextrator.NlpPredicate;
+import edu.uci.ics.textdb.web.request.beans.NlpExtractorBean;
 import io.dropwizard.jackson.Jackson;
 import org.junit.Test;
 
@@ -12,22 +13,21 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by kishorenarendran on 10/20/16.
  */
-public class JoinBeanTest {
+public class NlpExtractorBeanTest {
     private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
     @Test
     public void testDeserialization() throws IOException {
-        final JoinBean joinBean = new JoinBean("operator1", "Join", "attributes", "10", "100", "attribute", "10");
+        final NlpExtractorBean nlpExtractorBean = new NlpExtractorBean("operator1", "NlpExtractor", "attributes", "10", "100", NlpPredicate.NlpTokenType.Noun);
         String jsonString = "{\n" +
                 "    \"operator_id\": \"operator1\",\n" +
-                "    \"operator_type\": \"Join\",\n" +
+                "    \"operator_type\": \"NlpExtractor\",\n" +
                 "    \"attributes\":  \"attributes\",\n" +
                 "    \"limit\": \"10\",\n" +
                 "    \"offset\": \"100\",\n" +
-                "    \"id_attribute\": \"attribute\",\n" +
-                "    \"distance\": \"10\"\n" +
+                "    \"nlp_type\": \"Noun\"\n" +
                 "}";
-        JoinBean deserializedObject = MAPPER.readValue(jsonString, JoinBean.class);
-        assertEquals(joinBean.equals(deserializedObject), true);
+        NlpExtractorBean deserializedObject = MAPPER.readValue(jsonString, NlpExtractorBean.class);
+        assertEquals(nlpExtractorBean.equals(deserializedObject), true);
     }
 }

@@ -1,4 +1,4 @@
-package edu.uci.ics.textdb.web.request;
+package edu.uci.ics.textdb.web.request.beans;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.uci.ics.textdb.common.constants.DataConstants;

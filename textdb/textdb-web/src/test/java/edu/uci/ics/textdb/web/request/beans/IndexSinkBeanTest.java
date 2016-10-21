@@ -1,8 +1,7 @@
-package edu.uci.ics.textdb.web.request;
+package edu.uci.ics.textdb.web.request.beans;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.uci.ics.textdb.dataflow.nlpextrator.NlpPredicate;
-import edu.uci.ics.textdb.web.request.beans.NlpExtractorBean;
+import edu.uci.ics.textdb.web.request.beans.IndexSinkBean;
 import io.dropwizard.jackson.Jackson;
 import org.junit.Test;
 
@@ -13,21 +12,22 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by kishorenarendran on 10/20/16.
  */
-public class NlpExtractorBeanTest {
+public class IndexSinkBeanTest {
     private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
     @Test
     public void testDeserialization() throws IOException {
-        final NlpExtractorBean nlpExtractorBean = new NlpExtractorBean("operator1", "NlpExtractor", "attributes", "10", "100", NlpPredicate.NlpTokenType.Noun);
+        final IndexSinkBean indexSinkBean = new IndexSinkBean("operator1", "IndexSink", "attributes", "10", "100", "indexpath", "indexname");
         String jsonString = "{\n" +
                 "    \"operator_id\": \"operator1\",\n" +
-                "    \"operator_type\": \"NlpExtractor\",\n" +
+                "    \"operator_type\": \"IndexSink\",\n" +
                 "    \"attributes\":  \"attributes\",\n" +
                 "    \"limit\": \"10\",\n" +
                 "    \"offset\": \"100\",\n" +
-                "    \"nlp_type\": \"Noun\"\n" +
+                "    \"index_path\": \"indexpath\",\n" +
+                "    \"index_name\": \"indexname\"\n" +
                 "}";
-        NlpExtractorBean deserializedObject = MAPPER.readValue(jsonString, NlpExtractorBean.class);
-        assertEquals(nlpExtractorBean.equals(deserializedObject), true);
+        IndexSinkBean deserializedObject = MAPPER.readValue(jsonString, IndexSinkBean.class);
+        assertEquals(indexSinkBean.equals(deserializedObject), true);
     }
 }

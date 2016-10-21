@@ -2,7 +2,11 @@ package edu.uci.ics.textdb.web.resource;
 
 import edu.uci.ics.textdb.web.request.beans.*;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Contains some constants and utility functions for the QueryPlanResource in order to
@@ -10,6 +14,9 @@ import java.util.HashMap;
  * Created by kishorenarendran on 10/18/16.
  */
 public class QueryPlanResourceUtils {
+    /**
+     * Mapping from Operator type to Operator bean class
+     */
     public static final HashMap<String, Class> OPERATOR_BEAN_MAP = new HashMap<String, Class>() {{
         put("DictionaryMatcher", DictionaryMatcherBean.class);
         put("DictionarySource", DictionarySourceBean.class);
@@ -25,4 +32,27 @@ public class QueryPlanResourceUtils {
         put("RegexMatcher", RegexMatcherBean.class);
         put("RegexSource", RegexSourceBean.class);
     }};
+
+    /**
+     * This function aggregates all the operators' properties that have been sent by the query plan request
+     * @param operatorBeans - Contains a list of input operator bean objects
+     * @return - HashMap of properties for each operatorID
+     */
+    public static HashMap<String, HashMap<String, String>> aggregateOperatorProperties(List<OperatorBean> operatorBeans) {
+        HashMap<String, HashMap<String, String>> operatorProperties = new HashMap<>();
+        for(Iterator<OperatorBean> iter = operatorBeans.iterator(); iter.hasNext(); ) {
+            OperatorBean operatorBean = iter.next();
+            Class cls =  OPERATOR_BEAN_MAP.get(operatorBean.getOperatorType());
+            try {
+                Method method = cls.getMethod("getOperatorProperties");
+                HashMap<String, String> currentOperatorProperty = (HashMap<String, String>) method.invoke(operatorBean);
+                operatorProperties.put(operatorBean.getOperatorID(), currentOperatorProperty);
+            }
+            catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                // If any exception arises a NULL HashMap is raised
+                return null;
+            }
+        }
+        return operatorProperties;
+    }
 }

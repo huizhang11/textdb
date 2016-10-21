@@ -1,7 +1,7 @@
-package edu.uci.ics.textdb.web.request;
+package edu.uci.ics.textdb.web.request.beans;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.uci.ics.textdb.web.request.beans.RegexMatcherBean;
+import edu.uci.ics.textdb.web.request.beans.JoinBean;
 import io.dropwizard.jackson.Jackson;
 import org.junit.Test;
 
@@ -12,21 +12,22 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by kishorenarendran on 10/20/16.
  */
-public class RegexMatcherBeanTest {
+public class JoinBeanTest {
     private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
     @Test
     public void testDeserialization() throws IOException {
-        final RegexMatcherBean regexMatcherBean = new RegexMatcherBean("operator1", "RegexMatcher", "attributes", "10", "100", "regex");
+        final JoinBean joinBean = new JoinBean("operator1", "Join", "attributes", "10", "100", "attribute", "10");
         String jsonString = "{\n" +
                 "    \"operator_id\": \"operator1\",\n" +
-                "    \"operator_type\": \"RegexMatcher\",\n" +
+                "    \"operator_type\": \"Join\",\n" +
                 "    \"attributes\":  \"attributes\",\n" +
                 "    \"limit\": \"10\",\n" +
                 "    \"offset\": \"100\",\n" +
-                "    \"regex\": \"regex\"\n" +
+                "    \"id_attribute\": \"attribute\",\n" +
+                "    \"distance\": \"10\"\n" +
                 "}";
-        RegexMatcherBean deserializedObject = MAPPER.readValue(jsonString, RegexMatcherBean.class);
-        assertEquals(regexMatcherBean.equals(deserializedObject), true);
+        JoinBean deserializedObject = MAPPER.readValue(jsonString, JoinBean.class);
+        assertEquals(joinBean.equals(deserializedObject), true);
     }
 }
