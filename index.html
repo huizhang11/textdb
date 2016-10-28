@@ -1,0 +1,104 @@
+<html>
+  <head>
+    
+    <meta charset="utf-8">
+	
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<script src="textdb.flowchart.js"></script>
+	<script src="app.js"></script>
+	
+	<link href='flowchart.css' rel='stylesheet'>
+	<link href='style.css' rel='stylesheet'>
+
+    
+  </head>
+  <body>
+
+    <div class="menu">
+      
+      <!-- Menu icon -->
+      <div class="icon-close">
+        <img src="http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/uber/close.png">
+      </div>
+
+      <!-- Menu -->
+      <ul>
+		<li rel="regex-panel" class="regex-matcher">Create Regex Matcher</li>
+			<div id="regex-panel" class="panel">
+                <em>Enter Regex: </em><br/>
+				<input type="text" id="regexText" placeholder="zika\s*(virus|fever)"><br/>
+				<br/>
+                <br/>
+                <button rel="regex-panel" class="create_operator">Create operator</button><br/>
+            </div>
+		<li rel="keyword-panel" class="keyword-matcher">Create Keyword Matcher</li>
+			<div id="keyword-panel" class="panel">
+                <em>Enter Keyword: </em><br/>
+				<input type="text" id="keywordText" placeholder="Zika"><br/>
+                <em>Select Matching Type: </em><br/>
+                <select id="keywordMatchingType">
+					<option value="conjunction" selected>Conjunction</option>
+					<option value="phrase">Phrase</option>
+					<option value="substring">Substring</option>
+				</select><br/>
+				<br/>
+                <button rel="keyword-panel" class="create_operator">Create operator</button><br/><br/>
+            </div>
+		<li rel="dictionary-panel" class="dictionary-matcher">Create Dictionary Matcher</li>
+			<div id="dictionary-panel" class="panel">
+                <em>Enter Dictionary: </em><br/>
+				<input type="file" id="dictionaryFile" placeholder="Enter File"><br/>
+                <em>Select Matching Type: </em><br/>
+                <select id="dictionaryMatchingType">
+					<option value="conjunction" selected>Conjunction</option>
+					<option value="phrase">Phrase</option>
+					<option value="substring">Substring</option>
+				</select><br/>
+				<br/>
+                <button rel="dictionary-panel" class="create_operator">Create operator</button><br/><br/>
+            </div>
+		<li rel="fuzzy-panel" class="fuzzy-matcher">Create Fuzzy Matcher</li>
+			<div id="fuzzy-panel" class="panel">
+                <em>Enter Fuzzy: </em><br/>
+				<input type="text" id="fuzzyText" placeholder="Enter Fuzzy"><br/>
+                <br/>
+                <br/>
+                <button rel="fuzzy-panel" class="create_operator">Create operator</button><br/><br/>
+            </div>
+		<li rel="nlp-panel" class="nlp-matcher">Create NLP Extractor</li>
+			<div id="nlp-panel" class="panel">
+                <em>Enter NLP Extractor: </em><br/>
+				<input type="text" id="nlpText" placeholder="Ex: Noun/Date/Location"><br/>
+                <br/>
+                <br/>
+                <button rel="nlp-panel" class="create_operator">Create operator</button><br/><br/>
+            </div>
+		<li rel="process-panel" class="process-query">Process Operators</li>
+			<div id="process-panel" class="panel">
+                <br/>
+                <button rel="process-panel" class="process_operators">Process Operators</button><br/><br/>
+            </div>
+		<li class="-matcher">Create  Matcher</li>
+		<li class="-matcher">Create  Matcher</li>
+		<li class="-matcher">Create  Matcher</li>
+      </ul>
+    </div>
+
+    <!-- Main body -->
+    <div class="jumbotron">
+
+      <div class="nav">
+		<div class="icon-menu">Menu</div>
+		<div id="delete-panel">Delete Selected Operator</div>
+		
+      </div>
+	  
+	  <div class="dashboard" id="the-flowchart">
+	<script src="onstart.js"></script>
+
+	  </div>
+	  
+    
+  </body>
+</html>
