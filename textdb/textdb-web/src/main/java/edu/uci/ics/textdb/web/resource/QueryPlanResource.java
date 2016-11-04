@@ -54,7 +54,7 @@ public class QueryPlanResource {
                     .entity(objectMapper.writeValueAsString(sampleResponse))
                     .header("allowedOrigins", "*")
                     .header("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin")
-                    .header("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD"
+                    .header("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD")
                     .type(MediaType.APPLICATION_JSON)
                     .build();
         }
