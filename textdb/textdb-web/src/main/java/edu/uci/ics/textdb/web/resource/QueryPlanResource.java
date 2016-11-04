@@ -41,6 +41,9 @@ public class QueryPlanResource {
             SampleResponse sampleResponse = new SampleResponse(0, "Successful");
             return Response.status(200)
                     .entity(objectMapper.writeValueAsString(sampleResponse))
+                    .header("allowedOrigins", "*")
+                    .header("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin")
+                    .header("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD")
                     .type(MediaType.APPLICATION_JSON)
                     .build();
         }
@@ -49,6 +52,9 @@ public class QueryPlanResource {
             SampleResponse sampleResponse = new SampleResponse(1, "Unsuccessful");
             return Response.status(400)
                     .entity(objectMapper.writeValueAsString(sampleResponse))
+                    .header("allowedOrigins", "*")
+                    .header("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin")
+                    .header("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD"
                     .type(MediaType.APPLICATION_JSON)
                     .build();
         }
