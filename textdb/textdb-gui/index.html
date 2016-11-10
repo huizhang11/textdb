@@ -27,7 +27,7 @@
 		<li rel="regex-panel" class="regex-matcher">Create Regex Matcher</li>
 			<div id="regex-panel" class="panel">
                 <em>Enter Regex: </em><br/>
-				<input type="text" id="regexText" class='value' placeholder="zika\s*(virus|fever)"><br/>
+				<input type="text" class='value' placeholder="zika\s*(virus|fever)"><br/>
 				<em>Enter Attributes (Separated by commas): </em><br/>
 				<input type="text" id="regexAttributes" class='attributes' placeholder="first name, last name"><br/>
 				<em>Enter Limit (Optional): </em><br/>
@@ -40,9 +40,9 @@
 		<li rel="keyword-panel" class="keyword-matcher">Create Keyword Matcher</li>
 			<div id="keyword-panel" class="panel">
                 <em>Enter Keyword: </em><br/>
-				<input type="text" id="keywordText" class='value' placeholder="Zika"><br/>
+				<input type="text" class='value' placeholder="Zika"><br/>
                 <em>Select Matching Type: </em><br/>
-                <select id="keywordMatchingType">
+                <select class="matching-type">
 					<option value="conjunction" selected>Conjunction</option>
 					<option value="phrase">Phrase</option>
 					<option value="substring">Substring</option>
@@ -59,9 +59,9 @@
 		<li rel="dictionary-panel" class="dictionary-matcher">Create Dictionary Matcher</li>
 			<div id="dictionary-panel" class="panel">
                 <em>Enter Dictionary: </em><br/>
-				<input type="file" id="dictionaryFile" class='value' placeholder="Enter File"><br/>
+				<input type="file" class='value' placeholder="Enter File"><br/>
                 <em>Select Matching Type: </em><br/>
-                <select id="dictionaryMatchingType">
+                <select class="matching-type">
 					<option value="conjunction" selected>Conjunction</option>
 					<option value="phrase">Phrase</option>
 					<option value="substring">Substring</option>
@@ -78,7 +78,7 @@
 		<li rel="fuzzy-panel" class="fuzzy-matcher">Create Fuzzy Matcher</li>
 			<div id="fuzzy-panel" class="panel">
                 <em>Enter Fuzzy: </em><br/>
-				<input type="text" id="fuzzyText" class='value' placeholder="Enter Fuzzy"><br/>
+				<input type="text" class='value' placeholder="Enter Fuzzy"><br/>
 				<em>Enter Attributes (Separated by commas): </em><br/>
 				<input type="text" id="fuzzyAttributes" class='attributes' placeholder="first name, last name"><br/>
 				<em>Enter Limit (Optional): </em><br/>
@@ -91,7 +91,7 @@
 		<li rel="nlp-panel" class="nlp-matcher">Create NLP Extractor</li>
 			<div id="nlp-panel" class="panel">
                 <em>Enter NLP Extractor: </em><br/>
-				<input type="text" id="nlpText" class='value' placeholder="Ex: Noun/Date/Location"><br/>
+				<input type="text" class='value' placeholder="Ex: Noun/Date/Location"><br/>
 				<em>Enter Attributes (Separated by commas): </em><br/>
 				<input type="text" id="nlpAttributes" class='attributes' placeholder="first name, last name"><br/>
                 <em>Enter Limit (Optional): </em><br/>
@@ -129,7 +129,7 @@
 	  
 	  <div class="popup">
 		<div class="band">Attributes</div>
-		<div id="attributes"></div>
+		<div id="attributes" class="popup-panel"></div>
 	  </div>
     
   </body>
