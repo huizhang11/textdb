@@ -10,6 +10,7 @@ body {
 .menu {
   background: #202024 url('http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/uber/black-thread.png') repeat left top;
   left: -285px;  /* start off behind the scenes */
+  top: 0px;
   height: 100%;
   position: fixed;
   width: 285px;
@@ -24,8 +25,11 @@ body {
 .menu ul {
   border-top: 1px solid #636366;
   list-style: none;
-  margin: 0;
-  padding: 0;
+  height: 95%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow: auto;
 }
 
 .menu li {
@@ -41,35 +45,55 @@ body {
   cursor: pointer;
 }
 
+.blank-matcher{
+	border: 0px;
+	height: 50px;
+	cursor: default;
+}
 
 .icon-close {
   cursor: pointer;
-  padding: 11px;
+  padding: 10px;
 }
 
 .nav {
 	background: #202024 url('http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/uber/black-thread.png') repeat left top;
-	border-bottom: 1px solid #fff;
 }
 
-#delete-panel {
-	padding-left: 100px;
+.process-query {
+/*   border: 1px solid #636366; */
+  background-image: url(http://www.magicfloor-international.com/wp-content/uploads/Pastel-Lines-56606-dark-grey-800x566.jpg);
+/*   line-height: 45px; */
+  font-weight: bold;
+  float: right;
+  color: white;
+}
+
+#main-delete {
+	background-image: url(http://www.wallpapers4u.org/wp-content/uploads/patterns_lines_bright_color_surface_texture_50511_1920x1080.jpg);
+/* 	padding-left: 100px; */
+/* 	border: 1px solid #636366; */
 	float: right;
+	color: white;
+    font-weight: bold;
 }
 
 .nav div {
+    border: 1px solid #636366;
 	cursor: pointer;
+	border-radius: 10px;
 	text-decoration: none;
 	text-transform: uppercase;
-	color: #fff;
 	font-family: 'Open Sans', sans-serif;
 	font-size: 16px;
-	padding: 25px;
+	padding: 15px;
 	display: inline-block;
+	margin: 10px;
 }
 
 .icon-menu {
 	padding-right: 100px;
+	color: #fff;
 }
 
 .regex-square{
@@ -84,10 +108,10 @@ body {
 	background-image: url('http://hdwallpaperbackgrounds.net/wp-content/uploads/2016/07/white-background-9.jpg'); 
 	margin: 0;
 	padding: 0;
-	height: 85%;
+	height: 100%;
 	width: 100%;
 	border: 1px solid #BBB;
-	margin-bottom: 10px;
+/* 	margin-bottom: 10px; */
 }
 
 .panel{
@@ -112,6 +136,39 @@ button{
 	border-bottom: 5px;
 	margin-bottom: 5px;
 	padding-bottom: 5px;
+}
+
+.popup{
+	height: 250px;
+	width: 450px;
+	padding: 0px;
+	margin: 0px;
+	bottom: 0;
+	right: 0;
+	position: absolute;
+	background-image: url('http://hdwallpaperbackgrounds.net/wp-content/uploads/2016/07/white-background-9.jpg');
+	background-size: 100% 100%;
+	border: 1px solid black;
+}
+
+.band{
+	height: 20px;
+	border-bottom: 1px solid black;
+	padding: 11px;
+	background: #202024 url('http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/uber/black-thread.png') repeat left top;
+	color: #fff;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+#attributes{
+	padding: 11px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;
+	white-space: pre-wrap;
+	line-height: 1.5;
+/*  	display: inline-block;*/
 }
 /*
 .dashboard li {

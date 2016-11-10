@@ -5,33 +5,50 @@ var main = function(){
 		
     $('.icon-menu').click(function(){
         $('.menu').animate({
-            left: '0px'
+            'left': '0px'
         }, 200);
         
-		$('#delete-panel').animate({
-			'padding-right': '310px'
-		}, 200);
+		// $('#delete-operator').animate({
+			// 'padding-right': '310px'
+		// }, 200);
 		
 		$('.icon-menu').css({
-			'textIndent': '100%'
+			'visibility': 'hidden',
+			'pointer': 'default'
 		});
 		
+		$('.process-query').animate({
+            'margin-right': '295px'
+        }, 200);
+		
+		$('.popup').animate({
+			'padding-right': '285px'
+		}, 200);
+		
         $('body').animate({
-            left: '285px'
+            'left': '285px'
         }, 200);
     });
 	
     $('.icon-close').click(function(){
         $('.menu').animate({
-            left: '-285px'
+            'left': '-285px'
         }, 200);
         
-		$('#delete-panel').animate({'padding-right': '25px'}, 200, function(){
-			$('.icon-menu').css({'textIndent': '0%'});
+		$('.process-query').animate({'margin-right': '10px'}, 200, function(){
+			$('.icon-menu').css({'visibility': 'visible', 'pointer': 'pointer'});
 		});
 		
+		// $('.process-query').animate({
+            // 'left': '0px'
+        // }, 200);
+		
+		$('.popup').animate({
+			'padding-right': '0px'
+		}, 200);
+		
         $('body').animate({
-            left: '0px'
+            'left': '0px'
         }, 200);
     });
 	
@@ -55,7 +72,11 @@ var main = function(){
 		keyNum += 1;*/
 	});
 	
-	
+	$('.band').on('click', function() {
+		$('.popup').animate({
+            'bottom': '-570px'
+        }, 200);
+	});
 	
 	$('.menu ul li').on('click', function() {
 		
@@ -71,11 +92,10 @@ var main = function(){
 		}		
 	});
 	
-	
-	$('.dashboard').on('click', '.itemDelete', function() {
-		var id = $(this).parent().parent().attr('id');
-		$('#' + id).remove();
-	});
+	// $('.dashboard').on('click', '.itemDelete', function() {
+		// var id = $(this).parent().parent().attr('id');
+		// $('#' + id).remove();
+	// });
 };
 
 $(document).ready(main);

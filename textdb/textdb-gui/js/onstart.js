@@ -1,3 +1,10 @@
+/*
+	Gui <---> Flowchart.js Communication
+	GUIJSON <---> TEXTDBJSON Conversion
+	
+	@Author: Jimmy Wang
+*/
+
 $(document).ready(function() {
     var data = {};
 
@@ -7,7 +14,6 @@ $(document).ready(function() {
     });
 	
 	var operatorI = 0;
-	var operatorName = 'Default';
 	
 	var regexInput = "zika\s*(virus|fever)";
 	var keywordInput = "Zika";
@@ -19,12 +25,18 @@ $(document).ready(function() {
 	var defaultAttributes = "first name, last name";
 	var defaultLimit = 10;
 	var defaultOffset = 5;
-	
-	$('.process_operators').click(function() {
+
+
+/*
+	Process Operators to Server (GUIJSON --> TEXTDBJSON --> Server)
+*/
+
+
+	$('.process-query').on('click', function() {
 		
 		var GUIJSON = $('#the-flowchart').flowchart('getData');
 		
-		var data = {};
+		var TEXTDBJSON = {};
 		var operators = [];
 		var links = [];
 		
@@ -49,102 +61,128 @@ $(document).ready(function() {
 				links.push(destination);
 			}
 		}
-		data.operators = operators;
-		data.links = links;
+		TEXTDBJSON.operators = operators;
+		TEXTDBJSON.links = links;
 		
 		// console.log(operators);
 		// console.log(links)
 		// console.log(data);
-		console.log(JSON.stringify(data, null, 4));
+		// console.log(JSON.stringify(data));
+		// console.log(JSON.stringify(data2));
 		
-		// makeTextFile = function (text) {
-			// var data = new Blob([text], {type: 'text/plain'});
-
-		// // If we are replacing a previously generated file we need to
-		// // manually revoke the object URL to avoid memory leaks.
-			// if (textFile !== null) {
-				// window.URL.revokeObjectURL(textFile);
-			// }
-
-			// textFile = window.URL.createObjectURL(data);
-
-		// // returns a URL you can use as a href
-			// return textFile;
-		// };
-		
-		// window.location.assign(makeTextFile(str));
+		$.ajax({
+			url: "http://localhost:8080/queryplan/execute", 
+			type: "POST",
+			dataType: "json",
+			//contentType: "application/json; charset=utf-8",
+			//headers: { 'Access-Control-Allow-Origin': '*' },
+			//crossDomain: true,
+			//data: JSON.stringify(TEXTDBJSON),
+			success: function(returnedData){
+				console.log("SUCCESS\n");
+				console.log(JSON.stringify(returnedData));
+			},
+			error: function(xhr, status, err){
+				console.log("ERROR");
+				console.log(err);
+			}
+		});
 	});
+
+
+/*
+	Attribute Pop-Up Box
+*/
+
 	
-    $('.create_operator').click(function() {
-	  var panel = $(this).attr('rel');
-	  var userInput = 'Default Input';
-	  var userLimit = defaultLimit;
-	  var userOffset = defaultOffset;
-	  var userAttributes = defaultAttributes;
-	  
+	$('#the-flowchart').on('click', '.flowchart-operators-layer.unselectable div .flowchart-operator-title', function() {
+		var selectedOperator = $('#the-flowchart').flowchart('getSelectedOperatorId');
+		var output = data['operators'][selectedOperator]['properties']['attributes'];
+		var title = data['operators'][selectedOperator]['properties']['title'];
+		// console.log(data['operators'][selectedOperator]['attributes']);
+		// console.log(JSON.stringify(data['operators'][selectedOperator]['attributes']));
+		// console.log(output);
+		// console.log(JSON.stringify(output));
+		
+		$('.popup').animate({
+            'bottom': '0'
+        }, 200);
+		
+		$('#attributes').css({
+			'visibility': 'visible'
+		});
+		
+		$('#attributes').text(function(){
+			var result = "";
+			for(var attr in output){
+				if(attr == 'operator_id'){
+					continue;
+				}
+				if(output.hasOwnProperty(attr)){
+					var splitString = attr.split("_");
+					for(var splitPart in splitString){
+						result += ' ' + splitString[splitPart].charAt(0).toUpperCase() + splitString[splitPart].slice(1);
+					}
+					result += ": ";
+					result += output[attr] + "\n";
+				}
+			}
+			result += "\n";
+			result.replace(/\n/g, '<br />');
+			return result;
+		});
+		
+		var editButton = $('<button class="edit-operator">Edit</button>');
+        $('#attributes').append(editButton);
+		
+		var deleteButton = $('<button class="delete-operator">Delete</button>');
+        $('#attributes').append(deleteButton);
+		
+		$('#attributes button').css({
+			'margin': '5px',
+			'border': '1px solid black'
+		});
+		
+		$('.band').html('Attributes for <em>' + title + '</em>');
+	});
+
+	
+/*
+	Create Operator Helper Functions
+*/
+
+
+	function getExtraOperators(userInput, panel){
 	  var extraOperators = {};
 	  
 	  if (panel == 'regex-panel'){
-		userInput = $('#regexText').val();
 		if (userInput == null || userInput == ''){
 			userInput = regexInput;
 		}
-		userAttributes = $('#regexAttributes').val();
-		if (userAttributes == null || userAttributes == ''){
-			userAttributes = defaultAttributes;
-		}
-		operatorName = 'RegexMatcher';
-		userLimit = $('#regexLimit').val();
-		userOffset = $('#regexOffset').val();
-		extraOperators['regex'] = userInput;
+	    extraOperators['regex'] = userInput;
 	  }
 	  else if (panel == 'keyword-panel'){
-		userInput = $('#keywordText').val();
 		if (userInput == null || userInput == ''){
 			userInput = keywordInput;
 		}
-		userAttributes = $('#keywordAttributes').val();
-		if (userAttributes == null || userAttributes == ''){
-			userAttributes = defaultAttributes;
-		}
-		operatorName = 'KeywordMatcher';
-		userLimit = $('#keywordLimit').val();
-		userOffset = $('#keywordOffset').val();
 		extraOperators['keyword'] = userInput;
 		extraOperators['matching_type'] = $('#keywordMatchingType').val();
 	  }
 	  else if (panel == 'dictionary-panel'){
-		userInput = $('#dictionaryFile').val();
 		if (userInput == null || userInput == ''){
 			userInput = defaultDict;
 		}
-		userAttributes = $('#dictionaryAttributes').val();
-		if (userAttributes == null || userAttributes == ''){
-			userAttributes = defaultAttributes;
-		}
-		operatorName = 'DictionaryMatcher';
-		userLimit = $('#dictionaryLimit').val();
-		userOffset = $('#dictionaryOffset').val();
 		extraOperators['dictionary'] = userInput;
 		extraOperators['matching_type'] = $('#dictionaryMatchingType').val();
 	  }
 	  else if (panel == 'fuzzy-panel'){
-		userInput = $('#fuzzyText').val();
 		if (userInput == null || userInput == ''){
 			userInput = fuzzyInput;
 		}
-		userAttributes = $('#fuzzyAttributes').val();
-		if (userAttributes == null || userAttributes == ''){
-			userAttributes = defaultAttributes;
-		}
-		operatorName = 'FuzzyTokenMatcher';
-		userLimit = $('#fuzzyLimit').val();
-		userOffset = $('#fuzzyOffset').val();
 		extraOperators['query'] = userInput;
 		extraOperators['threshold_ratio'] = thresholdRatio;
 	  }
 	  else if (panel == 'nlp-panel'){
-		userInput = $('#nlpText').val();
 		if (userInput == null || userInput == ''){
 			userInput = nlpInput;
 		}
@@ -152,21 +190,53 @@ $(document).ready(function() {
 			alert('Please choose an NLP from the following: ["noun", "verb", "adjective", "adverb", "ne_all", "number", "location", "person", "organization", "money", "percent", "date", "time"]');
 			return;
 		}
-		userAttributes = $('#nlpAttributes').val();
-		if (userAttributes == null || userAttributes == ''){
-			userAttributes = defaultAttributes;
-		}
-		operatorName = 'NlpExtractor';
-		userLimit = $('#nlpLimit').val();
-		userOffset = $('#nlpOffset').val();
 		extraOperators['nlp-type'] = userInput;
 	  }
+	  return extraOperators;
+	}
+	
+	function getAttr(panel, keyword){
+		var result = $('#' + panel + keyword).val();
+		if(keyword == ' .limit'){
+			if (result == null || result == ''){
+				result = defaultLimit;
+			}
+		}
+		else if(keyword == ' .offset'){
+			if (result == null || result == ''){
+				result = defaultOffset;
+			}
+		}
+		else if(keyword == ' .attributes'){
+			if (result == null || result == ''){
+				result = defaultAttributes;
+			}
+		}
+		return result;
+	}
+
+	
+/*
+	Create Operator Button
+*/
+
+
+    $('.create-operator').click(function() {
+	  var panel = $(this).attr('rel');
+
+	  var userInput = $('#' + panel + ' .value').val();	  
+	  var extraOperators = getExtraOperators(userInput,panel);
+	  
+	  var userLimit = getAttr(panel, ' .limit');
+	  var userOffset = getAttr(panel, ' .offset');
+	  var userAttributes = getAttr(panel, ' .attributes');
+	  var operatorName = $('#' + panel + ' button').attr('id');
       var operatorId = operatorName + '_' + operatorI;
       var operatorData = {
         top: 60,
         left: 500,
         properties: {
-          title: (userInput),
+          title: 'Temp',
           inputs: {
             input_1: {
               label: 'Input 1',
@@ -184,7 +254,12 @@ $(document).ready(function() {
         }
       };
       
+	  var count = 0;
 	  for(var extraOperator in extraOperators){
+		  if(count == 0){
+			operatorData.properties.title = extraOperators[extraOperator];
+			count++;
+		  }
 		  operatorData.properties.attributes[extraOperator] = extraOperators[extraOperator];
 	  }
 	  operatorData.properties.attributes['attributes'] = userAttributes;
@@ -194,10 +269,47 @@ $(document).ready(function() {
       operatorI++;
       
       $('#the-flowchart').flowchart('createOperator', operatorId, operatorData);
+	  
+	  data = $('#the-flowchart').flowchart('getData');
+    });
+
+
+/*
+	Edit Operator Button
+*/
+
+
+	
+	$('#attributes').on('click', '.edit-operator', function() {
+		
+	});
+	
+	
+/*
+	Delete Operator Button
+*/
+
+
+
+	$('.delete-operator').on('click', function() {
+		$('#attributes').css({
+			'visibility': 'hidden'
+		});
+		
+		$('.band').text('Attributes');
+		
+		$('#the-flowchart').flowchart('deleteSelected');
+		data = $('#the-flowchart').flowchart('getData');
     });
 	
-	$('#delete-panel').click(function() {
-      $('#the-flowchart').flowchart('deleteSelected');
+	$('#attributes').on('click', '.delete-operator', function() {
+		$('#attributes').css({
+			'visibility': 'hidden'
+		});
+		
+		$('.band').text('Attributes');
+		
+		$('#the-flowchart').flowchart('deleteSelected');
+		data = $('#the-flowchart').flowchart('getData');
     });
-	
 });

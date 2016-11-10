@@ -5,10 +5,10 @@
 	
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-	<script type="text/javascript" src="js/textdb.flowchart.js"></script>
+	<script type="text/javascript" src="thirdparty/textdb.flowchart.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 	
-	<link href='css/flowchart.css' rel='stylesheet'>
+	<link href='thirdparty/flowchart.css' rel='stylesheet'>
 	<link href='css/style.css' rel='stylesheet'>
 
     
@@ -27,20 +27,20 @@
 		<li rel="regex-panel" class="regex-matcher">Create Regex Matcher</li>
 			<div id="regex-panel" class="panel">
                 <em>Enter Regex: </em><br/>
-				<input type="text" id="regexText" placeholder="zika\s*(virus|fever)"><br/>
+				<input type="text" id="regexText" class='value' placeholder="zika\s*(virus|fever)"><br/>
 				<em>Enter Attributes (Separated by commas): </em><br/>
-				<input type="text" id="regexAttributes" placeholder="first name, last name"><br/>
+				<input type="text" id="regexAttributes" class='attributes' placeholder="first name, last name"><br/>
 				<em>Enter Limit (Optional): </em><br/>
-				<input type="text" id="regexLimit" placeholder="8" value="8"><br/>
+				<input type="text" id="regexLimit" class='limit' placeholder="10" value="10"><br/>
 				<em>Enter Offset (Optional): </em><br/>
-				<input type="text" id="regexOffset" placeholder="5" value="5"><br/>
+				<input type="text" id="regexOffset" class='offset' placeholder="5" value="5"><br/>
 				<br/>
-                <button rel="regex-panel" class="create_operator">Create operator</button><br/>
+                <button rel="regex-panel" id='RegexMatcher' class="create-operator">Create operator</button><br/>
             </div>
 		<li rel="keyword-panel" class="keyword-matcher">Create Keyword Matcher</li>
 			<div id="keyword-panel" class="panel">
                 <em>Enter Keyword: </em><br/>
-				<input type="text" id="keywordText" placeholder="Zika"><br/>
+				<input type="text" id="keywordText" class='value' placeholder="Zika"><br/>
                 <em>Select Matching Type: </em><br/>
                 <select id="keywordMatchingType">
 					<option value="conjunction" selected>Conjunction</option>
@@ -48,18 +48,18 @@
 					<option value="substring">Substring</option>
 				</select><br/>
 				<em>Enter Attributes (Separated by commas): </em><br/>
-				<input type="text" id="keywordAttributes" placeholder="first name, last name"><br/>
+				<input type="text" id="keywordAttributes" class='attributes' placeholder="first name, last name"><br/>
 				<em>Enter Limit (Optional): </em><br/>
-				<input type="text" id="keywordLimit" placeholder="8" value="8"><br/>
+				<input type="text" id="keywordLimit" class='limit' placeholder="10" value="10"><br/>
 				<em>Enter Offset (Optional): </em><br/>
-				<input type="text" id="keywordOffset" placeholder="5" value="5"><br/>
+				<input type="text" id="keywordOffset" class='offset' placeholder="5" value="5"><br/>
 				<br/>
-                <button rel="keyword-panel" class="create_operator">Create operator</button><br/><br/>
+                <button rel="keyword-panel" id='KeywordMatcher' class="create-operator">Create operator</button><br/><br/>
             </div>
 		<li rel="dictionary-panel" class="dictionary-matcher">Create Dictionary Matcher</li>
 			<div id="dictionary-panel" class="panel">
                 <em>Enter Dictionary: </em><br/>
-				<input type="file" id="dictionaryFile" placeholder="Enter File"><br/>
+				<input type="file" id="dictionaryFile" class='value' placeholder="Enter File"><br/>
                 <em>Select Matching Type: </em><br/>
                 <select id="dictionaryMatchingType">
 					<option value="conjunction" selected>Conjunction</option>
@@ -67,58 +67,59 @@
 					<option value="substring">Substring</option>
 				</select><br/>
 				<em>Enter Attributes (Separated by commas): </em><br/>
-				<input type="text" id="dictionaryAttributes" placeholder="first name, last name"><br/>
+				<input type="text" id="dictionaryAttributes" class='attributes' placeholder="first name, last name"><br/>
 				<em>Enter Limit (Optional): </em><br/>
-				<input type="text" id="dictionaryLimit" placeholder="8" value="8"><br/>
+				<input type="text" id="dictionaryLimit" class='limit' placeholder="10" value="10"><br/>
 				<em>Enter Offset (Optional): </em><br/>
-				<input type="text" id="dictionaryOffset" placeholder="5" value="5"><br/>
+				<input type="text" id="dictionaryOffset" class='offset' placeholder="5" value="5"><br/>
 				<br/>
-                <button rel="dictionary-panel" class="create_operator">Create operator</button><br/><br/>
+                <button rel="dictionary-panel" id='DictionaryMatcher' class="create-operator">Create operator</button><br/><br/>
             </div>
 		<li rel="fuzzy-panel" class="fuzzy-matcher">Create Fuzzy Matcher</li>
 			<div id="fuzzy-panel" class="panel">
                 <em>Enter Fuzzy: </em><br/>
-				<input type="text" id="fuzzyText" placeholder="Enter Fuzzy"><br/>
+				<input type="text" id="fuzzyText" class='value' placeholder="Enter Fuzzy"><br/>
 				<em>Enter Attributes (Separated by commas): </em><br/>
-				<input type="text" id="fuzzyAttributes" placeholder="first name, last name"><br/>
+				<input type="text" id="fuzzyAttributes" class='attributes' placeholder="first name, last name"><br/>
 				<em>Enter Limit (Optional): </em><br/>
-				<input type="text" id="fuzzyLimit" placeholder="8" value="8"><br/>
+				<input type="text" id="fuzzyLimit" class='limit' placeholder="10" value="10"><br/>
 				<em>Enter Offset (Optional): </em><br/>
-				<input type="text" id="fuzzyOffset" placeholder="5" value="5"><br/>
+				<input type="text" id="fuzzyOffset" class='offset' placeholder="5" value="5"><br/>
 				<br/>
-                <button rel="fuzzy-panel" class="create_operator">Create operator</button><br/><br/>
+                <button rel="fuzzy-panel" id='FuzzyTokenMatcher' class="create-operator">Create operator</button><br/><br/>
             </div>
 		<li rel="nlp-panel" class="nlp-matcher">Create NLP Extractor</li>
 			<div id="nlp-panel" class="panel">
                 <em>Enter NLP Extractor: </em><br/>
-				<input type="text" id="nlpText" placeholder="Ex: Noun/Date/Location"><br/>
+				<input type="text" id="nlpText" class='value' placeholder="Ex: Noun/Date/Location"><br/>
 				<em>Enter Attributes (Separated by commas): </em><br/>
-				<input type="text" id="nlpAttributes" placeholder="first name, last name"><br/>
+				<input type="text" id="nlpAttributes" class='attributes' placeholder="first name, last name"><br/>
                 <em>Enter Limit (Optional): </em><br/>
-				<input type="text" id="nlpLimit" placeholder="8" value="8"><br/>
+				<input type="text" id="nlpLimit" class='limit' placeholder="10" value="10"><br/>
 				<em>Enter Offset (Optional): </em><br/>
-				<input type="text" id="nlpOffset" placeholder="5" value="5"><br/>
+				<input type="text" id="nlpOffset" class='offset' placeholder="5" value="5"><br/>
 				<br/>
-                <button rel="nlp-panel" class="create_operator">Create operator</button><br/><br/>
-            </div>
-		<li rel="process-panel" class="process-query">Process Operators</li>
-			<div id="process-panel" class="panel">
-                <br/>
-                <button rel="process-panel" class="process_operators">Process Operators</button><br/><br/>
+                <button rel="nlp-panel" id='NlpExtractor' class="create-operator">Create operator</button><br/><br/>
             </div>
 		<li class="-matcher">Create  Matcher</li>
 		<li class="-matcher">Create  Matcher</li>
 		<li class="-matcher">Create  Matcher</li>
+		<li class="-matcher">Create  Matcher</li>
+		<li class="-matcher">Create  Matcher</li>
+		<li class="-matcher">Create  Matcher</li>
+		<li class="-matcher">Create  Matcher</li>
+		<li class="-matcher">Create  Matcher</li>
+		<li class="blank-matcher"></li>
       </ul>
     </div>
-
+		
     <!-- Main body -->
     <div class="jumbotron">
 
       <div class="nav">
 		<div class="icon-menu">Menu</div>
-		<div id="delete-panel">Delete Selected Operator</div>
-		
+		<div class="process-query">Process Operators</div>
+		<div class="delete-operator" id="main-delete">Delete Selected Operator</div>		
       </div>
 	  
 	  <div class="dashboard" id="the-flowchart">
@@ -126,6 +127,10 @@
 
 	  </div>
 	  
+	  <div class="popup">
+		<div class="band">Attributes</div>
+		<div id="attributes"></div>
+	  </div>
     
   </body>
 </html>
