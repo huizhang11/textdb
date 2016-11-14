@@ -1,7 +1,7 @@
 /*
 	Gui <---> Flowchart.js Communication
 	GUIJSON <---> TEXTDBJSON Conversion
-	
+
 	@Author: Jimmy Wang
 */
 
@@ -12,11 +12,11 @@ $(document).ready(function() {
     $('#the-flowchart').flowchart({
       data: data
     });
-	
+
 	var operatorI = 0;
 	var selectedOperator = '';
 	var editOperators = [];
-	
+
 	var regexInput = "zika\s*(virus|fever)";
 	var keywordInput = "Zika";
 	var defaultDict = "SampleDict1.txt";
@@ -35,17 +35,17 @@ $(document).ready(function() {
 
 
 	$('.process-query').on('click', function() {
-		
+
 		var GUIJSON = $('#the-flowchart').flowchart('getData');
-		
+
 		var TEXTDBJSON = {};
 		var operators = [];
 		var links = [];
-		
+
 		for(var operatorIndex in GUIJSON.operators){
 			if (GUIJSON.operators.hasOwnProperty(operatorIndex)){
 				var attributes = {};
-				
+
 				for(var attribute in GUIJSON['operators'][operatorIndex]['properties']['attributes']){
 					if (GUIJSON['operators'][operatorIndex]['properties']['attributes'].hasOwnProperty(attribute)){
 						attributes[attribute] = GUIJSON['operators'][operatorIndex]['properties']['attributes'][attribute];
@@ -53,8 +53,8 @@ $(document).ready(function() {
 				}
 				operators.push(attributes);
 			}
-		}	
-		
+		}
+
 		for(var link in GUIJSON.links){
 			var destination = {};
 			if (GUIJSON['links'][link].hasOwnProperty("fromOperator")){
@@ -65,36 +65,38 @@ $(document).ready(function() {
 		}
 		TEXTDBJSON.operators = operators;
 		TEXTDBJSON.links = links;
-		
+
 		// console.log(operators);
 		// console.log(links)
 		// console.log(data);
 		// console.log(JSON.stringify(data));
 		// console.log(JSON.stringify(TEXTDBJSON));
-		
-		$.ajax({
-			url: "http://localhost:8080/queryplan/execute", 
-			type: "POST",
-			dataType: "json",
-			//contentType: "application/json; charset=utf-8",
-			//headers: { 'Access-Control-Allow-Origin': '*' },
-			//crossDomain: true,
-			//data: JSON.stringify(TEXTDBJSON),
-			success: function(returnedData){
-				console.log("SUCCESS\n");
-				console.log(JSON.stringify(returnedData));
-			},
-			error: function(xhr, status, err){
-				console.log("ERROR");
-				console.log(err);
-			}
-		});
+
+        $.ajax({
+            url: "http://localhost:8080/queryplan/execute",
+            type: "POST",
+            data: JSON.stringify(TEXTDBJSON),
+            dataType: "text",
+            contentType: "application/json",
+            //contentType: "application/json; charset=utf-8",
+            //headers: { 'Access-Control-Allow-Origin': '*' },
+            //crossDomain: true,
+            // data: JSON.stringify(TEXTDBJSON),
+            success: function(returnedData){
+                console.log("SUCCESS\n");
+                console.log(JSON.stringify(returnedData));
+            },
+            error: function(xhr, status, err){
+                console.log("ERROR");
+                console.log(err);
+            }
+        });
 	});
 
-	
+
 /*
 	Attribute Pop-Up Box Helper Function
-*/	
+*/
 
 
 	function getPopupText(output){
@@ -120,7 +122,7 @@ $(document).ready(function() {
 	Attribute Pop-Up Box
 */
 
-	
+
 	$('#the-flowchart').on('click', '.flowchart-operators-layer.unselectable div .flowchart-operator-title', function() {
 		selectedOperator = $('#the-flowchart').flowchart('getSelectedOperatorId');
 		var output = data['operators'][selectedOperator]['properties']['attributes'];
@@ -129,33 +131,33 @@ $(document).ready(function() {
 		// console.log(JSON.stringify(data['operators'][selectedOperator]['attributes']));
 		// console.log(output);
 		// console.log(JSON.stringify(output));
-		
+
 		$('.popup').animate({
             'bottom': '0'
         }, 200);
-		
+
 		$('#attributes').css({
 			'visibility': 'visible'
 		});
-		
+
 		$('#attributes').text(getPopupText(output));
 		$('#attributes').html($('#attributes').text());
-		
+
 		var editButton = $('<button class="edit-operator">Edit</button>');
         $('#attributes').append(editButton);
-		
+
 		var deleteButton = $('<button class="delete-operator">Delete</button>');
         $('#attributes').append(deleteButton);
-		
+
 		$('#attributes button').css({
 			'margin': '5px',
 			'border': '1px solid black'
 		});
-		
+
 		$('.band').html('Attributes for <em>' + title + '</em>');
 	});
 
-	
+
 /*
 	Create Operator Helper Functions
 */
@@ -163,7 +165,7 @@ $(document).ready(function() {
 
 	function getExtraOperators(userInput, panel){
 	  var extraOperators = {};
-	  
+
 	  if (panel == 'regex-panel'){
 		if (userInput == null || userInput == ''){
 			userInput = regexInput;
@@ -203,7 +205,7 @@ $(document).ready(function() {
 	  }
 	  return extraOperators;
 	}
-	
+
 	function getAttr(panel, keyword){
 		var result = $('#' + panel + keyword).val();
 		if(keyword == ' .limit'){
@@ -224,7 +226,7 @@ $(document).ready(function() {
 		return result;
 	}
 
-	
+
 /*
 	Create Operator Button
 */
@@ -233,9 +235,9 @@ $(document).ready(function() {
     $('.create-operator').click(function() {
 	  var panel = $(this).attr('rel');
 
-	  var userInput = $('#' + panel + ' .value').val();	  
+	  var userInput = $('#' + panel + ' .value').val();
 	  var extraOperators = getExtraOperators(userInput,panel);
-	  
+
 	  var userLimit = getAttr(panel, ' .limit');
 	  var userOffset = getAttr(panel, ' .offset');
 	  var userAttributes = getAttr(panel, ' .attributes');
@@ -262,27 +264,27 @@ $(document).ready(function() {
 		  }
         }
       };
-      
+
 	  for(var extraOperator in extraOperators){
 		  operatorData.properties.attributes[extraOperator] = extraOperators[extraOperator];
 	  }
 	  operatorData.properties.attributes['attributes'] = userAttributes;
 	  operatorData.properties.attributes['limit'] = userLimit;
 	  operatorData.properties.attributes['offset'] = userOffset;
-	  
+
       operatorI++;
-      
+
       $('#the-flowchart').flowchart('createOperator', operatorId, operatorData);
-	  
+
 	  data = $('#the-flowchart').flowchart('getData');
     });
 
-	
+
 /*
 	Edit Operator Button Helper Function
 */
-	
-	
+
+
 	function getHtml(attr, attrValue){
 		var resultString = '';
 		var classString = attr.replace(/_/g, '-');
@@ -308,19 +310,19 @@ $(document).ready(function() {
 			resultString += '<input type="text" class="' + classString + '" value="' + attrValue + '">';
 		}
 		editOperators.push(classString);
-		return resultString;		
+		return resultString;
 	}
-	
-	
+
+
 /*
 	Edit Operator Button
 */
 
-	
+
 	$('#attributes').on('click', '.edit-operator', function() {
 		editOperators = [];
 		var output = data['operators'][selectedOperator]['properties']['attributes'];
-		
+
 		$('#attributes').text(function(){
 			var result = "";
 			for(var attr in output){
@@ -334,7 +336,7 @@ $(document).ready(function() {
 					}
 					result += ": ";
 					if(attr == 'operator_type'){
-						result += output[attr] + "\n";					
+						result += output[attr] + "\n";
 					}
 					else{
 						inputHtml = getHtml(attr,output[attr]);
@@ -347,15 +349,15 @@ $(document).ready(function() {
 			result.replace(/\n/g, '<br />');
 			return result;
 		});
-		
+
 		$('#attributes').html($('#attributes').text());
-		
+
 		var confirmChangesButton = $('<button class="confirm-button">Confirm Changes</button>');
         $('#attributes').append(confirmChangesButton);
-		
+
 		var cancelButton = $('<button class="cancel-button">Cancel</button>');
         $('#attributes').append(cancelButton);
-		
+
 		$('#attributes button').css({
 			'margin': '5px',
 			'border': '1px solid black'
@@ -365,19 +367,19 @@ $(document).ready(function() {
 
 /*
 	Confirm Changes Button
-*/	
-	
-	
+*/
+
+
 	$('#attributes').on('click', '.confirm-button', function() {
 	  data = $('#the-flowchart').flowchart('getData');
 	  var output = data['operators'][selectedOperator]['properties']['attributes'];
 	  var panel = $(this).parent().attr('class');
-	  
+
 	  var operatorTop = data['operators'][selectedOperator]['top'];
 	  var operatorLeft = data['operators'][selectedOperator]['left'];
 	  var operatorId = output['operator_id'];
 	  var operatorName = output['operator_type'];
-	  
+
 	  var operatorData = {
         top: (operatorTop),
         left: (operatorLeft),
@@ -399,7 +401,7 @@ $(document).ready(function() {
 		  }
         }
       };
-	  
+
 	  for(var otherOperator in editOperators){
 		var attr = editOperators[otherOperator].replace(/-/, '_');
 		var result = $('.' + panel + ' .' + editOperators[otherOperator]).val();
@@ -408,70 +410,70 @@ $(document).ready(function() {
 		}
 		operatorData.properties.attributes[attr] = result;
 	  }
-      
+
 	  $('#the-flowchart').flowchart('deleteSelected');
       $('#the-flowchart').flowchart('createOperator', operatorId, operatorData);
 	  $('#the-flowchart').flowchart('selectOperator', operatorId);
 	  selectedOperator = $('#the-flowchart').flowchart('getSelectedOperatorId');
-	  
+
 	  data = $('#the-flowchart').flowchart('getData');
 	  output = data['operators'][selectedOperator]['properties']['attributes'];
-	  
+
 	  var title = data['operators'][selectedOperator]['properties']['title'];
 	  $('.band').html('Attributes for <em>' + title + '</em>');
-	  
+
 	  $('#attributes').text(getPopupText(output));
 	  $('#attributes').html($('#attributes').text());
-	  
+
 	  var editButton = $('<button class="edit-operator">Edit</button>');
 	  $('#attributes').append(editButton);
-		
+
 	  var deleteButton = $('<button class="delete-operator">Delete</button>');
 	  $('#attributes').append(deleteButton);
-		
+
 	  $('#attributes button').css({
 			'margin': '5px',
 			'border': '1px solid black'
 	  });
 	});
-	
-	
+
+
 /*
 	Cancel Edit Button
-*/	
-	
-	
+*/
+
+
 	$('#attributes').on('click', '.cancel-button', function() {
 		var output = data['operators'][selectedOperator]['properties']['attributes'];
 		$('#attributes').text(getPopupText(output));
 		$('#attributes').html($('#attributes').text());
-		
+
 		var editButton = $('<button class="edit-operator">Edit</button>');
         $('#attributes').append(editButton);
-		
+
 		var deleteButton = $('<button class="delete-operator">Delete</button>');
         $('#attributes').append(deleteButton);
-		
+
 		$('#attributes button').css({
 			'margin': '5px',
 			'border': '1px solid black'
 		});
 	});
-		
-		
+
+
 /*
 	Delete Operator Button
 */
 
-	
+
 	$('#attributes, .nav').on('click', '.delete-operator', function() {
 		data = $('#the-flowchart').flowchart('getData');
 		$('#attributes').css({
 			'visibility': 'hidden'
 		});
-		
+
 		$('.band').text('Attributes');
-		
+
 		$('#the-flowchart').flowchart('deleteSelected');
 		data = $('#the-flowchart').flowchart('getData');
     });
