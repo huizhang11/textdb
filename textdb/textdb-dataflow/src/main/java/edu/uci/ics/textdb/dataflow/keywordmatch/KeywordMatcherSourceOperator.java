@@ -18,11 +18,14 @@ import edu.uci.ics.textdb.api.dataflow.ISourceOperator;
 import edu.uci.ics.textdb.api.storage.IDataStore;
 import edu.uci.ics.textdb.common.constants.DataConstants.KeywordMatchingType;
 import edu.uci.ics.textdb.common.exception.DataFlowException;
+import edu.uci.ics.textdb.common.exception.StorageException;
 import edu.uci.ics.textdb.api.exception.TextDBException;
 import edu.uci.ics.textdb.dataflow.common.AbstractSingleInputOperator;
 import edu.uci.ics.textdb.dataflow.common.KeywordPredicate;
 import edu.uci.ics.textdb.storage.DataReaderPredicate;
+import edu.uci.ics.textdb.storage.DataStore;
 import edu.uci.ics.textdb.storage.reader.DataReader;
+import edu.uci.ics.textdb.storage.relation.RelationManager;
 
 /**
  * KeywordMatcherSourceOperator is a source operator with a keyword query.
@@ -43,6 +46,40 @@ public class KeywordMatcherSourceOperator extends AbstractSingleInputOperator im
 
     private Schema inputSchema;
     private Schema outputSchema;
+    
+    public KeywordMatcherSourceOperator(KeywordPredicate predicate, String tableName) throws DataFlowException {
+        try {
+            RelationManager relationManager = RelationManager.getRelationManager();
+            String indexDirectory = relationManager.getTableDirectory(tableName);
+            Schema tableSchema = relationManager.getTableSchema(tableName);
+            DataStore dataStore = new DataStore(indexDirectory, tableSchema);
+            
+            this.predicate = predicate;
+            this.dataStore = dataStore;
+
+            this.keywordQuery = predicate.getQuery();
+            
+            // input schema must be setup first
+            this.inputSchema = dataStore.getSchema();
+
+            // generate dataReader
+            Query luceneQuery = createLuceneQueryObject();
+            DataReaderPredicate dataReaderPredicate = new DataReaderPredicate(
+                    luceneQuery, dataStore);
+            dataReaderPredicate.setIsPayloadAdded(true);
+            dataReader = new DataReader(dataReaderPredicate);
+            
+            // generate KeywordMatcher
+            keywordMatcher = new KeywordMatcher(predicate);
+            keywordMatcher.setInputOperator(dataReader);
+            
+            this.inputOperator = this.keywordMatcher;
+            
+        } catch (StorageException e) {
+            throw new DataFlowException(e.getMessage(), e);
+        }
+    
+    }
 
     public KeywordMatcherSourceOperator(KeywordPredicate predicate, IDataStore dataStore) throws DataFlowException {
         this.predicate = predicate;
