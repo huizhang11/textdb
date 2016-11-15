@@ -2,12 +2,14 @@ package edu.uci.ics.textdb.plangen.operatorbuilder;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import edu.uci.ics.textdb.api.common.Attribute;
-import edu.uci.ics.textdb.common.constants.DataConstants;
 import edu.uci.ics.textdb.common.constants.DataConstants.KeywordMatchingType;
+import edu.uci.ics.textdb.common.constants.LuceneAnalyzerConstants;
 import edu.uci.ics.textdb.common.exception.DataFlowException;
 import edu.uci.ics.textdb.common.exception.PlanGenException;
+import edu.uci.ics.textdb.common.utils.Utils;
 import edu.uci.ics.textdb.dataflow.common.KeywordPredicate;
 import edu.uci.ics.textdb.dataflow.keywordmatch.KeywordMatcherSourceOperator;
 import edu.uci.ics.textdb.plangen.PlanGenUtils;
@@ -31,7 +33,7 @@ import edu.uci.ics.textdb.storage.DataStore;
 public class KeywordSourceBuilder {
     
     public static KeywordMatcherSourceOperator buildSourceOperator(Map<String, String> operatorProperties) 
-            throws PlanGenException, DataFlowException {
+            throws PlanGenException {
         String keyword = OperatorBuilderUtils.getRequiredProperty(
                 KeywordMatcherBuilder.KEYWORD, operatorProperties);
         String matchingTypeStr = OperatorBuilderUtils.getRequiredProperty(
@@ -40,8 +42,8 @@ public class KeywordSourceBuilder {
         // check if the keyword is empty
         PlanGenUtils.planGenAssert(!keyword.trim().isEmpty(), "the keyword is empty");
 
-        // generate the attribute list
-        List<Attribute> attributeList = OperatorBuilderUtils.constructAttributeList(operatorProperties);
+        // generate the attribute names
+        List<String> attributeNames = OperatorBuilderUtils.constructAttributeNames(operatorProperties);
 
         // generate the keyword matching type
         KeywordMatchingType matchingType = KeywordMatcherBuilder.getKeywordMatchingType(matchingTypeStr);
@@ -49,12 +51,18 @@ public class KeywordSourceBuilder {
                 "the matching type: "+ matchingTypeStr +" is not valid. "
                 + "It must be one of " + KeywordMatcherBuilder.keywordMatchingTypeMap.keySet());
         
-        KeywordPredicate keywordPredicate = new KeywordPredicate(keyword, attributeList,
-                DataConstants.getStandardAnalyzer(), matchingType);
+        KeywordPredicate keywordPredicate;
+        keywordPredicate = new KeywordPredicate(keyword, attributeNames,
+                LuceneAnalyzerConstants.getStandardAnalyzer(), matchingType);  
         
         DataStore dataStore = OperatorBuilderUtils.constructDataStore(operatorProperties);
 
-        KeywordMatcherSourceOperator sourceOperator = new KeywordMatcherSourceOperator(keywordPredicate, dataStore);
+        KeywordMatcherSourceOperator sourceOperator;
+        try {
+            sourceOperator = new KeywordMatcherSourceOperator(keywordPredicate, dataStore);
+        } catch (DataFlowException e) {
+            throw new PlanGenException(e.getMessage(), e);
+        }
    
         return sourceOperator;
     }

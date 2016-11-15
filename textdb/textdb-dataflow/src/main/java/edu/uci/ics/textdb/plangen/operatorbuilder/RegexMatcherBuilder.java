@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.uci.ics.textdb.api.common.Attribute;
-import edu.uci.ics.textdb.common.constants.DataConstants;
+import edu.uci.ics.textdb.common.constants.LuceneAnalyzerConstants;
 import edu.uci.ics.textdb.common.exception.DataFlowException;
 import edu.uci.ics.textdb.common.exception.PlanGenException;
 import edu.uci.ics.textdb.dataflow.common.RegexPredicate;
@@ -30,7 +30,7 @@ public class RegexMatcherBuilder {
     /**
      * Builds a RegexMatcher according to operatorProperties.
      */
-    public static RegexMatcher buildRegexMatcher(Map<String, String> operatorProperties) throws PlanGenException, DataFlowException, IOException {
+    public static RegexMatcher buildRegexMatcher(Map<String, String> operatorProperties) throws PlanGenException {
         String regex = OperatorBuilderUtils.getRequiredProperty(REGEX, operatorProperties);
 
         // check if regex is empty
@@ -40,8 +40,13 @@ public class RegexMatcherBuilder {
         List<Attribute> attributeList = OperatorBuilderUtils.constructAttributeList(operatorProperties);
 
         // build RegexMatcher
-        RegexPredicate regexPredicate = new RegexPredicate(regex, attributeList,
-                DataConstants.getTrigramAnalyzer());
+        RegexPredicate regexPredicate;
+        try {
+            regexPredicate = new RegexPredicate(regex, attributeList,
+                    LuceneAnalyzerConstants.getNGramAnalyzer(3));
+        } catch (DataFlowException e) {
+            throw new PlanGenException(e.getMessage(), e);
+        }
         RegexMatcher regexMatcher = new RegexMatcher(regexPredicate);
 
         // set limit and offset

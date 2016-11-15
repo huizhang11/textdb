@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.uci.ics.textdb.api.common.Attribute;
-import edu.uci.ics.textdb.common.constants.DataConstants;
+import edu.uci.ics.textdb.common.constants.LuceneAnalyzerConstants;
 import edu.uci.ics.textdb.common.exception.DataFlowException;
 import edu.uci.ics.textdb.common.exception.PlanGenException;
 import edu.uci.ics.textdb.dataflow.common.FuzzyTokenPredicate;
@@ -31,7 +31,7 @@ public class FuzzyTokenMatcherBuilder {
     /**
      * Builds a FuzzyTokenMatcher according to operatorProperties.
      */
-    public static FuzzyTokenMatcher buildOperator(Map<String, String> operatorProperties) throws PlanGenException, DataFlowException, IOException {
+    public static FuzzyTokenMatcher buildOperator(Map<String, String> operatorProperties) throws PlanGenException {
         String query = OperatorBuilderUtils.getRequiredProperty(FUZZY_STRING, operatorProperties);
         String thresholdStr = OperatorBuilderUtils.getRequiredProperty(THRESHOLD_RATIO, operatorProperties);
 
@@ -45,8 +45,13 @@ public class FuzzyTokenMatcherBuilder {
         Double thresholdRatioDouble = generateThresholdDouble(thresholdStr);
 
         // build FuzzyTokenMatcher
-        FuzzyTokenPredicate fuzzyTokenPredicate = new FuzzyTokenPredicate(query, attributeList,
-                DataConstants.getStandardAnalyzer(), thresholdRatioDouble);
+        FuzzyTokenPredicate fuzzyTokenPredicate;
+        try {
+            fuzzyTokenPredicate = new FuzzyTokenPredicate(query, attributeList,
+                    LuceneAnalyzerConstants.getStandardAnalyzer(), thresholdRatioDouble);
+        } catch (DataFlowException e) {
+            throw new PlanGenException(e.getMessage(), e);
+        }
         FuzzyTokenMatcher fuzzyTokenMatcher = new FuzzyTokenMatcher(fuzzyTokenPredicate);
 
         // set limit and offset

@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.uci.ics.textdb.api.exception.TextDBException;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryparser.classic.ParseException;
@@ -29,6 +30,7 @@ import edu.uci.ics.textdb.common.field.ListField;
 import edu.uci.ics.textdb.common.field.Span;
 import edu.uci.ics.textdb.common.field.StringField;
 import edu.uci.ics.textdb.common.field.TextField;
+import edu.uci.ics.textdb.common.utils.Utils;
 import edu.uci.ics.textdb.dataflow.common.KeywordPredicate;
 import edu.uci.ics.textdb.dataflow.utils.TestUtils;
 import edu.uci.ics.textdb.storage.DataStore;
@@ -51,7 +53,9 @@ public class PhraseMatcherTest {
         luceneAnalyzer = new StandardAnalyzer();
         dataWriter = new DataWriter(dataStore, luceneAnalyzer);
         dataWriter.clearData();
-        dataWriter.writeData(TestConstants.getSamplePeopleTuples());
+        for (ITuple tuple : TestConstants.getSamplePeopleTuples()) {
+            dataWriter.insertTuple(tuple);
+        }
     }
 
     @After
@@ -72,19 +76,20 @@ public class PhraseMatcherTest {
      */
 
     public List<ITuple> getPeopleQueryResults(String query, ArrayList<Attribute> attributeList)
-            throws DataFlowException, ParseException {
+            throws TextDBException, ParseException {
         return getPeopleQueryResults(query, attributeList, Integer.MAX_VALUE, 0);
     }
 
     public List<ITuple> getPeopleQueryResults(String query, ArrayList<Attribute> attributeList, int limit)
-            throws DataFlowException, ParseException {
+            throws TextDBException, ParseException {
         return getPeopleQueryResults(query, attributeList, limit, 0);
     }
 
     public List<ITuple> getPeopleQueryResults(String query, ArrayList<Attribute> attributeList, int limit, int offset)
-            throws DataFlowException, ParseException {
+            throws TextDBException, ParseException {
 
-        KeywordPredicate keywordPredicate = new KeywordPredicate(query, attributeList, luceneAnalyzer,
+        KeywordPredicate keywordPredicate = new KeywordPredicate(query, 
+                Utils.getAttributeNames(attributeList), luceneAnalyzer,
                 DataConstants.KeywordMatchingType.PHRASE_INDEXBASED);
 
         KeywordMatcherSourceOperator keywordSource = new KeywordMatcherSourceOperator(keywordPredicate, dataStore);
@@ -311,7 +316,9 @@ public class PhraseMatcherTest {
         Analyzer MedAnalyzer = new StandardAnalyzer();
         DataWriter MedDataWriter = new DataWriter(medDataStore, MedAnalyzer);
         MedDataWriter.clearData();
-        MedDataWriter.writeData(keywordTestConstants.getSampleMedlineRecord());
+        for (ITuple tuple : keywordTestConstants.getSampleMedlineRecord()) {
+            MedDataWriter.insertTuple(tuple);
+        }
         // Prepare Query
         String query = "skin rash";
         ArrayList<Attribute> attributeList = new ArrayList<>();
@@ -347,7 +354,8 @@ public class PhraseMatcherTest {
         expectedResultList.add(tuple1);
 
         // Perform Query
-        KeywordPredicate keywordPredicate = new KeywordPredicate(query, attributeList, MedAnalyzer,
+        KeywordPredicate keywordPredicate = new KeywordPredicate(query, 
+                Utils.getAttributeNames(attributeList), MedAnalyzer,
                 DataConstants.KeywordMatchingType.PHRASE_INDEXBASED);
         
         KeywordMatcherSourceOperator keywordMatcherSource = new KeywordMatcherSourceOperator(keywordPredicate, medDataStore);
@@ -379,7 +387,9 @@ public class PhraseMatcherTest {
         Analyzer MedAnalyzer = new StandardAnalyzer();
         DataWriter MedDataWriter = new DataWriter(medDataStore, MedAnalyzer);
         MedDataWriter.clearData();
-        MedDataWriter.writeData(keywordTestConstants.getSampleMedlineRecord());
+        for (ITuple tuple : keywordTestConstants.getSampleMedlineRecord()) {
+            MedDataWriter.insertTuple(tuple);
+        }
         // Prepare Query
         String query = "x-ray";
         ArrayList<Attribute> attributeList = new ArrayList<>();
@@ -410,7 +420,8 @@ public class PhraseMatcherTest {
         expectedResultList.add(tuple1);
 
         // Perform Query
-        KeywordPredicate keywordPredicate = new KeywordPredicate(query, attributeList, MedAnalyzer,
+        KeywordPredicate keywordPredicate = new KeywordPredicate(query, 
+                Utils.getAttributeNames(attributeList), MedAnalyzer,
                 DataConstants.KeywordMatchingType.PHRASE_INDEXBASED);
 
         KeywordMatcherSourceOperator keywordSource = new KeywordMatcherSourceOperator(keywordPredicate, medDataStore);
@@ -442,7 +453,9 @@ public class PhraseMatcherTest {
         Analyzer MedAnalyzer = new StandardAnalyzer();
         DataWriter MedDataWriter = new DataWriter(medDataStore, MedAnalyzer);
         MedDataWriter.clearData();
-        MedDataWriter.writeData(keywordTestConstants.getSampleMedlineRecord());
+        for (ITuple tuple : keywordTestConstants.getSampleMedlineRecord()) {
+            MedDataWriter.insertTuple(tuple);
+        }
         // Prepare Query
         String query = "gain weight";
         ArrayList<Attribute> attributeList = new ArrayList<>();
@@ -483,7 +496,8 @@ public class PhraseMatcherTest {
         expectedResultList.add(tuple1);
 
         // Perform Query
-        KeywordPredicate keywordPredicate = new KeywordPredicate(query, attributeList, MedAnalyzer,
+        KeywordPredicate keywordPredicate = new KeywordPredicate(query, 
+                Utils.getAttributeNames(attributeList), MedAnalyzer,
                 DataConstants.KeywordMatchingType.PHRASE_INDEXBASED);
 
         KeywordMatcherSourceOperator keywordSource = new KeywordMatcherSourceOperator(keywordPredicate, medDataStore);

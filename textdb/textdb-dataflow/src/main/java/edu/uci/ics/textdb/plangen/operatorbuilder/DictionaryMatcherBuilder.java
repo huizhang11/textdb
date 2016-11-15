@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import edu.uci.ics.textdb.api.common.Attribute;
-import edu.uci.ics.textdb.common.constants.DataConstants;
 import edu.uci.ics.textdb.common.constants.DataConstants.KeywordMatchingType;
+import edu.uci.ics.textdb.common.constants.LuceneAnalyzerConstants;
 import edu.uci.ics.textdb.common.exception.DataFlowException;
 import edu.uci.ics.textdb.common.exception.PlanGenException;
 import edu.uci.ics.textdb.dataflow.common.Dictionary;
@@ -33,7 +33,7 @@ public class DictionaryMatcherBuilder {
     /**
      * Builds a DictionaryMatcher according to operatorProperties.
      */
-    public static DictionaryMatcher buildOperator(Map<String, String> operatorProperties) throws PlanGenException, DataFlowException {
+    public static DictionaryMatcher buildOperator(Map<String, String> operatorProperties) throws PlanGenException {
         String dictionaryStr = OperatorBuilderUtils.getRequiredProperty(DICTIONARY, operatorProperties);
         String matchingTypeStr = OperatorBuilderUtils.getRequiredProperty(MATCHING_TYPE, operatorProperties);
 
@@ -53,7 +53,7 @@ public class DictionaryMatcherBuilder {
 
         // build DictionaryMatcher
         DictionaryPredicate predicate = new DictionaryPredicate(dictionary, attributeList,
-                DataConstants.getStandardAnalyzer(), matchingType);
+                LuceneAnalyzerConstants.getStandardAnalyzer(), matchingType);
         DictionaryMatcher operator = new DictionaryMatcher(predicate);
 
         // set limit and offset

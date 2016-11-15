@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.uci.ics.textdb.api.exception.TextDBException;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.search.MatchAllDocsQuery;
@@ -43,7 +44,9 @@ public class OneToNBroadcastConnectorTest {
         luceneAnalyzer = new StandardAnalyzer();
         dataWriter = new DataWriter(dataStore, luceneAnalyzer);
         dataWriter.clearData();
-        dataWriter.writeData(TestConstants.getSamplePeopleTuples());
+        for (ITuple tuple : TestConstants.getSamplePeopleTuples()) {
+            dataWriter.insertTuple(tuple);
+        }
     }
     
     @After
@@ -53,8 +56,7 @@ public class OneToNBroadcastConnectorTest {
     
     private IOperator getScanSourceOperator(IDataStore dataStore) throws DataFlowException {
         DataReaderPredicate dataReaderPredicate = new DataReaderPredicate(
-                new MatchAllDocsQuery(), DataConstants.SCAN_QUERY, dataStore,
-                dataStore.getSchema().getAttributes(), luceneAnalyzer);
+                new MatchAllDocsQuery(), dataStore);
         IndexBasedSourceOperator sourceOperator = new IndexBasedSourceOperator(dataReaderPredicate);
         return sourceOperator;
     }
@@ -64,7 +66,7 @@ public class OneToNBroadcastConnectorTest {
      * This test connects Connector with Projection
      */
     @Test
-    public void testTwoOutputsWithProjection() throws DataFlowException {
+    public void testTwoOutputsWithProjection() throws TextDBException {
         IOperator sourceOperator = getScanSourceOperator(dataStore);
         
         List<String> projectionFields = Arrays.asList(

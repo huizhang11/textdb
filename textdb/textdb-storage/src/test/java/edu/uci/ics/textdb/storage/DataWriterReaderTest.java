@@ -1,7 +1,6 @@
 package edu.uci.ics.textdb.storage;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -14,7 +13,6 @@ import org.apache.lucene.search.Query;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.uci.ics.textdb.api.common.IPredicate;
 import edu.uci.ics.textdb.api.common.ITuple;
 import edu.uci.ics.textdb.api.storage.IDataReader;
 import edu.uci.ics.textdb.api.storage.IDataStore;
@@ -40,8 +38,7 @@ public class DataWriterReaderTest {
         dataWriter = new DataWriter(dataStore, luceneAnalyzer);
         QueryParser queryParser = new QueryParser(TestConstants.ATTRIBUTES_PEOPLE[0].getFieldName(), luceneAnalyzer);
         query = queryParser.parse(DataConstants.SCAN_QUERY);
-        dataReaderPredicate = new DataReaderPredicate(query, DataConstants.SCAN_QUERY, dataStore,
-                Arrays.asList(TestConstants.ATTRIBUTES_PEOPLE), luceneAnalyzer);
+        dataReaderPredicate = new DataReaderPredicate(query, dataStore);
         dataReader = new DataReader(dataReaderPredicate);
     }
 
@@ -49,8 +46,12 @@ public class DataWriterReaderTest {
     public void testReadWriteData() throws Exception {
         dataWriter.clearData();
         List<ITuple> actualTuples = TestConstants.getSamplePeopleTuples();
-        dataWriter.writeData(actualTuples);
-        Assert.assertEquals(actualTuples.size(), dataStore.getNumDocuments());
+        for (ITuple tuple : actualTuples) {
+            dataWriter.insertTuple(tuple);
+        }
+        
+        Assert.assertEquals(dataStore.getNumDocuments(), actualTuples.size());
+        
         dataReader.open();
         ITuple nextTuple = null;
         int numTuples = 0;

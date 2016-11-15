@@ -4,9 +4,9 @@
 package edu.uci.ics.textdb.dataflow.source;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import edu.uci.ics.textdb.api.exception.TextDBException;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryparser.classic.ParseException;
@@ -17,7 +17,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.uci.ics.textdb.api.common.IPredicate;
 import edu.uci.ics.textdb.api.common.ITuple;
 import edu.uci.ics.textdb.api.storage.IDataStore;
 import edu.uci.ics.textdb.api.storage.IDataWriter;
@@ -47,8 +46,9 @@ public class IndexBasedSourceOperatorTest {
         luceneAnalyzer = new StandardAnalyzer();
         dataWriter = new DataWriter(dataStore, luceneAnalyzer);
         dataWriter.clearData();
-        dataWriter.writeData(TestConstants.getSamplePeopleTuples());
-
+        for (ITuple tuple : TestConstants.getSamplePeopleTuples()) {
+            dataWriter.insertTuple(tuple);
+        }
     }
 
     @After
@@ -60,13 +60,12 @@ public class IndexBasedSourceOperatorTest {
         String defaultField = TestConstants.ATTRIBUTES_PEOPLE[0].getFieldName();
         QueryParser queryParser = new QueryParser(defaultField, luceneAnalyzer);
         Query queryObject = queryParser.parse(query);
-        dataReaderPredicate = new DataReaderPredicate(queryObject, query, dataStore,
-                Arrays.asList(TestConstants.ATTRIBUTES_PEOPLE[0]), luceneAnalyzer);
+        dataReaderPredicate = new DataReaderPredicate(queryObject, dataStore);
 
         indexBasedSourceOperator = new IndexBasedSourceOperator(dataReaderPredicate);
     }
 
-    public List<ITuple> getQueryResults(String query) throws DataFlowException, ParseException {
+    public List<ITuple> getQueryResults(String query) throws TextDBException, ParseException {
         constructIndexBasedSourceOperator(query);
         indexBasedSourceOperator.open();
 
@@ -86,7 +85,7 @@ public class IndexBasedSourceOperatorTest {
      * @throws ParseException
      */
     @Test
-    public void testTextSearchWithMultipleTokens() throws DataFlowException, ParseException {
+    public void testTextSearchWithMultipleTokens() throws TextDBException, ParseException {
         List<ITuple> results = getQueryResults(TestConstants.DESCRIPTION + ":Tall,Brown");
         int numTuples = results.size();
         Assert.assertEquals(3, numTuples);
@@ -102,7 +101,7 @@ public class IndexBasedSourceOperatorTest {
      * @throws ParseException
      */
     @Test
-    public void testTextSearchWithSingleToken() throws DataFlowException, ParseException {
+    public void testTextSearchWithSingleToken() throws TextDBException, ParseException {
         List<ITuple> results = getQueryResults(TestConstants.DESCRIPTION + ":angry");
         int numTuples = results.size();
         boolean check = TestUtils.checkResults(results, "angry", this.luceneAnalyzer, TestConstants.DESCRIPTION);
@@ -118,7 +117,7 @@ public class IndexBasedSourceOperatorTest {
      * @throws ParseException
      */
     @Test
-    public void testStringSearchWithSubstring() throws DataFlowException, ParseException {
+    public void testStringSearchWithSubstring() throws TextDBException, ParseException {
         List<ITuple> results = getQueryResults("lin");
         int numTuples = results.size();
         Assert.assertEquals(0, numTuples);
@@ -132,7 +131,7 @@ public class IndexBasedSourceOperatorTest {
      * @throws ParseException
      */
     @Test
-    public void testMultipleFields() throws DataFlowException, ParseException {
+    public void testMultipleFields() throws TextDBException, ParseException {
         List<ITuple> results = getQueryResults(
                 TestConstants.DESCRIPTION + ":(Tall,Brown)" + " AND " + TestConstants.LAST_NAME + ":cruise");
         int numTuples = results.size();
@@ -155,7 +154,7 @@ public class IndexBasedSourceOperatorTest {
      * @throws DataFlowException
      */
     @Test(expected = DataFlowException.class)
-    public void testResetPredicate() throws ParseException, DataFlowException {
+    public void testResetPredicate() throws ParseException, TextDBException {
         constructIndexBasedSourceOperator(TestConstants.DESCRIPTION + ":angry");
         indexBasedSourceOperator.open();
         indexBasedSourceOperator.getNextTuple();
