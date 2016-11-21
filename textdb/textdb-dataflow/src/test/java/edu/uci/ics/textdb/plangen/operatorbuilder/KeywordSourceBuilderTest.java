@@ -53,7 +53,7 @@ public class KeywordSourceBuilderTest {
         Assert.assertEquals(Utils.getSchemaWithID(testTableSchema), sourceOperator.getDataStore().getSchema());
         // compare the keyword matcher attribute list
         Assert.assertEquals(
-                Arrays.asList(new Attribute("test", FieldType.STRING)),
+                Arrays.asList("test"),
                 sourceOperator.getPredicate().getAttributeNames());
 
     }
