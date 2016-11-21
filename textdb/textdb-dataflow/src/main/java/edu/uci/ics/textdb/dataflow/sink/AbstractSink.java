@@ -5,6 +5,8 @@ import edu.uci.ics.textdb.api.common.Schema;
 import edu.uci.ics.textdb.api.dataflow.IOperator;
 import edu.uci.ics.textdb.api.dataflow.ISink;
 import edu.uci.ics.textdb.api.exception.TextDBException;
+import edu.uci.ics.textdb.common.constants.SchemaConstants;
+import edu.uci.ics.textdb.common.utils.Utils;
 
 /**
  * Created by chenli on 5/11/16.
@@ -17,13 +19,17 @@ import edu.uci.ics.textdb.api.exception.TextDBException;
 public abstract class AbstractSink implements ISink {
 
     private IOperator inputOperator;
+    private Schema inputSchema;
+    private Schema outputSchema;
 
     /**
      * @about Opens the child operator.
      */
     @Override
     public void open() throws TextDBException {
-        inputOperator.open();
+        inputSchema = inputOperator.getOutputSchema();
+        outputSchema = Utils.removeAttributeFromSchema(inputSchema, SchemaConstants.PAYLOAD);
+        this.inputOperator.open();
     }
 
     public void setInputOperator(IOperator inputOperator) {
@@ -42,6 +48,19 @@ public abstract class AbstractSink implements ISink {
             processOneTuple(nextTuple);
         }
     }
+    
+    @Override
+    public ITuple getNextTuple() throws TextDBException {
+        ITuple nextTuple = inputOperator.getNextTuple();
+        if (nextTuple == null) {
+            return null;
+        }
+        if (inputSchema.containsField(SchemaConstants.PAYLOAD)) {
+            return Utils.removePayload(inputOperator.getNextTuple());
+        } else {
+            return nextTuple;
+        }
+    }
 
     /**
      *
@@ -56,6 +75,6 @@ public abstract class AbstractSink implements ISink {
     }
     
     public Schema getOutputSchema() {
-        return this.inputOperator.getOutputSchema();
+        return outputSchema;
     }
 }

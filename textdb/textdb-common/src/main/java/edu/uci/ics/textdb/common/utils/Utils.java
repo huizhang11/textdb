@@ -168,6 +168,13 @@ public class Utils {
         Schema newSchema = new Schema(attributes.toArray(new Attribute[attributes.size()]));
         return newSchema;
     }
+    
+    public static Schema removeAttributeFromSchema(Schema schema, String attributeName) {
+        return new Schema(
+                schema.getAttributes().stream()
+                .filter(attr -> ! attr.getFieldName().equals(attributeName))
+                .toArray(Attribute[]::new));
+    }
 
     /**
      * Tokenizes the query string using the given analyser
