@@ -1,6 +1,3 @@
-var regNum = 0;
-var keyNum = 0;
-
 var main = function(){
 		
     $('.icon-menu').click(function(){
@@ -21,9 +18,9 @@ var main = function(){
             'margin-right': '295px'
         }, 200);
 		
-		$('.popup').animate({
-			'padding-right': '285px'
-		}, 200);
+		// $('.popup').animate({
+			// 'padding-right': '285px'
+		// }, 200);
 		
         $('body').animate({
             'left': '285px'
@@ -43,34 +40,14 @@ var main = function(){
             // 'left': '0px'
         // }, 200);
 		
-		$('.popup').animate({
-			'padding-right': '0px'
-		}, 200);
+		// $('.popup').animate({
+			// 'padding-right': '0px'
+		// }, 200);
 		
         $('body').animate({
             'left': '0px'
         }, 200);
     });
-	
-	$('.regex-matcher').click(function(){
-        /*$('.dashboard').append(
-		`<li class="regex-square" id="regex-square${regNum}">Regex Matcher 
-			<p>
-				<a href="#" class="itemDelete">Delete</a>
-			</p>
-		</li>`);
-		regNum += 1;*/
-	});
-	
-	$('.keyword-matcher').click(function(){
-        /*$('.dashboard').append(
-		`<li class="keyword-square" id="keyword-square${keyNum}">Keyword Matcher 
-			<p>
-				<a href="#" class="itemDelete">Delete</a>
-			</p>
-		</li>`);
-		keyNum += 1;*/
-	});
 	
 	$('.band').on('click', function() {
 		$('.popup').animate({
@@ -91,11 +68,6 @@ var main = function(){
 			$('#' + panelToShow).addClass('active');
 		}		
 	});
-	
-	// $('.dashboard').on('click', '.itemDelete', function() {
-		// var id = $(this).parent().parent().attr('id');
-		// $('#' + id).remove();
-	// });
 };
 
 $(document).ready(main);

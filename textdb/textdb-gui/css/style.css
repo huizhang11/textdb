@@ -8,7 +8,7 @@ body {
 
 /* Initial menu */
 .menu {
-  background: #202024 url('http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/uber/black-thread.png') repeat left top;
+  background: #202024 url("../img/black-thread.png") repeat left top;
   left: -285px;  /* start off behind the scenes */
   top: 0px;
   height: 100%;
@@ -54,25 +54,27 @@ body {
 .icon-close {
   cursor: pointer;
   padding: 10px;
+  padding-bottom: 14px;
 }
 
 .nav {
-	background: #202024 url('http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/uber/black-thread.png') repeat left top;
+	background: #202024 url("../img/black-thread.png") repeat left top;
 }
 
 .process-query {
 /*   border: 1px solid #636366; */
-  background-image: url(http://www.magicfloor-international.com/wp-content/uploads/Pastel-Lines-56606-dark-grey-800x566.jpg);
+/*	 background-image: url('../img/pastel-lines-dark-grey.png'); */
 /*   line-height: 45px; */
-  font-weight: bold;
-  float: right;
-  color: white;
+	font-weight: bold;
+	float: right;
+	color: white;
 }
 
 #main-delete {
-	background-image: url(http://www.wallpapers4u.org/wp-content/uploads/patterns_lines_bright_color_surface_texture_50511_1920x1080.jpg);
+/*  background-image: url('../img/patterns-lines-red.jpg'); */
 /* 	padding-left: 100px; */
 /* 	border: 1px solid #636366; */
+	background-color: Darkred;
 	float: right;
 	color: white;
     font-weight: bold;
@@ -96,16 +98,8 @@ body {
 	color: #fff;
 }
 
-.regex-square{
-	background-color: green;
-}
-
-.keyword-square{
-	background-color: red;
-}
-
 .dashboard {
-	background-image: url('http://hdwallpaperbackgrounds.net/wp-content/uploads/2016/07/white-background-9.jpg'); 
+	background-image: url('../img/white-background.jpg'); 
 	margin: 0;
 	padding: 0;
 	height: 100%;
@@ -139,14 +133,14 @@ button{
 }
 
 .popup{
-	height: 250px;
+	height: 310px;
 	width: 450px;
 	padding: 0px;
 	margin: 0px;
 	bottom: 0;
 	right: 0;
-	position: absolute;
-	background-image: url('http://hdwallpaperbackgrounds.net/wp-content/uploads/2016/07/white-background-9.jpg');
+	position: fixed;
+	background-image: url('../img/white-background.jpg');
 	background-size: 100% 100%;
 	border: 1px solid black;
 }
@@ -155,7 +149,7 @@ button{
 	height: 20px;
 	border-bottom: 1px solid black;
 	padding: 11px;
-	background: #202024 url('http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/uber/black-thread.png') repeat left top;
+	background: #202024 url('../img/black-thread.png') repeat left top;
 	color: #fff;
 	font-family: 'Open Sans', sans-serif;
 	font-size: 16px;
@@ -170,15 +164,3 @@ button{
 	line-height: 1.5;
 /*  	display: inline-block;*/
 }
-/*
-.dashboard li {
-	display: inline-block;
-	list-style-type: none;
-	cursor: pointer;
-	padding: 5px;
-	border: 2px solid black;
-	margin: 5px;
-	width: 200px;
-	height: 200px;
-}
-*/
