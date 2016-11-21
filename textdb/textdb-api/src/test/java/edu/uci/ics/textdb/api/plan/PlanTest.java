@@ -6,6 +6,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.uci.ics.textdb.api.common.ITuple;
 import edu.uci.ics.textdb.api.common.Schema;
 import edu.uci.ics.textdb.api.dataflow.ISink;
 
@@ -49,6 +50,11 @@ public class PlanTest {
             @Override
             public Schema getOutputSchema() {
                 // TODO Auto-generated method stub
+                return null;
+            }
+            
+            @Override
+            public ITuple getNextTuple() {
                 return null;
             }
         };
