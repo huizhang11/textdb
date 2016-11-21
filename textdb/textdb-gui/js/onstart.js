@@ -89,7 +89,10 @@ $(document).ready(function() {
             },
             error: function(xhr, status, err){
                 console.log("ERROR");
-                console.log(err);
+				console.log(xhr.status);
+				console.log(JSON.stringify(xhr));
+				console.log(JSON.stringify(status));
+				console.log(JSON.stringify(err));
             }
         });
 	});
