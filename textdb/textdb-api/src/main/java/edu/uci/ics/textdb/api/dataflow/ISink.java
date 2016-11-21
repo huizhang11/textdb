@@ -16,9 +16,5 @@ public interface ISink extends IOperator {
     void processTuples() throws TextDBException;
 
     void close() throws TextDBException;
-    
-    default ITuple getNextTuple() throws TextDBException {
-        throw new TextDBException("temp", new UnsupportedOperationException());
-    }
-    
+
 }
