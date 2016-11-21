@@ -55,7 +55,7 @@ public class DictionarySourceBuilder {
         DictionaryPredicate predicate = new DictionaryPredicate(
                 dictionary, attributeList, LuceneAnalyzerConstants.getStandardAnalyzer(), matchingType);
         
-        DataStore dataStore = OperatorBuilderUtils.constructDataStoreOld(operatorProperties);
+        DataStore dataStore = OperatorBuilderUtils.constructDataStore(operatorProperties);
         
         DictionaryMatcherSourceOperator sourceOperator = new DictionaryMatcherSourceOperator(predicate, dataStore);
                 
