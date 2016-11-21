@@ -1,5 +1,6 @@
 package edu.uci.ics.textdb.plangen.operatorbuilder;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import org.junit.After;
@@ -11,6 +12,7 @@ import edu.uci.ics.textdb.api.common.FieldType;
 import edu.uci.ics.textdb.api.common.Schema;
 import edu.uci.ics.textdb.common.constants.LuceneAnalyzerConstants;
 import edu.uci.ics.textdb.common.exception.PlanGenException;
+import edu.uci.ics.textdb.common.utils.Utils;
 import edu.uci.ics.textdb.dataflow.keywordmatch.KeywordMatcherSourceOperator;
 import edu.uci.ics.textdb.storage.relation.RelationManager;
 import junit.framework.Assert;
@@ -46,13 +48,13 @@ public class KeywordSourceBuilderTest {
         // compare the keyword
         Assert.assertEquals(keyword, sourceOperator.getPredicate().getQuery());
         // compare the dataStore directory
-        Assert.assertEquals(testTableDirectory, sourceOperator.getDataStore().getDataDirectory());
+        Assert.assertEquals(new File(testTableDirectory).getCanonicalPath(), sourceOperator.getDataStore().getDataDirectory());
         // compare the dataStore schema
-        Assert.assertEquals(testTableSchema, sourceOperator.getDataStore().getSchema());
+        Assert.assertEquals(Utils.getSchemaWithID(testTableSchema), sourceOperator.getDataStore().getSchema());
         // compare the keyword matcher attribute list
         Assert.assertEquals(
-                Arrays.asList("test").toString(),
-                sourceOperator.getPredicate().getAttributeNames().toString());
+                Arrays.asList(new Attribute("test", FieldType.STRING)),
+                sourceOperator.getPredicate().getAttributeNames());
 
     }
     

@@ -1,5 +1,6 @@
 package edu.uci.ics.textdb.plangen.operatorbuilder;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.json.JSONObject;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,6 +17,7 @@ import edu.uci.ics.textdb.api.common.FieldType;
 import edu.uci.ics.textdb.api.common.Schema;
 import edu.uci.ics.textdb.common.constants.LuceneAnalyzerConstants;
 import edu.uci.ics.textdb.common.exception.PlanGenException;
+import edu.uci.ics.textdb.common.utils.Utils;
 import edu.uci.ics.textdb.dataflow.dictionarymatcher.DictionaryMatcherSourceOperator;
 import edu.uci.ics.textdb.storage.relation.RelationManager;
 import junit.framework.Assert;
@@ -48,6 +51,7 @@ public class DictionarySourceBuilderTest {
         operatorProperties.put(DictionaryMatcherBuilder.DICTIONARY, dictionaryStr);
         operatorProperties.put(DictionaryMatcherBuilder.MATCHING_TYPE, "PHRASE_INDEXBASED");
         operatorProperties.put(OperatorBuilderUtils.ATTRIBUTE_NAMES, "test");
+        operatorProperties.put(OperatorBuilderUtils.ATTRIBUTE_TYPES, "string");
         operatorProperties.put(OperatorBuilderUtils.DATA_SOURCE, testTableName);
         
         DictionaryMatcherSourceOperator sourceOperator = DictionarySourceBuilder.buildSourceOperator(operatorProperties);
@@ -61,14 +65,17 @@ public class DictionarySourceBuilderTest {
         // compare dict
         Assert.assertEquals(dictionaryList, actualDictionary);
         // compare dataStore directory
-        Assert.assertEquals(testTableDirectory, sourceOperator.getDataStore().getDataDirectory());
+        Assert.assertEquals(new File(testTableDirectory).getCanonicalPath(), sourceOperator.getDataStore().getDataDirectory());
         // compare dataStore schema
-        Assert.assertEquals(
-                testTableSchema, 
-                sourceOperator.getDataStore().getSchema());
+        Assert.assertEquals(Utils.getSchemaWithID(testTableSchema), sourceOperator.getDataStore().getSchema());
         // compare dictMatcher attribute list
-        Assert.assertEquals(Arrays.asList("test"), sourceOperator.getPredicate().getAttributeList().toString());
+        Assert.assertEquals(Arrays.asList(new Attribute("test", FieldType.STRING)), sourceOperator.getPredicate().getAttributeList());
 
+    }
+    
+    @After
+    public void deleteFromCatalog() throws Exception {
+        RelationManager.getRelationManager().deleteTable(testTableName);
     }
 
 }
