@@ -72,7 +72,7 @@ public class DictionarySourceBean extends OperatorBean {
             return null;
         operatorProperties.put(DictionarySourceBuilder.DICTIONARY, this.getDictionary());
         operatorProperties.put(DictionarySourceBuilder.MATCHING_TYPE, this.getMatchingType().name());
-        operatorProperties.put(OperatorBuilderUtils.DATA_DIRECTORY, this.getDataSource());
+        operatorProperties.put(OperatorBuilderUtils.DATA_SOURCE, this.getDataSource());
         return operatorProperties;
     }
 
