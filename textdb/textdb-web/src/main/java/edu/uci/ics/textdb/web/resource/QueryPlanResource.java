@@ -1,6 +1,11 @@
 package edu.uci.ics.textdb.web.resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import edu.uci.ics.textdb.api.common.ITuple;
+import edu.uci.ics.textdb.api.dataflow.ISink;
+import edu.uci.ics.textdb.api.plan.Plan;
+import edu.uci.ics.textdb.common.utils.Utils;
 import edu.uci.ics.textdb.web.request.QueryPlanRequest;
 import edu.uci.ics.textdb.web.response.SampleResponse;
 
@@ -33,11 +38,22 @@ public class QueryPlanResource {
         // Aggregating all the operator properties, and creating a logical plan object
         boolean aggregatePropertiesFlag = queryPlanRequest.aggregateOperatorProperties();
         boolean createLogicalPlanFlag = queryPlanRequest.createLogicalPlan();
+        
+        Plan plan = queryPlanRequest.getLogicalPlan().buildQueryPlan();
+        ISink sink = plan.getRoot();
+        ITuple firstTuple = sink.getNextTuple();
+        
+        String returnMessage = "";
+        if (firstTuple == null) {
+            returnMessage = "null";
+        } else {
+            returnMessage = Utils.getTupleString(firstTuple);
+        }
 
         ObjectMapper objectMapper = new ObjectMapper();
         if(aggregatePropertiesFlag && createLogicalPlanFlag) {
             // Temporary sample response when the operator properties aggregation works correctly
-            SampleResponse sampleResponse = new SampleResponse(0, "Successful");
+            SampleResponse sampleResponse = new SampleResponse(0, returnMessage);
             return Response.status(200)
                     .entity(objectMapper.writeValueAsString(sampleResponse))
                     .header("Access-Control-Allow-Origin", "*")

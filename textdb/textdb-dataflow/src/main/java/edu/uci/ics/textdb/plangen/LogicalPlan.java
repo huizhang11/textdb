@@ -363,7 +363,7 @@ public class LogicalPlan implements Serializable {
      * 
      * This function assumes that the graph is valid and there is only one sink in the graph.
      */
-    private ISink findSinkOperator(HashMap<String, IOperator> operatorObjectMap) throws PlanGenException {
+    public ISink findSinkOperator(HashMap<String, IOperator> operatorObjectMap) throws PlanGenException {
         IOperator sinkOperator = adjacencyList.keySet().stream()
                 .filter(operator -> operatorTypeMap.get(operator).toLowerCase().contains("sink"))
                 .map(operator -> operatorObjectMap.get(operator))

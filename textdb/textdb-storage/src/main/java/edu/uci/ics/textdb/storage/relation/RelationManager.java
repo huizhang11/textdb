@@ -57,7 +57,7 @@ public class RelationManager implements IRelationManager {
     public boolean checkTableExistence(String tableName) {
         try {
             String tableDirectory = getTableDirectory(tableName);
-            return DataReader.checkIndexExistence(tableDirectory);
+            return true;
         } catch (StorageException e) {
             return false;
         }
