@@ -50,13 +50,9 @@ public class LogicalPlanTest {
 
     public static HashMap<String, String> keywordSourceProperties = new HashMap<String, String>() {
         {
-            JSONObject schemaJsonJSONObject = new JSONObject();
-            schemaJsonJSONObject.put(OperatorBuilderUtils.ATTRIBUTE_NAMES, "id, city, location, content");
-            schemaJsonJSONObject.put(OperatorBuilderUtils.ATTRIBUTE_TYPES, "integer, string, string, text");
-
             put(KeywordMatcherBuilder.KEYWORD, "irvine");
             put(KeywordMatcherBuilder.MATCHING_TYPE, "PHRASE_INDEXBASED");
-            put(OperatorBuilderUtils.ATTRIBUTE_NAMES, "city, location, content");
+            put(OperatorBuilderUtils.ATTRIBUTE_NAMES, "test");
             put(OperatorBuilderUtils.DATA_SOURCE, "LogicalPlanTest_Table");
         }
     };
