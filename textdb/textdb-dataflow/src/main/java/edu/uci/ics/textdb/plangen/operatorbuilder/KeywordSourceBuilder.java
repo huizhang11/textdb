@@ -55,7 +55,7 @@ public class KeywordSourceBuilder {
         keywordPredicate = new KeywordPredicate(keyword, attributeNames,
                 LuceneAnalyzerConstants.getStandardAnalyzer(), matchingType);  
         
-        DataStore dataStore = OperatorBuilderUtils.constructDataStore(operatorProperties);
+        DataStore dataStore = OperatorBuilderUtils.constructDataStoreOld(operatorProperties);
 
         KeywordMatcherSourceOperator sourceOperator;
         try {

@@ -73,11 +73,13 @@ public class OperatorBuilderUtils {
      *   }
      * }
      * 
+     * TODO: This is the old API, after source operators are changed, this should be deleted
+     * 
      * @param operatorProperties
      * @return dataStore, dataStore constructed according to directory and schema.
      * @throws PlanGenException
      */
-    public static DataStore constructDataStore(Map<String, String> operatorProperties) throws PlanGenException {
+    public static DataStore constructDataStoreOld(Map<String, String> operatorProperties) throws PlanGenException {
         String directoryStr = OperatorBuilderUtils.getRequiredProperty(DATA_DIRECTORY, operatorProperties);
         String schemaStr = OperatorBuilderUtils.getRequiredProperty(SCHEMA, operatorProperties);
         
