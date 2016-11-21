@@ -4,11 +4,17 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import org.json.JSONObject;
+import org.junit.Before;
 import org.junit.Test;
 
+import edu.uci.ics.textdb.api.common.Attribute;
+import edu.uci.ics.textdb.api.common.FieldType;
+import edu.uci.ics.textdb.api.common.Schema;
 import edu.uci.ics.textdb.api.dataflow.IOperator;
 import edu.uci.ics.textdb.api.dataflow.ISink;
+import edu.uci.ics.textdb.api.exception.TextDBException;
 import edu.uci.ics.textdb.api.plan.Plan;
+import edu.uci.ics.textdb.common.constants.LuceneAnalyzerConstants;
 import edu.uci.ics.textdb.common.exception.PlanGenException;
 import edu.uci.ics.textdb.dataflow.connector.OneToNBroadcastConnector;
 import edu.uci.ics.textdb.dataflow.connector.OneToNBroadcastConnector.ConnectorOutputOperator;
@@ -25,9 +31,22 @@ import edu.uci.ics.textdb.plangen.operatorbuilder.KeywordMatcherBuilder;
 import edu.uci.ics.textdb.plangen.operatorbuilder.NlpExtractorBuilder;
 import edu.uci.ics.textdb.plangen.operatorbuilder.OperatorBuilderUtils;
 import edu.uci.ics.textdb.plangen.operatorbuilder.RegexMatcherBuilder;
+import edu.uci.ics.textdb.storage.relation.RelationManager;
 import junit.framework.Assert;
 
 public class LogicalPlanTest {
+    
+    public static final String testTable = "LogicalPlanTest_Table";
+    
+    @Before
+    public void createTestTable() throws TextDBException {
+        RelationManager.getRelationManager().createTable(
+                testTable, 
+                "LogicalPlanTest_Table", 
+                new Schema(new Attribute("test", FieldType.STRING)), 
+                LuceneAnalyzerConstants.standardAnalyzerString());
+        
+    }
 
     public static HashMap<String, String> keywordSourceProperties = new HashMap<String, String>() {
         {
@@ -38,9 +57,7 @@ public class LogicalPlanTest {
             put(KeywordMatcherBuilder.KEYWORD, "irvine");
             put(KeywordMatcherBuilder.MATCHING_TYPE, "PHRASE_INDEXBASED");
             put(OperatorBuilderUtils.ATTRIBUTE_NAMES, "city, location, content");
-            put(OperatorBuilderUtils.ATTRIBUTE_TYPES, "STRING, STRING, TEXT");
-            put(OperatorBuilderUtils.DATA_DIRECTORY, "./index");
-            put(OperatorBuilderUtils.SCHEMA, schemaJsonJSONObject.toString());
+            put(OperatorBuilderUtils.DATA_SOURCE, "LogicalPlanTest_Table");
         }
     };
 
