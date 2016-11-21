@@ -17,13 +17,14 @@ $(document).ready(function() {
 	var selectedOperator = '';
 	var editOperators = [];
 	
-	var regexInput = "zika\s*(virus|fever)";
-	var keywordInput = "Zika";
+	var defaultRegex = "zika\s*(virus|fever)";
+	var defaultKeyword = "Zika";
 	var defaultDict = "SampleDict1.txt";
-	var fuzzyInput = "FuzzyWuzzy";
+	var defaultFuzzy = "FuzzyWuzzy";
 	var thresholdRatio = 0.8;
 	var nlpArray = ["noun", "verb", "adjective", "adverb", "ne_all", "number", "location", "person", "organization", "money", "percent", "date", "time"];
-	var nlpInput = "ne_all";
+	var defaultNlp = "ne_all";
+	var defaultDataSource = "collection name";
 	var defaultFileSink = "output.txt";
 	var defaultAttributeID = "John";
 	var defaultPredicateType = "CharacterDistance";
@@ -88,7 +89,10 @@ $(document).ready(function() {
             },
             error: function(xhr, status, err){
                 console.log("ERROR");
-                console.log(err);
+				console.log(xhr.status);
+				console.log(JSON.stringify(xhr));
+				console.log(JSON.stringify(status));
+				console.log(JSON.stringify(err));
             }
         });
 	});
@@ -168,13 +172,13 @@ $(document).ready(function() {
 	  
 	  if (panel == 'regex-panel'){
 		if (userInput == null || userInput == ''){
-			userInput = regexInput;
+			userInput = defaultRegex;
 		}
 	    extraOperators['regex'] = userInput;
 	  }
 	  else if (panel == 'keyword-panel'){
 		if (userInput == null || userInput == ''){
-			userInput = keywordInput;
+			userInput = defaultKeyword;
 		}
 		extraOperators['keyword'] = userInput;
 		extraOperators['matching_type'] = $('#' + panel + ' .matching-type').val();
@@ -188,20 +192,34 @@ $(document).ready(function() {
 	  }
 	  else if (panel == 'fuzzy-panel'){
 		if (userInput == null || userInput == ''){
-			userInput = fuzzyInput;
+			userInput = defaultFuzzy;
 		}
 		extraOperators['query'] = userInput;
 		extraOperators['threshold_ratio'] = thresholdRatio;
 	  }
 	  else if (panel == 'nlp-panel'){
 		if (userInput == null || userInput == ''){
-			userInput = nlpInput;
+			userInput = defaultNlp;
 		}
 		else if(nlpArray.indexOf(userInput.toLowerCase()) == -1){
 			alert('Please choose an NLP from the following: ["noun", "verb", "adjective", "adverb", "ne_all", "number", "location", "person", "organization", "money", "percent", "date", "time"]');
 			return;
 		}
-		extraOperators['nlp-type'] = userInput;
+		extraOperators['nlp_type'] = userInput;
+	  }
+	  else if (panel == 'keyword-source-panel'){
+		if (userInput == null || userInput == ''){
+			userInput = defaultKeyword;
+		}
+		extraOperators['keyword'] = userInput;
+		
+		var dataSource = $('#' + panel + ' .data-source').val();
+		if (dataSource == null || dataSource == ''){
+			dataSource = defaultDataSource;
+		}
+		extraOperators['data_source'] = dataSource;
+		
+		extraOperators['matching_type'] = $('#' + panel + ' .matching-type').val();
 	  }
 	  else if (panel == 'file-sink-panel'){
 		if (userInput == null || userInput == ''){

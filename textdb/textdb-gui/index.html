@@ -101,6 +101,27 @@
 				<br/>
                 <button rel="nlp-panel" id='NlpExtractor' class="create-operator">Create operator</button><br/><br/>
             </div>
+		<li rel="keyword-source-panel" class="keyword-source"><font color="yellow">Create Keyword Source</font></li>
+			<div id="keyword-source-panel" class="panel">
+                <em>Enter Keyword: </em><br/>
+				<input type="text" class='value' placeholder="Zika"><br/>
+				<em>Enter Data Source: </em><br/>
+				<input type="text" class="data-source" placeholder="Collection Name"><br/>
+                <em>Select Matching Type: </em><br/>
+                <select class="matching-type">
+					<option value="conjunction" selected>Conjunction</option>
+					<option value="phrase">Phrase</option>
+					<option value="substring">Substring</option>
+				</select><br/>
+				<em>Enter Attributes (Separated by commas): </em><br/>
+				<input type="text" class='attributes' placeholder="first name, last name"><br/>
+				<em>Enter Limit (Optional): </em><br/>
+				<input type="text" class='limit' placeholder="10" value="10"><br/>
+				<em>Enter Offset (Optional): </em><br/>
+				<input type="text" class='offset' placeholder="5" value="5"><br/>
+				<br/>
+                <button rel="keyword-source-panel" id='KeywordSource' class="create-operator">Create operator</button><br/><br/>
+            </div>
 		<li rel="file-sink-panel" class="file-sink-matcher"><font color="orange">Create File Sink</font></li>
 			<div id="file-sink-panel" class="panel">
                 <em>Enter File Path: </em><br/>
