@@ -18,11 +18,11 @@ import java.util.function.Consumer;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.uci.ics.textdb.textql.languageparser.TextQLParser.Statement;
-import edu.uci.ics.textdb.textql.languageparser.TextQLParser.SelectStatement;
-import edu.uci.ics.textdb.textql.languageparser.TextQLParser.CreateViewStatement;
-import edu.uci.ics.textdb.textql.languageparser.TextQLParser.ExtractPredicate;
-import edu.uci.ics.textdb.textql.languageparser.TextQLParser.KeywordExtractPredicate;
+import edu.uci.ics.textdb.textql.languageparser.Statement;
+import edu.uci.ics.textdb.textql.languageparser.SelectStatement;
+import edu.uci.ics.textdb.textql.languageparser.CreateViewStatement;
+import edu.uci.ics.textdb.textql.languageparser.ExtractPredicate;
+import edu.uci.ics.textdb.textql.languageparser.KeywordExtractPredicate;
 
 public class TextQLParserTest {
 
