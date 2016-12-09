@@ -56,7 +56,9 @@ public class Extractor {
         writeSampleIndex();
         
         // perform the extraction task
-        extractPersonLocation();
+//        extractPersonLocation();
+//        extractPersonLocation_KeywordOnly();
+        extractPersonLocation_RejexOnly();
     }
     
     public static ITuple parsePromedHTML(String fileName, String content) {
@@ -103,6 +105,152 @@ public class Extractor {
 
         Engine.getEngine().evaluate(standardIndexPlan);
     }
+    
+    /*
+     * This is the DAG of KeywordOnly extraction plan.
+     * Output: look for locations in a file with the Keyword
+     * 
+     *              KeywordSource (zika)
+     *                       ↓
+     *              Projection (content)
+     *                       ↓
+     *                NLP (location)
+     *                       ↓
+     * Projection (ID:filename; spanList(field,start:109; end:115; key:Location; value: Brazil;token; offset:-1) )
+     *                       ↓
+     *                    FileSink
+     *                    
+     */
+    public static void extractPersonLocation_KeywordOnly() throws Exception {
+        
+        String keywordZika = "zika";
+        KeywordPredicate keywordPredicateZika = new KeywordPredicate(keywordZika, Arrays.asList(PromedSchema.CONTENT),
+                new StandardAnalyzer(), KeywordMatchingType.CONJUNCTION_INDEXBASED);
+        
+        KeywordMatcherSourceOperator keywordSource = new KeywordMatcherSourceOperator(
+                keywordPredicateZika, promedDataStore);       
+        
+        ProjectionPredicate projectionPredicateIdAndContent = new ProjectionPredicate(
+                Arrays.asList(PromedSchema.ID, PromedSchema.CONTENT));
+        
+        ProjectionOperator projectionOperatorIdAndContent1 = new ProjectionOperator(projectionPredicateIdAndContent);
+
+        NlpPredicate nlpPredicateLocation = new NlpPredicate(NlpPredicate.NlpTokenType.Location, Arrays.asList(PromedSchema.CONTENT_ATTR));
+        NlpExtractor nlpExtractorLocation = new NlpExtractor(nlpPredicateLocation);
+        //output part setting
+        ProjectionPredicate projectionPredicateIdAndSpan = new ProjectionPredicate(
+                Arrays.asList(PromedSchema.ID, SchemaConstants.SPAN_LIST));
+        ProjectionOperator projectionOperatorIdAndSpan = new ProjectionOperator(projectionPredicateIdAndSpan);  
+        
+        FileSink fileSink = new FileSink( 
+                new File("./sample-data-files/person-location-result-"+PerfTestUtils.formatTime(System.currentTimeMillis())+".txt"));
+        fileSink.setToStringFunction((tuple -> Utils.getTupleString(tuple)));
+        
+        //link  stage 1
+        /*			KeywordSource (zika)
+        *                       ↓
+        *              Projection (content)
+        *                       ↓
+        *                NLP (location)
+        */              
+        projectionOperatorIdAndContent1.setInputOperator(keywordSource); 
+        nlpExtractorLocation.setInputOperator(projectionOperatorIdAndContent1);
+        
+        //link stage 2
+        /*				    NLP (location)
+         *                       ↓
+         *              Projection (spanList)
+         *                       ↓
+         *                    FileSink
+         */ 
+        projectionOperatorIdAndSpan.setInputOperator(nlpExtractorLocation);
+        fileSink.setInputOperator(projectionOperatorIdAndSpan);
+        
+        Plan extractPersonPlan = new Plan(fileSink);
+        Engine.getEngine().evaluate(extractPersonPlan);
+    }
+    
+    /*
+     * This is the DAG of RejexOnly extraction plan.
+     * Output: locations within distance of 100 to a ReGex pattern
+     * 
+     *                   projection (ID:filename, Content)
+     *                        ↓
+     *                  regex ( A|a|(an)|(An)) .{1,40} ((woman)|(man) )
+     *                  ↓          ↓
+     *                  ↓        NLP (location)
+     *                  ↓          ↓     
+     *             Join (distance < 100)
+     *                       ↓
+     *              Projection (spanList)  (ID:filename; spanList(field,start:109; end:115; key:Location; value: Brazil;token; offset:-1) )
+     *                       ↓
+     *                    FileSink
+     *                    
+     */
+    public static void extractPersonLocation_RejexOnly() throws Exception {
+        
+        ScanBasedSourceOperator scanSource = new ScanBasedSourceOperator(promedDataStore);
+        
+        ProjectionPredicate projectionPredicateIdAndContent = new ProjectionPredicate(
+                Arrays.asList(PromedSchema.ID, PromedSchema.CONTENT));
+        
+        ProjectionOperator projectionOperatorIdAndContent2 = new ProjectionOperator(projectionPredicateIdAndContent);
+
+        String regexPerson = "\\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\\b";
+        RegexPredicate regexPredicatePerson = new RegexPredicate(regexPerson, Arrays.asList(PromedSchema.CONTENT_ATTR),
+                LuceneAnalyzerConstants.getNGramAnalyzer(3));
+        RegexMatcher regexMatcherPerson = new RegexMatcher(regexPredicatePerson);
+        
+        NlpPredicate nlpPredicateLocation = new NlpPredicate(NlpPredicate.NlpTokenType.Location, Arrays.asList(PromedSchema.CONTENT_ATTR));
+        NlpExtractor nlpExtractorLocation = new NlpExtractor(nlpPredicateLocation);
+ 
+        //Condition of Join: distance less than 100
+        IJoinPredicate joinPredicatePersonLocation = new JoinDistancePredicate(PromedSchema.ID, PromedSchema.CONTENT, 100);
+        Join joinPersonLocation = new Join(null, null, joinPredicatePersonLocation);
+        //output Part settings
+        ProjectionPredicate projectionPredicateIdAndSpan = new ProjectionPredicate(
+                Arrays.asList(PromedSchema.ID, SchemaConstants.SPAN_LIST));
+        ProjectionOperator projectionOperatorIdAndSpan = new ProjectionOperator(projectionPredicateIdAndSpan);
+
+        FileSink fileSink = new FileSink( 
+                new File("./sample-data-files/person-location-result-"+PerfTestUtils.formatTime(System.currentTimeMillis())+".txt"));
+        fileSink.setToStringFunction((tuple -> Utils.getTupleString(tuple)));
+        
+        //link stage 1
+        regexMatcherPerson.setInputOperator(scanSource);
+        /*
+        *                   projection (ID:filename, Content)
+        *                               ↓
+        *                  regex ( A|a|(an)|(An)) .{1,40} ((woman)|(man) )
+        */
+        projectionOperatorIdAndContent2.setInputOperator(regexMatcherPerson);
+        
+        /* link stage 2
+        *                  regex ( A|a|(an)|(An)) .{1,40} ((woman)|(man) )
+        *                                       ↓
+        *                                  NLP (location)        
+        */
+        nlpExtractorLocation.setInputOperator(projectionOperatorIdAndContent2);
+        /* link stage 3
+         * 
+         *                 regex            NLP 
+         *                   ↓               ↓   
+         *                 Join (condition: distance < 100)
+         */
+        joinPersonLocation.setInnerInputOperator(regexMatcherPerson);
+        joinPersonLocation.setOuterInputOperator(nlpExtractorLocation);
+       /*
+        *                            ↓
+        *                       FileSink
+        */
+        projectionOperatorIdAndSpan.setInputOperator(joinPersonLocation);
+        fileSink.setInputOperator(projectionOperatorIdAndSpan);
+        
+        Plan extractPersonPlan = new Plan(fileSink);
+        Engine.getEngine().evaluate(extractPersonPlan);
+    }
+    
+    
 
     /*
      * This is the DAG of this extraction plan.
@@ -129,9 +277,6 @@ public class Extractor {
         
         KeywordMatcherSourceOperator keywordSource = new KeywordMatcherSourceOperator(
                 keywordPredicateZika, promedDataStore);
-        
-        
-        ScanBasedSourceOperator scanSource = new ScanBasedSourceOperator(promedDataStore);
         
         ProjectionPredicate projectionPredicateIdAndContent = new ProjectionPredicate(
                 Arrays.asList(PromedSchema.ID, PromedSchema.CONTENT));
@@ -161,10 +306,10 @@ public class Extractor {
         
         projectionOperatorIdAndContent1.setInputOperator(keywordSource);
         
-        regexMatcherPerson.setInputOperator(scanSource);
+        regexMatcherPerson.setInputOperator(projectionOperatorIdAndContent1);
         
         projectionOperatorIdAndContent2.setInputOperator(regexMatcherPerson);
-        nlpExtractorLocation.setInputOperator(scanSource);
+        nlpExtractorLocation.setInputOperator(projectionOperatorIdAndContent1);
         
         joinPersonLocation.setInnerInputOperator(regexMatcherPerson);
         joinPersonLocation.setOuterInputOperator(nlpExtractorLocation);

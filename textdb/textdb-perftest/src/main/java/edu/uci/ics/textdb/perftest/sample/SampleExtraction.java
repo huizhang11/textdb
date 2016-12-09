@@ -32,6 +32,7 @@ import edu.uci.ics.textdb.dataflow.projection.ProjectionPredicate;
 import edu.uci.ics.textdb.dataflow.regexmatch.RegexMatcher;
 import edu.uci.ics.textdb.dataflow.sink.FileSink;
 import edu.uci.ics.textdb.dataflow.sink.IndexSink;
+import edu.uci.ics.textdb.dataflow.source.ScanBasedSourceOperator;
 import edu.uci.ics.textdb.dataflow.source.TupleStreamSourceOperator;
 import edu.uci.ics.textdb.engine.Engine;
 import edu.uci.ics.textdb.perftest.promed.PromedSchema;
@@ -127,6 +128,9 @@ public class SampleExtraction {
         KeywordMatcherSourceOperator keywordSource = new KeywordMatcherSourceOperator(
                 keywordPredicateZika, promedDataStore);
         
+        
+        ScanBasedSourceOperator scanSource = new ScanBasedSourceOperator(promedDataStore);
+        
         ProjectionPredicate projectionPredicateIdAndContent = new ProjectionPredicate(
                 Arrays.asList(PromedSchema.ID, PromedSchema.CONTENT));
         
@@ -140,7 +144,7 @@ public class SampleExtraction {
         
         NlpPredicate nlpPredicateLocation = new NlpPredicate(NlpPredicate.NlpTokenType.Location, Arrays.asList(PromedSchema.CONTENT_ATTR));
         NlpExtractor nlpExtractorLocation = new NlpExtractor(nlpPredicateLocation);
-
+//less than 100 
         IJoinPredicate joinPredicatePersonLocation = new JoinDistancePredicate(PromedSchema.ID, PromedSchema.CONTENT, 100);
         Join joinPersonLocation = new Join(null, null, joinPredicatePersonLocation);
         
@@ -155,10 +159,10 @@ public class SampleExtraction {
         
         projectionOperatorIdAndContent1.setInputOperator(keywordSource);
         
-        regexMatcherPerson.setInputOperator(projectionOperatorIdAndContent1);
+        regexMatcherPerson.setInputOperator(scanSource);
         
         projectionOperatorIdAndContent2.setInputOperator(regexMatcherPerson);
-        nlpExtractorLocation.setInputOperator(projectionOperatorIdAndContent2);
+        nlpExtractorLocation.setInputOperator(scanSource);
         
         joinPersonLocation.setInnerInputOperator(regexMatcherPerson);
         joinPersonLocation.setOuterInputOperator(nlpExtractorLocation);

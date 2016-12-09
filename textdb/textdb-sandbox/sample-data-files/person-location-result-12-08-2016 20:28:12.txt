@@ -1,0 +1,168 @@
+id(STRING): 20150604.3408349.html
+span list:
+field: content
+start: 744
+end:   818
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: a 22 year old man, when he was admitted to the General Hospital of Roraima
+token offset: -1
+
+
+id(STRING): 20160203.3990632.html
+span list:
+field: content
+start: 3310
+end:   3422
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: Campinas Metro, Sao Paulo state. 28 Jan 2016. (conf.) 1st case in the municipality, a 31-year-old pregnant woman
+token offset: -1
+
+field: content
+start: 3326
+end:   3422
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: Sao Paulo state. 28 Jan 2016. (conf.) 1st case in the municipality, a 31-year-old pregnant woman
+token offset: -1
+
+field: content
+start: 12819
+end:   12893
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: USA - Boston, Massachusetts. 28 Jan 2016. (conf.) A previously healthy man
+token offset: -1
+
+field: content
+start: 12825
+end:   12893
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: Boston, Massachusetts. 28 Jan 2016. (conf.) A previously healthy man
+token offset: -1
+
+field: content
+start: 12833
+end:   12893
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: Massachusetts. 28 Jan 2016. (conf.) A previously healthy man
+token offset: -1
+
+field: content
+start: 12869
+end:   12912
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: A previously healthy man from Massachusetts
+token offset: -1
+
+
+id(STRING): 20160128.3974426.html
+span list:
+field: content
+start: 15547
+end:   15607
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: Austria ex Brazil. 28 Jan 2016. A 57-year-old Viennese woman
+token offset: -1
+
+field: content
+start: 15558
+end:   15607
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: Brazil. 28 Jan 2016. A 57-year-old Viennese woman
+token offset: -1
+
+
+id(STRING): 20160209.4007411.html
+span list:
+field: content
+start: 4468
+end:   4533
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: Cambodia detected a case in a 3-year-old boy. A 52-year-old woman
+token offset: -1
+
+field: content
+start: 4486
+end:   4546
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: a case in a 3-year-old boy. A 52-year-old woman in Australia
+token offset: -1
+
+
+id(STRING): 20151213.3858300.html
+span list:
+field: content
+start: 3890
+end:   3924
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: an infected man infected in Africa
+token offset: -1
+
+
+id(STRING): 20160217.4026836.html
+span list:
+field: content
+start: 13940
+end:   14005
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: England, semen persistence. 13 Feb 2016. (conf) a 68 year old man
+token offset: -1
+
+field: content
+start: 13988
+end:   14049
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: a 68 year old man became infected in 2014 in the Cook Islands
+token offset: -1
+
+field: content
+start: 15419
+end:   15481
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: Spain. 4 Feb 2016. (conf) 1 case ex Colombia, a pregnant woman
+token offset: -1
+
+field: content
+start: 15455
+end:   15481
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: Colombia, a pregnant woman
+token offset: -1
+
+field: content
+start: 15465
+end:   15540
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: a pregnant woman. http://www.bbc.com/news/world-europe-35490524 Switzerland
+token offset: -1
+
+
+id(STRING): 20150716.3513770.html
+span list:
+field: content
+start: 747
+end:   792
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: Parana. The individual is a 48-year-old woman
+token offset: -1
+
+field: content
+start: 773
+end:   826
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: a 48-year-old woman, resident of Sao Miguel do Iguacu
+token offset: -1
+
+field: content
+start: 2101
+end:   2198
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: Bahia [state] with a diagnosis of Guillain-Barre syndrome [GBS]. In Salvador, a 26-year-old woman
+token offset: -1
+
+field: content
+start: 2169
+end:   2198
+key:   Location_\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b
+value: Salvador, a 26-year-old woman
+token offset: -1
+
+
