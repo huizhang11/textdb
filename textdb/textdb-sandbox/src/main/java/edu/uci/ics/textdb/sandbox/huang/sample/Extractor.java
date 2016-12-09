@@ -116,7 +116,11 @@ public class Extractor {
      *                       ↓
      *                NLP (location)
      *                       ↓
-     * Projection (ID:filename; spanList(field,start:109; end:115; key:Location; value: Brazil;token; offset:-1) )
+     * Projection (ID:filename; spanList(start:109; 
+     * 									   end:115; 
+     *                                     key:Location; 
+     *                                     value: Brazil;
+     *                                     token; offset:-1) )
      *                       ↓
      *                    FileSink
      *                    
@@ -159,7 +163,7 @@ public class Extractor {
         //link stage 2
         /*				    NLP (location)
          *                       ↓
-         *              Projection (spanList)
+         *              Projection (ID, spanList)
          *                       ↓
          *                    FileSink
          */ 
@@ -182,7 +186,11 @@ public class Extractor {
      *                  ↓          ↓     
      *             Join (distance < 100)
      *                       ↓
-     *              Projection (spanList)  (ID:filename; spanList(field,start:109; end:115; key:Location; value: Brazil;token; offset:-1) )
+     *              Projection ( (ID:spanList):  (ID:filename; spanList(start:109; end:115; 
+     *                                                              key:(Location___\b(A|a|(an)|(An)) .{1,40} ((woman)|(man))\b); 
+     *                                                              value: Brazil
+     *                                                              Brazil. 28 Jan 2016. A 57-year-old Viennese woman;
+     *                                                              token; offset:-1) ) )
      *                       ↓
      *                    FileSink
      *                    
@@ -239,7 +247,8 @@ public class Extractor {
          */
         joinPersonLocation.setInnerInputOperator(regexMatcherPerson);
         joinPersonLocation.setOuterInputOperator(nlpExtractorLocation);
-       /*
+       /*                              ↓
+        * 						projection(ID, spanlist())
         *                            ↓
         *                       FileSink
         */
@@ -251,7 +260,6 @@ public class Extractor {
     }
     
     
-
     /*
      * This is the DAG of this extraction plan.
      * 
